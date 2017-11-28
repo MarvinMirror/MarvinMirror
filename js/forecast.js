@@ -36,7 +36,7 @@ function weatherForecast() {
 			for (i = 1; i <= 5; i++){
 				var wrap = document.createDocumentFragment();
 				var d = document.getElementById(elements[i]);
-				d.class = "daycast";
+				d.setAttribute("class", "daycast");
 				// var date = document.createElement("div");
 				var day = document.createElement("div");
 				var temp = document.createElement("div");
@@ -44,14 +44,14 @@ function weatherForecast() {
 				var w_icon = document.createElement("img");
 				var icon = data.list[4 + (i - 1) * 8].weather[0].icon;
 				img.appendChild(w_icon);
-				// date.class = "date";
+				// date.setAttribute("class", "date";
 				// time = now.add(i - 1, 'days');
 				// date.innerHTML = time;
-				day.class = "day";
+				day.setAttribute("class", "day");
 				day.innerHTML = now.add(i - 1, 'days').format("ddd, M/D");
-				temp.class = "temp";
+				temp.setAttribute("class", "temp");
 				temp.innerHTML = Math.floor(data.list[4 + (i - 1) * 8].main.temp);
-				img.class = "img";
+				img.setAttribute("class", "img");
 				w_icon.setAttribute("src", "http://openweathermap.org/img/w/" + icon + ".png")
 				// wrap.appendChild(date);
 				wrap.appendChild(day);

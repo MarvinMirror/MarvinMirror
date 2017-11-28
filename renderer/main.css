@@ -1,0 +1,74 @@
+html, body {
+	background-color: black;
+	/* color: white; */
+	height: 100vh;
+}
+
+span .time{
+	display:inline-block;
+    width:100px;
+    background:blue;
+    text-align:center;
+}
+
+.wrapper {
+	/*border: 1px solid green;*/
+	display: grid;
+	grid-template-columns: 198px 1199px 198px;
+	grid-template-rows: 180px 2400px 179px;
+}
+
+button {
+	grid-column: 1;
+}
+
+.wrapper > div {
+	display: grid;
+	border: 1px solid red;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+	font-family: 'Futura';
+  font-weight: bold;
+  color: white;
+}
+
+.content {
+	display: grid;
+	align-items: center;
+	justify-content: center;
+}
+
+.content > div{
+	border: 1px solid green;
+	text-align: center;
+	padding: 0;
+}
+
+.clock {
+	font-size: 2000%;
+}
+
+.date {
+	font-size: 450%;
+}
+
+.blink {
+  -webkit-animation: blink 2s steps(3, start) infinite;
+  -moz-animation:    blink 2s steps(3, start) infinite;
+  -o-animation:      blink 2s steps(3, start) infinite; 
+  animation:         blink 2s steps(3, start) infinite;
+}
+
+@-webkit-keyframes blink {
+  to { visibility: hidden; }
+}
+@-moz-keyframes blink {
+  to { visibility: hidden; }
+}
+@-o-keyframes blink {
+  to { visibility: hidden; }
+}
+@keyframes blink {
+  to { visibility: hidden; }
+}

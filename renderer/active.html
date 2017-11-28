@@ -1,0 +1,41 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="active.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body onload="dateTime()">
+	<div class="wrapper">
+		<div>
+			<div class="header" id="clock"></div>
+		</div>
+		<div class="content" id="content">
+			<link id="content_css" rel="stylesheet" type="text/css" href="">
+		</div>
+		<div>
+			<div id="footer">
+			<button onclick="getWeather()" name="weather" value="weather">
+				WEATHER ON
+			</button>
+			<button onclick="weatherForecast()" name="forecast" value="forecast">
+				Forecast
+			</button>
+			<button onclick="getMenu()" name="menu" value="menu">
+				Cantina Menu
+			</button>
+			<button onclick="manageDOM.clearContent()" name="woff" value="woff">
+				WEATHER OFF
+			</button>
+			<button onclick="ftGetObj()" name="student" value="student">
+				GET ME
+			</button>
+			</div>
+		</div>
+		</div>
+	</div>
+	<script src="../js/clock.js"></script>
+	<script src="../js/weather.js"></script>
+	<script src="../js/forecast.js"></script>
+	<script src="../js/student.js"></script>
+	<script src="../js/cantina.js"></script>
+</body>
+</html>

@@ -2,6 +2,9 @@
 // Modules
 const {BrowserWindow} = require('electron')
 
+// Config data
+var windowSize = require('./config/empty_config').window
+
 // BrowserWindow instance
 exports.win
 
@@ -12,8 +15,8 @@ exports.createWindow = () => {
     // webPreferences: {
     //   experimentalFeatures: true,
     // },
-    width: 1595,
-    height: 2759,
+    width: windowSize.width,
+    height: windowSize.height,
     // resizable: false,
     frame: false,
     // blinkFeatures: 'CSSGridLayout',

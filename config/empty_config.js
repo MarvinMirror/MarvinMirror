@@ -4,6 +4,11 @@ var config = {
     // ipWhiteList:,
     language: "en",
 
+    window: {
+        width: 1000,
+        height: 1600
+    },
+
     ftOauth: {
         client_id: "",
         client_secret: "",
@@ -13,16 +18,16 @@ var config = {
     },
 
     currentWeather: {
-        location: "Fremont",
-        units: "imperial",
         appKey: ""
     },
 
     weatherForecast: {
-        location: "Fremont",
-        units: "imperial",
         cnt: "5",
         appKey: ""
-    }
+    },
+
+    openWeatherMapAPI: 'http://api.openweathermap.org/data/2.5/',
+    location: "Fremont",
+    units: "imperial"
 }
 module.exports = config;

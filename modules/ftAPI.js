@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var request = require('request');
-var config = require('../config/config');
+var config = require('../config/empty_config');
 var ftOauth = config.ftOauth;
 
 var accessToken = "e67ea91547f090b140ecc992a98222fe1053a404c38409fcf4d434580b9cfee0";

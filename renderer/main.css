@@ -14,8 +14,8 @@ span .time{
 .wrapper {
 	/*border: 1px solid green;*/
 	display: grid;
-	grid-template-columns: 198px 1199px 198px;
-	grid-template-rows: 180px 2400px 179px;
+	grid-template-columns: 10% 80% 10%;
+	grid-template-rows: 20% 60% 20%;
 }
 
 button {

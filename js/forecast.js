@@ -1,30 +1,56 @@
 var getJSON = require('../modules/getJSON');
-var config = require('../config/config');
-var ftAPI = require('../modules/ftAPI');
+var config = require('../config/config.js');
 var moment = require('moment');
 var manageDOM = require('../modules/manageDOM');
 var now = moment();
 
-function weatherForecast() {
+// If user did not specify location the function returns default location from config file.
+function getLocation(place)
+{
+if (!place) return (config.location)
+return (place)
+}
 
+// If user did not specify units the function returns default 'imperial' units (fahrenheit) from config file.
+function getUnits(units)
+{
+if (!units || units === 'fahrenheit') return (config.units)
+return("metric")
+}
+
+function weatherForecast() {
+	
+	// check input for location
+	var place = getLocation(document.getElementById('location_form').value)
+
+	// check input for units
+	var units = getUnits(document.getElementById('units_form').checked)
+	
+	// clear page
 	manageDOM.clearContent();
 
+	// getting data from config
 	var weatherForecast = config.weatherForecast;
+
+	// array of elements for builing new html
 	var elements = [
 		'location', 'day00', 'day01', 'day02',
 		'day03', 'day04'
 	];
 	
+	// creating new html
 	manageDOM.array2Div(elements);
 	
 	// sets styling for the content
 	var css = document.getElementById('content_css');
 	css.setAttribute('href', '../css/forecast.css');
 
+	// making url for request to weather api
 	var weatherAPI = 
-		'http://api.openweathermap.org/data/2.5/forecast?q=' +
-		weatherForecast.location + '&units=' + weatherForecast.units + '&APPID=' + weatherForecast.appKey;
+		config.openWeatherMapAPI + 'forecast?q=' +
+		place + '&units=' + units + '&APPID=' + weatherForecast.appKey;
 
+	// request to the API and filling html
 	getJSON(weatherAPI, function(err, data){
 		if (err) throw err;
 		console.log(data);

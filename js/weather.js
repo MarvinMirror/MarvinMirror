@@ -25,26 +25,26 @@ function getWeather() {
 	var units = getUnits(document.getElementById('units_form').checked)
 	
 	// clear page
-	manageDOM.clearContent();
+	manageDOM.clearContent("right");
 
 	// getting data from config
 	var currentWeather = config.currentWeather;
 
 	// array of elements for builing new html
 	var elements = [
-		'location', 'time', 'img_wrap', 'cur_temp', 'conditions'
+		'w_location', 'w_time', 'w_img_wrap', 'w_cur_temp', 'w_conditions'
 	];
 	
 	// creating new html
-	manageDOM.array2Div(elements);
+	manageDOM.array2Div(elements, "right");
 
     var w_icon = document.createElement("img");
 	w_icon.id = "wicon";
 	
-	document.getElementById('img_wrap').appendChild(w_icon);
+	document.getElementById('w_img_wrap').appendChild(w_icon);
 
 	// sets styling for the content
-	var css = document.getElementById('content_css');
+	var css = document.getElementById('right_css');
 	css.setAttribute('href', '../css/weather.css');
 	
 	// making url for request to weather api
@@ -61,9 +61,9 @@ function getWeather() {
 			// var desc = weather.description;
 			var icon = weather.icon;
 			w_icon.setAttribute("src", "http://openweathermap.org/img/w/" + icon + ".png");
-			document.getElementById("cur_temp").innerHTML = Math.floor(data.main.temp) + "&deg";
-			document.getElementById("conditions").innerHTML = weather.main;
-			document.getElementById("location").innerHTML = data.name;
+			document.getElementById("w_cur_temp").innerHTML = Math.floor(data.main.temp) + "&deg";
+			document.getElementById("w_conditions").innerHTML = weather.main;
+			document.getElementById("w_location").innerHTML = data.name;
 	
 		}
 	});

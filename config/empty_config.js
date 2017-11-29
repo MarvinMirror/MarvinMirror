@@ -22,7 +22,6 @@ var config = {
     },
 
     weatherForecast: {
-        cnt: "5",
         appKey: ""
     },
 

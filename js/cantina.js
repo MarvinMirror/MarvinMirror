@@ -14,7 +14,7 @@ var cantinaAPI = 'https://cantina.42.us.org/marvins_meals';
 
 function getMenu() {
 
-    manageDOM.clearContent();
+    manageDOM.clearContent("content");
 
     // sets styling for the content
 	document.getElementById('content_css').setAttribute('href', '../css/cantina.css');
@@ -45,7 +45,7 @@ function getMenu() {
                 i++;
             });
 
-            manageDOM.array2Div(meal_list);
+            manageDOM.array2Div(meal_list, "content");
 
             document.getElementById("date").innerHTML = "Your meals for today " + moment().format("dddd") + " are:";
             

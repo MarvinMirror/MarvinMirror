@@ -1,3 +1,33 @@
-.img {
+#content_wrapper {
+    width: 400px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+#content_wrapper > div {
+    width: 360px;
+}
+
+.daycast {
+    /* width: 200px; */
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-around;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px dashed purple;
+}
+
+#fore_location {
+    border: 1px dashed yellow;
+}
+
+.fore_img, .fore_temp, .fore_day {
+    width: 50px;
     border: 1px solid blue;
 }

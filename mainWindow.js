@@ -3,7 +3,7 @@
 const {BrowserWindow} = require('electron')
 
 // Config data
-var windowSize = require('./config/empty_config').window
+var windowSize = require('./config/config').window
 
 // BrowserWindow instance
 exports.win

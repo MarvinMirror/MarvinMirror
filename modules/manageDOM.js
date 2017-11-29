@@ -1,9 +1,9 @@
 var manageDOM = {
 
-    clearContent: function () {
-        var content = document.getElementById('content');
-        var wrapper = document.getElementById('wrapper');
-        var css = document.getElementById('content_css');
+    clearContent: function (parent) {
+        var content = document.getElementById(parent);
+        var wrapper = document.getElementById(parent + "_wrapper");
+        var css = document.getElementById(parent + '_css');
         css.setAttribute('href', '');
     
         if (wrapper !== null) {
@@ -12,12 +12,12 @@ var manageDOM = {
         }
     },
 
-    array2Div: function(arr) {
+    array2Div: function(arr, parent) {
 
-        var c = document.getElementById("content");
+        var c = document.getElementById(parent);
 
         var wrapper = document.createElement("div");
-        wrapper.id = "wrapper";
+        wrapper.id = parent + "_wrapper";
 
         arr.forEach( function (element) {
             var e = document.createElement("div");

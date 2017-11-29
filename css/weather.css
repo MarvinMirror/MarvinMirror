@@ -1,13 +1,10 @@
-#wrapper{
-	font-size: 900%;
-}
-
-#temp{
-	font-size: 175%;
+#right_wrapper{
+	border: 1px solid red;
+	/* font-size: 900%; */
 }
 
 #wicon{
-	height: 900px;
+	height: 100px;
 	/* border: 1px solid red; */
-	margin: -30px 0px -60px 0px;
+	margin: -4px 0px -8px 0px;
 }

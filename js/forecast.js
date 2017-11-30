@@ -54,40 +54,42 @@ function weatherForecast() {
 	getJSON(weatherAPI, function(err, data){
 		console.log(data);
 		if (err) throw err;
-		else {
-			document.getElementById('fore_location').innerHTML = "<p>" + data.city.name + "</p>";
-			var j = 1;
-			for (i = 0; i < data.list.length; i++){
-				var weather = data.list[i];
-				if ("13:00" === moment(weather.dt * 1000).format("HH:mm")) {
-					var wrap = document.createDocumentFragment();
+		document.getElementById('fore_location').innerHTML = "<p>" + data.city.name + "</p>";
+		var j = 1;
 
-					var d = document.getElementById(elements[j]);
-					d.setAttribute("class", "daycast");
+		// Loop through all 40 objects in the list and get attributes for 5 days at 1:00 pm PST
+		for (i = 0; i < data.list.length; i++){
+			var weather = data.list[i];
 
-					var day = document.createElement("div");
-					day.setAttribute("class", "fore_day");
-					day.innerHTML = "<p>" + moment(weather.dt * 1000).format("ddd") + "</p>";
+			// This only gets an afternoon temperature for US/Pacific time
+			if ("13:00" === moment(weather.dt * 1000).format("HH:mm")) {
+				var wrap = document.createDocumentFragment();
 
-					var temp = document.createElement("div");
-					temp.setAttribute("class", "fore_temp");
-					temp.innerHTML = "<p>" + Math.floor(weather.main.temp) + "&deg" + deg + "</p>";
+				var d = document.getElementById(elements[j]);
+				d.setAttribute("class", "daycast");
 
-					var img = document.createElement("div");
-					img.setAttribute("class", "fore_img");
-					
-					var w_icon = document.createElement("img");
-					var icon = weather.weather[0].icon;
-					w_icon.setAttribute("src", "http://openweathermap.org/img/w/" + icon + ".png")
-					
-					img.appendChild(w_icon);
-					wrap.appendChild(day);
-					wrap.appendChild(temp);
-					wrap.appendChild(img);
-					d.appendChild(wrap);
-					j++;
-				}
-			};
-		}
+				var day = document.createElement("div");
+				day.setAttribute("class", "fore_day");
+				day.innerHTML = "<p>" + moment(weather.dt * 1000).format("ddd") + "</p>";
+
+				var temp = document.createElement("div");
+				temp.setAttribute("class", "fore_temp");
+				temp.innerHTML = "<p>" + Math.floor(weather.main.temp) + "&deg" + deg + "</p>";
+
+				var img = document.createElement("div");
+				img.setAttribute("class", "fore_img");
+				
+				var w_icon = document.createElement("img");
+				var icon = weather.weather[0].icon;
+				w_icon.setAttribute("src", "http://openweathermap.org/img/w/" + icon + ".png")
+				
+				img.appendChild(w_icon);
+				wrap.appendChild(day);
+				wrap.appendChild(temp);
+				wrap.appendChild(img);
+				d.appendChild(wrap);
+				j++;
+			}
+		};
 	});
 }

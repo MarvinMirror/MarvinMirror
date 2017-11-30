@@ -1,11 +1,30 @@
 var express = require('express');
 var app = express();
 var request = require('request');
-var config = require('../config/empty_config');
+var config = require('../config/config');
 var ftOauth = config.ftOauth;
 
-var accessToken = "e67ea91547f090b140ecc992a98222fe1053a404c38409fcf4d434580b9cfee0";
+var accessToken = "cf236ff4e4ce085575d73937a18576dbba3dbcff2416acd253ac7e4f626800c6";
+var refreshToken = "87bf020d0e387053e78423b86565a4b3727da025bca304af85031e4c46cff1c7";
 var ftUrl = "https://api.intra.42.fr";
+
+// DOESNT WORK YET
+var getNewToken = function () {
+    request({
+        url: ftOauth.tokenURL,
+        method: 'POST',
+        form: {
+            'refresh_token': refreshToken,
+            'client_id': ftOauth.client_id,
+            'client_secret': ftOauth.client_secret,
+            'grant_type': 'refresh_token'
+        }
+      }, function(err, res) {
+        console.log("Get new token: " + res.body);
+        // var json = JSON.parse(res.body);
+        // console.log(json);
+      });
+}
 
 var ftAPI = {
     
@@ -21,7 +40,7 @@ var ftAPI = {
                 'grant_type': 'authorization_code',
                 'client_id': ftOauth.client_id,
                 'client_secret': ftOauth.client_secret,
-                'code': "de1c0342226015310b33661edc5c6585aa77f8a7eb1abf297eef8e798fc21bd2",
+                'code': "f4bc72573f971484d11c81eae79a594e27c17b1a2595ac97b5fcbed629264f6b",
                 'redirect_uri': ftOauth.redirectUri
             }
           }, function(err, res) {
@@ -38,9 +57,17 @@ var ftAPI = {
                 'bearer': accessToken
             }
         }, function(err, res) {
-            var obj = JSON.parse(res.body);
-            console.log(obj);
-            callback(obj);
+            if (res.statusCode === 401){
+                console.log(res.statusCode);
+                console.log(obj);
+                getNewToken();
+            }
+            else {
+                var obj = JSON.parse(res.body);
+                // console.log(res.statusCode);
+                callback(obj);
+            }
+            console.log(res);
         });
     }
 }

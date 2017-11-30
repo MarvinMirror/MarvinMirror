@@ -1,46 +1,84 @@
 var ftAPI = require('../modules/ftAPI');
 var manageDOM = require('../modules/manageDOM');
 
-var getStudent = function (obj) {
+function activeUser() {
+    
+    this.location = "";
+    this.login = ""
+    this.profile_pic = "";
+    this.name = "";
+    this.level = "";
+    this.correction_point = "";
+
+}
+
+function buildInfo(obj) {
+ 
+    var user = new activeUser;
+
+    if (obj)
+    {
+        user.name = "<p>" + obj.displayname  + "</p>";
+        user.login = "<p>(" + obj.login + ")</p>";
+        user.profile_pic = obj.image_url;
+        user.location = "<p>" + (obj.location ? obj.location : "Unavailable") + "</p>";
+        user.level = "<p>Level: " + obj.cursus_users[0].level + "</p>";
+        user.correction_point = "<p>Correction points: " + obj.correction_point + "</p>";
+    }
+
+    // adds content to html with data retrieved from API
+    var profile_pic = document.createElement("img");
+    profile_pic.id = "ft_pic";
+    profile_pic.src = user.profile_pic;
+    document.getElementById('ft_profile_pic').appendChild(profile_pic);
+    
+    document.getElementById('ft_displayname').innerHTML = user.name;
+    document.getElementById('ft_login').innerHTML = user.login;
+    document.getElementById('ft_location').innerHTML = user.location;
+    document.getElementById('ft_level').innerHTML = user.level;
+    document.getElementById('ft_correction_points').innerHTML = user.correction_point;
+}
+
+var getStudentInfo = function (obj) {
+    
+    console.log(obj);
 
     // removes from "content" div of app any div with id "wrapper"
-    manageDOM.clearContent("left");
-    
-    // sets defaults from config file
-    var currentWeather = config.currentWeather;
+    manageDOM.clearContent("content");
     
     // create an array with all of the separate divs with
     // appropriate names here
     var elements = [
-        'me_displayname', 'me_profile_pic', 'me_location',
-        'me_level', 'me_correction_points'
+        'ft_displayname', 'ft_login', 'ft_profile_pic', 'ft_location',
+        'ft_level', 'ft_correction_points'
     ];
     
     // creates HTML
-    manageDOM.array2Div(elements, "left");
-
-    // any special elements should be created individually
-    var profile_pic = document.createElement("img");
-    profile_pic.id = "me_pic";
-    profile_pic.src = obj.image_url;
-    document.getElementById('me_profile_pic').appendChild(profile_pic);
+    manageDOM.array2Div(elements, "content");
 
     // sets styling for the content
-    var css = document.getElementById('left_css');
+    var css = document.getElementById('content_css');
     css.setAttribute('href', '../css/student.css');
-  
-    // adds content to html with data retrieved from API
-    document.getElementById('me_displayname').innerHTML = obj.displayname;
-    var location = obj.location;
-    if (location === null){
-        location = "Unavailable";
-    }   
-    document.getElementById('me_location').innerHTML = location;
-    document.getElementById('me_level').innerHTML = "Level: " + obj.cursus_users[0].level;
-    document.getElementById('me_correction_points').innerHTML = "Correction points: " + obj.correction_point;
+
+    buildInfo(obj);
+}    
+
+var getStudentID = function (obj) {
+
+    if (obj.length > 0){
+        ftAPI.query42("/v2/users/" + obj[0].id, getStudentInfo)
+    }
 }
 
-function ftGetObj() {
-	// ftAPI.getToken();
-    ftAPI.query42("/v2/me", getStudent);    
+
+function loadStudent(login) {
+    
+    if (!login){
+        //getStudent(null);
+    }
+    else {
+        // ftAPI.getToken();
+        ftAPI.query42("/v2/users/?filter[login]=" + login, getStudentID);    
+    }
 }
+

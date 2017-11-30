@@ -3,7 +3,7 @@
 	<link rel="stylesheet" type="text/css" href="active.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<body onload="dateTime(),getWeather()">
+<body onload="dateTime(),getWeather(),loadUser(null)">
 	<div class="wrapper">
 		<div class="sidebar" id="left">
 				<link id="left_css" rel="stylesheet" type="text/css" href="">
@@ -32,9 +32,12 @@
 				<button onclick="manageDOM.clearContent('content')" name="coff" value="coff">
 					CONTENT OFF
 				</button>
-				<button onclick="ftGetObj()" name="student" value="student">
+				<button onclick="loadUser(1)" name="user" value="user">
 					GET ME
 				</button>
+				<button onclick="loadStudent('eupopa')" name="student" value="student">
+						GET JANEA
+					</button>
 			</div>
 		</div>
 		<div class="sidebar" id="right">
@@ -45,6 +48,7 @@
 	<script src="../js/weather.js"></script>
 	<script src="../js/forecast.js"></script>
 	<script src="../js/student.js"></script>
+	<script src="../js/user.js"></script>
 	<script src="../js/cantina.js"></script>
 </body>
 </html>

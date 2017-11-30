@@ -1,7 +1,7 @@
 var ftAPI = require('../modules/ftAPI');
 var manageDOM = require('../modules/manageDOM');
 
-function activeUser() {
+function activeStudent() {
     
     this.location = "";
     this.login = ""
@@ -12,7 +12,7 @@ function activeUser() {
 
 }
 
-function buildInfo(obj) {
+function buildStudent(obj) {
  
     var user = new activeUser;
 
@@ -60,7 +60,7 @@ var getStudentInfo = function (obj) {
     var css = document.getElementById('content_css');
     css.setAttribute('href', '../css/student.css');
 
-    buildInfo(obj);
+    buildStudent(obj);
 }    
 
 var getStudentID = function (obj) {

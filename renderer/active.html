@@ -14,12 +14,12 @@
 				<link id="content_css" rel="stylesheet" type="text/css" href="">
 			</div>
 			<div id="footer">
-					<form>
-						Location:<br>
-						<input type="text" id="location_form"><br>
-						in Celsius (default Fahrenheit)?
-						<input type="checkbox" id="units_form">
-					</form>
+				<form>
+					Location:<br>
+					<input type="text" id="location_form"><br>
+					in Celsius (default Fahrenheit)?
+					<input type="checkbox" id="units_form">
+				</form>
 				<button onclick="getWeather()" name="weather" value="weather">
 					GET WEATHER
 				</button>
@@ -34,10 +34,15 @@
 				</button>
 				<button onclick="loadUser(1)" name="user" value="user">
 					GET ME
+				</button><br />
+				<form>
+						student login:<br>
+						<input type="text" id="student_form"><br>
+				</form>
+				<button onclick="loadStudent()" name="student" value="student">
+						GET STUDENT
 				</button>
-				<button onclick="loadStudent('eupopa')" name="student" value="student">
-						GET JANEA
-					</button>
+
 			</div>
 		</div>
 		<div class="sidebar" id="right">

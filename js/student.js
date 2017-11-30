@@ -1,6 +1,7 @@
 var ftAPI = require('../modules/ftAPI');
 var manageDOM = require('../modules/manageDOM');
 
+// This is simply copied over from user.js for ease of use. May be discarded
 function activeStudent() {
     
     this.location = "";
@@ -12,19 +13,17 @@ function activeStudent() {
 
 }
 
+// Handles filling html with student information passed as JSON object
 function buildStudent(obj) {
  
     var user = new activeUser;
 
-    if (obj)
-    {
-        user.name = "<p>" + obj.displayname  + "</p>";
-        user.login = "<p>(" + obj.login + ")</p>";
-        user.profile_pic = obj.image_url;
-        user.location = "<p>" + (obj.location ? obj.location : "Unavailable") + "</p>";
-        user.level = "<p>Level: " + obj.cursus_users[0].level + "</p>";
-        user.correction_point = "<p>Correction points: " + obj.correction_point + "</p>";
-    }
+    user.name = "<p>" + obj.displayname  + "</p>";
+    user.login = "<p>(" + obj.login + ")</p>";
+    user.profile_pic = obj.image_url;
+    user.location = "<p>" + (obj.location ? obj.location : "Unavailable") + "</p>";
+    user.level = "<p>Level: " + obj.cursus_users[0].level + "</p>";
+    user.correction_point = "<p>Correction points: " + obj.correction_point + "</p>";
 
     // adds content to html with data retrieved from API
     var profile_pic = document.createElement("img");
@@ -39,6 +38,7 @@ function buildStudent(obj) {
     document.getElementById('ft_correction_points').innerHTML = user.correction_point;
 }
 
+// Could be combined with above
 var getStudentInfo = function (obj) {
     
     console.log(obj);
@@ -63,6 +63,8 @@ var getStudentInfo = function (obj) {
     buildStudent(obj);
 }    
 
+// There is no direct-to-student from login via the API so 2 requests are needed. This is the second and 
+// feeds comprehensive student data object to callback function
 var getStudentID = function (obj) {
 
     if (obj.length > 0){
@@ -70,14 +72,12 @@ var getStudentID = function (obj) {
     }
 }
 
-
-function loadStudent(login) {
+// The first step is to get the user/:id by using the login from this endpoin
+function loadStudent() {
     
-    if (!login){
-        //getStudent(null);
-    }
-    else {
-        // ftAPI.getToken();
+    var login = getLocation(document.getElementById('student_form').value)
+    
+    if (login !== null) {
         ftAPI.query42("/v2/users/?filter[login]=" + login, getStudentID);    
     }
 }

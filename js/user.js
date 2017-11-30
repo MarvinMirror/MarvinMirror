@@ -1,6 +1,8 @@
 var ftAPI = require('../modules/ftAPI');
 var manageDOM = require('../modules/manageDOM');
 
+// This objects sets a default for values in case there is no user
+// Plus it makes it easy to change it if someone signs in
 function activeUser() {
     
     this.location = "<p>Location: Marvin's Mirror</p>";
@@ -12,6 +14,7 @@ function activeUser() {
 
 }
 
+// HTML builder once user info has been acquired
 function buildInfo(obj) {
  
     var user = new activeUser;
@@ -39,6 +42,7 @@ function buildInfo(obj) {
     document.getElementById('me_correction_points').innerHTML = user.correction_point;
 }
 
+// Could be comined with above
 var getUser = function (obj) {
 
     // removes from "content" div of app any div with id "wrapper"
@@ -61,15 +65,13 @@ var getUser = function (obj) {
     buildInfo(obj);
 }
 
-
+// 42 API query that will build a user whether someone signs in or not
 function loadUser(guest) {
     
-
     if (!guest){
         getUser(null);
     }
     else {
-        // ftAPI.getToken();
         ftAPI.query42("/v2/me", getUser);    
     }
 }

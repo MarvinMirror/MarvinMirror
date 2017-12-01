@@ -1,6 +1,6 @@
-var getJSON = require('../modules/getJSON');
+var getJSON = require('../src/getJSON');
 var config = require('../config/config.js');
-var manageDOM = require('../modules/manageDOM');
+var manageDOM = require('../src/manageDOM');
 
 // If user did not specify location the function returns default location from config file.
 function getLocation(place)

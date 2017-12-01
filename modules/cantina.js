@@ -1,6 +1,6 @@
 var moment = require('moment');
-var getJSON = require('../modules/getJSON');
-var manageDOM = require('../modules/manageDOM');
+var getJSON = require('../src/getJSON');
+var manageDOM = require('../src/manageDOM');
 
 // compare function for the array.sort method for organizing meals
 function compare(a,b) {

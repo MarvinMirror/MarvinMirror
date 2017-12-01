@@ -1,5 +1,5 @@
-var ftAPI = require('../modules/ftAPI');
-var manageDOM = require('../modules/manageDOM');
+var ftAPI = require('../src/ftAPI');
+var manageDOM = require('../src/manageDOM');
 
 // This objects sets a default for values in case there is no user
 // Plus it makes it easy to change it if someone signs in

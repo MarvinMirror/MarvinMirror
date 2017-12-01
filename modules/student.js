@@ -1,5 +1,5 @@
-var ftAPI = require('../modules/ftAPI');
-var manageDOM = require('../modules/manageDOM');
+var ftAPI = require('../src/ftAPI');
+var manageDOM = require('../src/manageDOM');
 
 // This is simply copied over from user.js for ease of use. May be discarded
 function activeStudent() {

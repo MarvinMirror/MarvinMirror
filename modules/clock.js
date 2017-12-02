@@ -9,48 +9,35 @@ var now = moment();
 console.log("clock1");
 
 function dateTime() {
-    
-    var div = document.getElementById('clock');
-    
-    // Generating html for date and time
-    var wrapper = document.createElement("div");
-    var timeWrapper = document.createElement("div");
-    var dateWrapper = document.createElement("div");
-    var hourSpan = document.createElement("span");
-    var colonSpan = document.createElement("span");
-    var minuteSpan = document.createElement("span");
-    
-    var dateString = now.format("dddd, MMMM D");
-    
-    // For css styling
-    colonSpan.className = "blink";
-    timeWrapper.className = "clock";
-    dateWrapper.className = "date";
-
-    // DOM management
-    div.insertBefore(wrapper, document.getElementById('spacer'));
-    wrapper.appendChild(timeWrapper);
-    wrapper.appendChild(dateWrapper);
-    timeWrapper.appendChild(hourSpan);
-    timeWrapper.appendChild(colonSpan);
-    timeWrapper.appendChild(minuteSpan);
-    
-    colonSpan.innerHTML = ":";
-    dateWrapper.innerHTML = dateString;
 
     var newDay = moment('12:00:01am', 'h:mm:ssa');
-    console.log(newDay);
-    console.log(moment().add(1, 'days').startOf('day'));
-    console.log(moment());
+    var dateString = now.format("dddd, MMMM D");
 
-   // Time updates every 1 second, date does not
-   setInterval(function getTime () {
+    var clockdiv = document.getElementById("time");
+    var datediv = document.getElementById("date");
+
+    var hourDiv = document.createElement("div");
+    var colonDiv = document.createElement("div");
+    var minutesDiv = document.createElement("div");
+
+    hourDiv.className = "hour";
+    colonDiv.className = "colon";
+    minutesDiv.className = "minutes";
+   
+    clockdiv.appendChild(hourDiv);
+    clockdiv.appendChild(colonDiv);
+    clockdiv.appendChild(minutesDiv);
+
+    colonDiv.innerHTML = ":";
+    datediv.innerHTML = dateString;
+
+    setInterval(function getTime () {
         now = moment();
-        hourSpan.innerHTML = now.format("HH");
-        minuteSpan.innerHTML = now.format("mm");
+        hourDiv.innerHTML = now.format("HH");
+        minutesDiv.innerHTML = now.format("mm");
         if (now.isSameOrBefore(newDay)) {
             dateString = now.format("dddd, MMMM D");
-            dateWrapper.innerHTML = dateString;
+            dateDiv.innerHTML = dateString;
             console.log(dateString);
         }
     }, 1000);

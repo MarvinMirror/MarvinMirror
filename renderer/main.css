@@ -1,59 +1,78 @@
 html, body {
-	background-color: black;
-	/* color: white; */
-	height: 100vh;
-}
-
-span .time{
-	display:inline-block;
-    width:100px;
-    background:blue;
-    text-align:center;
+		height: 100%;
+		padding: 10px;
 }
 
 .wrapper {
-	/*border: 1px solid green;*/
+	height: 100%;
 	display: grid;
-	grid-template-columns: 10% 80% 10%;
-	grid-template-rows: 20% 60% 20%;
+	grid-template-columns: 1fr 80% 1fr;
+	grid-template-rows: 1fr 1fr 70% 3fr;
+	grid-gap: 10px;
+	
 }
 
-button {
-	grid-column: 1;
+* {
+	box-sizing: border-box;
+}
+
+.wrapper {
+	background-color: black;
+	font-family: sans-serif;
 }
 
 .wrapper > div {
-	display: grid;
-	border: 1px solid red;
-	align-items: center;
-	justify-content: center;
-	padding: 10px;
-	font-family: 'Futura';
-  font-weight: bold;
-  color: white;
+	border: 3px solid grey;
 }
 
-.content {
-	display: grid;
-	align-items: center;
-	justify-content: center;
-}
-
-.content > div{
-	border: 1px solid green;
-	text-align: center;
-	padding: 0;
+.box {
+	font-family: sans-serif;
+	color: white;
+	font-weight: bold;
+	text-align: center;	
+	font-size: 200%;
 }
 
 .clock {
-	font-size: 2000%;
+	grid-column: 2/3;
+	grid-row: 1/2;
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: end;
 }
 
 .date {
-	font-size: 450%;
+	grid-column: 2/3;
+	grid-row: 2/3;
 }
 
-.blink {
+.marvin {
+	grid-column: 2/3;
+	grid-row: 3/4;
+}
+
+.announcements {
+	grid-column: 1/5;
+	grid-row: 4/ 4;
+	padding: 10px;
+}
+
+/* Clock elements css*/
+
+.hour {
+	grid-column: 1/2;
+	text-align: right;
+}
+
+.colon {
+	grid-column: 2/3;
+}
+
+.minutes {
+	text-align: left;
+}
+
+.colon {
   -webkit-animation: blink 2s steps(3, start) infinite;
   -moz-animation:    blink 2s steps(3, start) infinite;
   -o-animation:      blink 2s steps(3, start) infinite; 

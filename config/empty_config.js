@@ -28,6 +28,6 @@ var config = {
     openWeatherMapAPI: 'http://api.openweathermap.org/data/2.5/',
     location: "Fremont",
     units: "imperial",
-    waitingTime: 5
+    waitingTime: 50000
 }
 module.exports = config;

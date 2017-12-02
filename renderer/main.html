@@ -5,36 +5,16 @@
 <script src="../src/jquery.min.js"></script>
 </head>
 
-<body onload="dateTime()">
-		
+<body onload="dateTime()">	
 	<div class="wrapper">
-		<div>
+		<div class="box clock" id="time"></div>
+		<div class="box date" id="date"></div>
+		<div class="box marvin">
+			<img src="https://media.giphy.com/media/rrVqL0o7pinLy/giphy.gif">
 		</div>
-		<div>
-			<div id="header"></div>
+		<div class="box announcements">
+			<a href="active.html">GO TO ACTIVE</a>
 		</div>
-		<div>
-		</div>
-		<div>
-			<div class="sidebar" id="left"></div>
-		</div>
-		<div>
-			<div class="content" id="clock">
-				<div id="spacer" style="height: 100px"></div>
-				<div onload="validateField()" id="marvin">
-					<img id="marvin_gif" src="https://media.giphy.com/media/rrVqL0o7pinLy/giphy.gif">
-				</div>
-			</div>
-		</div>
-		<div>
-			<div class="sidebar" id="left"></div>
-		</div>
-		<div></div>
-		<div>
-			<div id="footer"><a href="active.html">GO TO ACTIVE</a></div>
-
-		</div>
-		<div></div>
 	</div>
 	<script src="../modules/clock.js"></script>	
 </body>

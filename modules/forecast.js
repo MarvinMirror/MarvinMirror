@@ -40,10 +40,6 @@ function weatherForecast() {
 	
 	// creating new html
 	manageDOM.array2Div(elements, "content");
-	
-	// sets styling for the content
-	var css = document.getElementById('content_css');
-	css.setAttribute('href', '../css/forecast.css');
 
 	// making url for request to weather api
 	var weatherAPI = 

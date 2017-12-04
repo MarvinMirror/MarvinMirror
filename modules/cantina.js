@@ -16,9 +16,6 @@ var cantinaAPI = 'https://cantina.42.us.org/marvins_meals';
 function getMenu() {
 
     manageDOM.clearContent("content");
-
-    // sets styling for the content
-	document.getElementById('content_css').setAttribute('href', '../css/cantina.css');
   
     getJSON(cantinaAPI, function(err, data) {
         if (err) throw err;
@@ -48,7 +45,7 @@ function getMenu() {
 
         manageDOM.array2Div(meal_list, "content");
 
-        document.getElementById("date").innerHTML = "Your meals for today " + moment().format("dddd") + " are:";
+        document.getElementById("content").innerHTML = "Your meals for today " + moment().format("dddd") + " are:";
         
         // for each dive, give it a class and add appropriate content whether it is time or meal descroption
         for (i = 1; i < meal_list.length; i++) {

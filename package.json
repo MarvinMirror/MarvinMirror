@@ -1,7 +1,7 @@
 {
-  "name": "electron-quick-start",
+  "name": "marvin_mirror",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "Marvin Mirror application",
   "main": "main.js",
   "scripts": {
     "start": "./node_modules/.bin/electron ."
@@ -24,7 +24,8 @@
   "homepage": "https://github.com/electron/electron-quick-start#readme",
   "devDependencies": {
     "devtron": "*",
-    "electron-reload": "*"
+    "electron-reload": "*",
+    "moment-timezone": "^0.5.14"
   },
   "dependencies": {
     "electron": "*",

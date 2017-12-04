@@ -56,10 +56,6 @@ var getStudentInfo = function (obj) {
     // creates HTML
     manageDOM.array2Div(elements, "content");
 
-    // sets styling for the content
-    var css = document.getElementById('content_css');
-    css.setAttribute('href', '../css/student.css');
-
     buildStudent(obj);
 }    
 

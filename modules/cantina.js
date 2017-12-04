@@ -35,7 +35,7 @@ function getMenu() {
         a.sort(compare);
 
         // create an array of elements to build the DOM
-        var meal_list = ['date'];
+        var meal_list = ['cantina_greet'];
         a.forEach(function() {
             meal_list.push("spacer" + i);
             meal_list.push("time" + i);
@@ -45,7 +45,7 @@ function getMenu() {
 
         manageDOM.array2Div(meal_list, "content");
 
-        document.getElementById("content").innerHTML = "Your meals for today " + moment().format("dddd") + " are:";
+        document.getElementById("cantina_greet").innerHTML = "Your meals for today " + moment().format("dddd") + " are:";
         
         // for each dive, give it a class and add appropriate content whether it is time or meal descroption
         for (i = 1; i < meal_list.length; i++) {

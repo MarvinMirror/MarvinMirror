@@ -46,7 +46,7 @@ function buildInfo(obj) {
 var getUser = function (obj) {
 
     // removes from "content" div of app any div with id "wrapper"
-    manageDOM.clearContent("left");
+    manageDOM.clearContent("user");
     
     // create an array with all of the separate divs with
     // appropriate names here
@@ -56,11 +56,7 @@ var getUser = function (obj) {
     ];
     
     // creates HTML
-    manageDOM.array2Div(elements, "left");
-
-    // sets styling for the content
-    var css = document.getElementById('left_css');
-    css.setAttribute('href', '../css/user.css');
+    manageDOM.array2Div(elements, "user");
 
     buildInfo(obj);
 }

@@ -1,26 +1,30 @@
+
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="active.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body onload="dateTime(),getWeather(),loadUser(null),incatvityTime(!null)">
-	<div class="wrapper">
-		<div class="sidebar" id="left">
-				<link id="left_css" rel="stylesheet" type="text/css" href="">
+	
+<div class="wrapper">
+		<div class="box clock" id="time"></div>
+		<div class="box date" id="date"></div>
+		<div class="box user" id="user"></div>
+		<div class="box weather" id="weather"></div>
+		<div class="box dialog">
+			<br />Marvin
+			<br />You
+			<br />Marvin
 		</div>
-		<div id="body">
-			<div class="header" id="clock"></div>
-			<div id="content">
-				<link id="content_css" rel="stylesheet" type="text/css" href="">
-			</div>
-			<div id="footer">
-				<form>
+		<div class="box content" id="content"></div>
+		<div class="box announcements">
+			<form>
 					Location:<br>
 					<input type="text" id="location_form"><br>
 					in Celsius (default Fahrenheit)?
 					<input type="checkbox" id="units_form">
 				</form>
-				<button onclick="getWeather()" name="weather" value="weather">
+				<button onclick="getWeatherAtLocation()" name="weather" value="weather">
 					GET WEATHER
 				</button>
 				<button onclick="weatherForecast()" name="forecast" value="forecast">
@@ -34,21 +38,16 @@
 				</button>
 				<button onclick="loadUser(1)" name="user" value="user">
 					GET ME
-				</button><br />
+				</button>
 				<form>
 						student login:<br>
-						<input type="text" id="student_form"><br>
+						<input type="text" id="student_form">
 				</form>
 				<button onclick="loadStudent()" name="student" value="student">
 						GET STUDENT
 				</button>
-
-			</div>
 		</div>
-		<div class="sidebar" id="right">
-				<link id="right_css" rel="stylesheet" type="text/css" href="">
-		</div>
-	</div>
+</div>
 	<script src="../modules/clock.js"></script>
 	<script src="../modules/weather.js"></script>
 	<script src="../modules/forecast.js"></script>

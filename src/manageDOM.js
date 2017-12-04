@@ -3,8 +3,6 @@ var manageDOM = {
     clearContent: function (parent) {
         var content = document.getElementById(parent);
         var wrapper = document.getElementById(parent + "_wrapper");
-        var css = document.getElementById(parent + '_css');
-        css.setAttribute('href', '');
     
         if (wrapper !== null) {
             console.log("REMOVED!");

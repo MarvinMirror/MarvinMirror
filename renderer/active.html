@@ -16,7 +16,9 @@
 			<br />You
 			<br />Marvin
 		</div>
-		<div class="box content" id="content"></div>
+		<div class="box content" id="content">
+            <img id="zone" src="zone" style="display:none;" class="zone"/>
+        </div>
 		<div class="box announcements">
 			<form>
 					Location:<br>
@@ -46,7 +48,21 @@
 				<button onclick="loadStudent()" name="student" value="student">
 						GET STUDENT
 				</button>
+                    <br><br>
+            <button onclick="zone1()" class="zone1" id="z1"> 
+                    zone1
+            </button>
+            <button class="zone2" onclick="zone2()" id="z2"> 
+                    ZONE2
+            </button>
+            <button onclick="zone3()" class="zone3" id="z3"> 
+                    ZONE3
+            </button>
+            <button onclick="zone4()" name="map" value="map"> 
+                    ZONE4
+            </button>
 		</div>
+    
 </div>
 	<script src="../modules/clock.js"></script>
 	<script src="../modules/weather.js"></script>
@@ -54,6 +70,7 @@
 	<script src="../modules/student.js"></script>
 	<script src="../modules/user.js"></script>
 	<script src="../modules/cantina.js"></script>
-	<script src="../src/inactive.js"></script>
+	<script src="../modules/map.js"></script>
+    <script src="../src/inactive.js"></script>
 </body>
 </html>

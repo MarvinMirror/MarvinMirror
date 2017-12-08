@@ -71,4 +71,3 @@ function loadUser(guest) {
         ftAPI.query42("/v2/me", getUser);    
     }
 }
-

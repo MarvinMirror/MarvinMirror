@@ -30,7 +30,7 @@ function buildStudent(obj) {
     profile_pic.id = "ft_pic";
     profile_pic.src = user.profile_pic;
     document.getElementById('ft_profile_pic').appendChild(profile_pic);
-    
+
     document.getElementById('ft_displayname').innerHTML = user.name;
     document.getElementById('ft_login').innerHTML = user.login;
     document.getElementById('ft_location').innerHTML = user.location;
@@ -41,8 +41,6 @@ function buildStudent(obj) {
 // Could be combined with above
 var getStudentInfo = function (obj) {
     
-    console.log(obj);
-
     // removes from "content" div of app any div with id "wrapper"
     manageDOM.clearContent("content");
     

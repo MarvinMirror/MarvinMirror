@@ -35,7 +35,13 @@ var config = {
     cantinaAPI: 'https://cantina.42.us.org/marvins_meals',
     openWeatherMapAPI: 'http://api.openweathermap.org/data/2.5/',
     location: "Fremont",
+    timeZone: "America/Los_Angeles",
     units: "imperial",
-    waitingTime: 100000
+    waitingTime: 50000,
+    geoNamesAPI: {
+        username: "marvinmirror",
+        search: "http://api.geonames.org/searchJSON?q=",
+        timezone: "http://api.geonames.org/timezoneJSON?"
+    }
 }
 module.exports = config;

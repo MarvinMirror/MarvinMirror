@@ -27,7 +27,13 @@ var config = {
 
     openWeatherMapAPI: 'http://api.openweathermap.org/data/2.5/',
     location: "Fremont",
+    timeZone: "America/Los_Angeles",
     units: "imperial",
-    waitingTime: 50000
+    waitingTime: 50000,
+    geoNamesAPI: {
+        username: "marvinmirror",
+        search: "http://api.geonames.org/searchJSON?q=",
+        timezone: "http://api.geonames.org/timezoneJSON?"
+    }
 }
 module.exports = config;

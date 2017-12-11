@@ -1,11 +1,14 @@
 var express = require('express');
 var app = express();
-var request = require('request');
+var request = require('request-promise');
+// var request = require('request-promise');
 var fs = require('fs-extra');
 var config = require('../config/config');
 var ftOauth = config.ftOauth;
 var mongoose = require('mongoose');
 var Token = require('../src/mongoDB').Token;
+
+"use strict";
 
 // This function is used in both getToken() and getNewToken to update the database entry
 var updateFields = function(res) {
@@ -78,8 +81,8 @@ var ftAPI = {
     query42: function (endPoint, callback) {
 
         // queries mongoDB for token document
-        var query = Token.findOne({'db_id': '42'});
-        
+        let query = Token.findOne({'db_id': '42'});
+
         query.exec(function(err, data){
             if (err) throw err;
             request({
@@ -88,9 +91,10 @@ var ftAPI = {
                     'bearer': data.accessToken
                 }
             }, function(err, res) {
+                if (err) throw err;
                 if (res.statusCode !== 200){
                     console.log("TIME FOR A NEW TOKEN");
-                    // getNewToken();
+                    // self.ftAPI.getNewToken().then(self.ftAPI.query42(endPoint, callback));
                 }
                 else {
                     var obj = JSON.parse(res.body);

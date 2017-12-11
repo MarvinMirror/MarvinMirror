@@ -54,6 +54,8 @@ var getStudentInfo = function (obj) {
     // creates HTML
     manageDOM.array2Div(elements, "content");
 
+    console.log(obj);
+
     buildStudent(obj);
 }    
 

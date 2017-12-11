@@ -16,7 +16,8 @@
 			<br />You
 			<br />Marvin
 		</div>
-		<div class="box content" id="content"></div>
+		<div class="box content" id="content">
+        </div>
 		<div class="box announcements">
 			<form>
 					Location:<br>
@@ -65,7 +66,21 @@
 				<button onclick="getPromise()" name="promise" value="promise">
 					DEV: PROMISE
 				</button>
+                    <br><br>
+            <button onclick="zone(this.id)" id="zone-1"> 
+                    ZONE1
+            </button>
+            <button onclick="zone(this.id)" id="zone-2"> 
+                    ZONE2
+            </button>
+            <button onclick="zone(this.id)" id="zone-3"> 
+                    ZONE3
+            </button>
+            <button onclick="zone(this.id)" id="zone-4"> 
+                    ZONE4
+            </button>
 		</div>
+    
 </div>
 	<script src="../src/ftAPI.js"></script>
 	<script src="../src/mongodb.js"></script>
@@ -76,6 +91,7 @@
 	<script src="../modules/student.js"></script>
 	<script src="../modules/user.js"></script>
 	<script src="../modules/cantina.js"></script>
-	<script src="../src/inactive.js"></script>
+	<script src="../modules/map.js"></script>
+    <script src="../src/inactive.js"></script>
 </body>
 </html>

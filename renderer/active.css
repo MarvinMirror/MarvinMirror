@@ -212,3 +212,10 @@ html, body {
 #wl_location {
 	font-size: 6vmin;
 }
+
+/* maps css */
+.map img {
+    
+    width: auto;
+    height: auto;
+}

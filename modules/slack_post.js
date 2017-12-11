@@ -3,9 +3,6 @@
 var getJSON = require('../src/getJSON');
 var config = require('../config/config');
 
-// curl used for testing:
-//curl 'https://slack.com/api/channels.history?token=xoxp-50141135975-96845516743-283476714066-25f610356a019cc2dd1627a374c3f2cf&channel=C1G4AJ96D&count=1'
-
 console.log("slack_post");
 
 function slack_post() {
@@ -15,6 +12,7 @@ function slack_post() {
                   '&channel=' + slack_app.channel_announcements + '&count=100';
 
   getJSON(slackAPI, function(err, data){
+    console.log(data);
     if (err) throw err;
     else {
       var dots = "";

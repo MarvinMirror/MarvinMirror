@@ -11,7 +11,6 @@ var request = require('request-promise')
 ** set timezone and hopefully change it easily with
 ** voice command.
 */
-console.log("clock1");
 
 function getTimeZone(place)
 {

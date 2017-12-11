@@ -121,12 +121,10 @@ function getMenu(str) {
             }
         }
     });
-    console.log(b);
     
     // sort meal array by time
     a.sort(compare);
     b.sort(compare);
-    console.log(b);
     
     // query mongoDB for cached menu
     var today = Menu.findOne( {'day': 'Today'});
@@ -138,9 +136,11 @@ function getMenu(str) {
             tomorrow.exec(function(err, data2){
                 if (data2 == null || moment().format("MMMM D YYYY") !== data2.date) {
                     updateMenuDB('Today', a);
+                    console.log("Tomorrow != today: " + data2.date);
                 }
                 else {
                     updateMenuDay();
+                    console.log("Tomorrow == today: " + data2.date);                    
                 }
                 updateMenuDB('Tomorrow', b);                    
             });
@@ -149,6 +149,10 @@ function getMenu(str) {
             tomorrow.exec(function(err, data3){
                 if (data3 == null) {
                     updateMenuDB('Tomorrow', b);
+                    console.log("Should update tomorrow");                    
+                }
+                else {
+                    console.log("Nothing should update");                    
                 }
             });
         }
@@ -181,7 +185,7 @@ function getMenu(str) {
 
             manageDOM.array2Div(meal_list, "content");
             
-            document.getElementById("cantina_greet").innerHTML = "Your meals for " + str + " are:";
+            document.getElementById("cantina_greet").innerHTML = "the 42 cantina menu for " + str + " is";
             
             // for each div, give it a class and add appropriate content whether it is time or meal descroption
             for (i = 1; i < meal_list.length; i++) {
@@ -189,17 +193,19 @@ function getMenu(str) {
                     var date = new moment(Date.parse(arr[Math.floor((i - 1) / 3)].begin_at));
                     var date_end = new moment(Date.parse(arr[Math.floor((i - 1) / 3)].end_at));
                     var t = document.getElementById(meal_list[i]);
-                    t.setAttribute("class", "hours");
-                    t.innerHTML = "begin at " + date.format("HH mm") + " end at " + date_end.format("HH mm");                   
+                    t.setAttribute("class", "cantina_hours");
+                    t.innerHTML = "Served from " + date.format("HH:mm") + " until " + date_end.format("HH:mm") + ":";                   
                 }
                 else if (meal_list[i][0] === "m") {
                     var m = document.getElementById(meal_list[i]);
                     m.setAttribute("class", "meal");
-                    var br = arr[Math.floor((i - 1) / 3)].menu;
+                    var item = arr[Math.floor((i - 1) / 3)];
+                    var br = item.menu;
 
                     // Replaces 'line feed' and 'carriage return' with and HTML break
                     br = br.replace(/\r\n/g, '<br />').replace(/[\r\n]/g, '<br />');
-                    m.innerHTML = br;              
+                    m.innerHTML = br + " ~ <span style='font-style:italic;text-decoration:underline'>\
+                                            $" + item.price + "</span>";              
                 }
                 else if (meal_list[i][0] === 'c') {
                     var c = document.getElementById('cafe');

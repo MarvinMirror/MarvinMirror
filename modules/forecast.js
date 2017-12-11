@@ -40,6 +40,8 @@ function weatherForecast() {
 	
 	// creating new html
 	manageDOM.array2Div(elements, "content");
+	
+	document.getElementById("content_wrapper").className = "forecast_wrapper";
 
 	// making url for request to weather api
 	var weatherAPI = 
@@ -50,7 +52,7 @@ function weatherForecast() {
 	getJSON(weatherAPI, function(err, data){
 		console.log(data);
 		if (err) throw err;
-		document.getElementById('fore_location').innerHTML = "<p>" + data.city.name + "</p>";
+		document.getElementById('fore_location').innerHTML = "<p>" + data.city.name + " 5-Day Forecast</p>";
 		var j = 1;
 
 		// Loop through all 40 objects in the list and get attributes for 5 days at 1:00 pm PST

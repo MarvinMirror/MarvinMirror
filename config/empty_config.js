@@ -32,16 +32,32 @@ var config = {
          appKey: ""
      },
 
+    fb_app: {
+    client_id: "",
+    app_secret: ""
+    },
+
+    slack_app: {
+    //you don't use id and secret to get last announcement
+    client_id: ".",
+    app_secret: "",
+    channel_announcements: "",
+    token: ""
+    }, 
+
     cantinaAPI: 'https://cantina.42.us.org/marvins_meals',
     openWeatherMapAPI: 'http://api.openweathermap.org/data/2.5/',
     location: "Fremont",
     timeZone: "America/Los_Angeles",
     units: "imperial",
-    waitingTime: 50000,
+    waitingTime: 10000,
     geoNamesAPI: {
         username: "marvinmirror",
         search: "http://api.geonames.org/searchJSON?q=",
         timezone: "http://api.geonames.org/timezoneJSON?"
-    }
+    },
+    fbAPI: 'https://graph.facebook.com/v2.11/42SiliconValley',
+    slackAPI: 'https://slack.com/api/'
+
 }
 module.exports = config;

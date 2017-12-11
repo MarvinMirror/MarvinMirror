@@ -1,5 +1,6 @@
 html, body {
 		height: 100%;
+		width: 100%;
 		padding: 10px;
 }
 
@@ -32,9 +33,17 @@ html, body {
 	text-align: center;	
 	font-size: 100%;
 }
+
+.center_center, .weather, .content{
+	display: grid;
+	align-items: center;
+	justify-content: center;
+}
+
 .clock {
 	grid-column: 3/4;
 	grid-row: 1/2;
+	font-size: 8vmin;
 	display: grid;
 	grid-template-columns: 1fr auto 1fr;
 	align-items: end;
@@ -43,6 +52,7 @@ html, body {
 .date {
 	grid-column: 3/4;
 	grid-row: 2/3;
+	font-size: 3vmin;
 }
 
 .user {
@@ -53,11 +63,14 @@ html, body {
 .user img {
 	max-width: 50%;
 	max-height: 50%;
+	border-radius: 50%;
 }
 
 .weather {
 	grid-column: 4/6;
 	grid-row: 1/4;
+	display: grid;
+	align-items: start;
 }
 
 .dialog {
@@ -68,7 +81,7 @@ html, body {
 .content {
 	grid-column: 1/6; 
 	grid-row: 4/5;
-	font-size: 50%;
+	/* font-size: 50%; */
 }
 
 .content img {
@@ -81,6 +94,10 @@ html, body {
 	grid-row: 5/ 5;
 	padding: 10px;
 	font-size: 50%;
+}
+
+#marvin_command {
+	width: 600px;
 }
 
 /* Clock elements css*/
@@ -118,6 +135,85 @@ html, body {
   to { visibility: hidden; }
 }
 
+/* Cantina elements css */
+.spacing {
+	height: 20px;
+}
+
+.cantina_hours {
+	font-size: 150%;
+}
+
+.meal {
+	font-size: 200%;
+	padding: 20px;
+}
+
+#cantina_greet {
+	font-size: 250%;
+	text-decoration: underline;
+	text-transform: uppercase;
+}
+
+/* Forecast elements css */
+.forecast_wrapper {
+	height: 80%;
+	min-width: 400px;
+	/* border: 1px solid blue; */
+	display: grid;
+	grid-template-rows: repeat(6, 1fr);
+	grid-gap: 10px;
+}
+
+.forecast_wrapper > div {
+	/* min-height: 10%; */
+}
+
+.daycast {
+	display: grid;
+	border: 1px solid teal;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+#fore_location, .daycast {
+	font-size: 2.5vmin;
+}
+
+/* weather top right css */
+#weather_wrapper {
+	max-height: 80%;
+	width: 200px;
+	grid-template-rows: repeat(4, 1fr);
+	font-size: 3vmin;
+}
+
+#weather_wrapper img {
+	height: 10vmin;
+}
+
+/* #w_cur_temp, #w_conditions {
+	font-size: 3vmin;
+} */
+
+/* weather by location css */
+.weather_location {
+	width: 600px;
+	grid-template-rows: repeat(4, 1fr);	
+}
+
+.weather_location img {
+	height: 16vmin;
+}
+
+#wl_cur_temp, #wl_conditions {
+	font-size: 8vmin;
+}
+
+#wl_location {
+	font-size: 6vmin;
+}
+
+/* maps css */
 .map img {
     
     width: auto;

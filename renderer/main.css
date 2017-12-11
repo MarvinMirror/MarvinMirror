@@ -9,7 +9,7 @@ html, body {
 	grid-template-columns: 1fr 80% 1fr;
 	grid-template-rows: 1fr 1fr 70% 3fr;
 	grid-gap: 10px;
-	
+
 }
 
 * {
@@ -29,7 +29,7 @@ html, body {
 	font-family: sans-serif;
 	color: white;
 	font-weight: bold;
-	text-align: center;	
+	text-align: center;
 	font-size: 200%;
 }
 
@@ -54,9 +54,28 @@ html, body {
 .announcements {
 	grid-column: 1/5;
 	grid-row: 4/ 4;
+	display: grid;
+	grid-template-rows: 1fr 1fr 1fr;
 	padding: 10px;
 }
 
+.posts {
+	display: grid;
+	grid-template-columns: : 10% 1fr;
+	grid-gap: 10px;
+
+}
+.posts img {
+	grid-column: 1/2;
+	max-width: 90%;
+	max-height: 90%;
+}
+
+.post_text {
+	grid-column: 2/3;
+	font-size: 12px;
+	text-align: left;
+}
 /* Clock elements css*/
 
 .hour {
@@ -75,7 +94,7 @@ html, body {
 .colon {
   -webkit-animation: blink 2s steps(3, start) infinite;
   -moz-animation:    blink 2s steps(3, start) infinite;
-  -o-animation:      blink 2s steps(3, start) infinite; 
+  -o-animation:      blink 2s steps(3, start) infinite;
   animation:         blink 2s steps(3, start) infinite;
 }
 

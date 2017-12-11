@@ -4,7 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="active.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<body onload="dateTime(),getWeather(),loadUser(null),incatvityTime(!null)">
+<body onload="dateTime(),getWeather(),loadUser(null),incatvityTime(!null),connectDB()">
 	
 <div class="wrapper">
 		<div class="box clock" id="time"></div>
@@ -30,22 +30,34 @@
 				</button>
 				<button onclick="weatherForecast()" name="forecast" value="forecast">
 					Forecast
+				</button> <br /><br />
+				<button onclick="getMenu('today')" name="menu" value="menu">
+					CANTINA TODAY
 				</button>
-				<button onclick="getMenu()" name="menu" value="menu">
-					Cantina Menu
-				</button>
+				<button onclick="getMenu('tomorrow')" name="menu" value="menu">
+					CANTINA TOMORROW
+				</button><br /><br />
 				<button onclick="manageDOM.clearContent('content')" name="coff" value="coff">
 					CONTENT OFF
 				</button>
 				<button onclick="loadUser(1)" name="user" value="user">
 					GET ME
 				</button>
+				<button onclick="localDateTime()" name="localTime" value="localTime">
+					LocalTime
+				</button>
 				<form>
-						student login:<br>
-						<input type="text" id="student_form">
+					student login:<br>
+					<input type="text" id="student_form">
 				</form>
 				<button onclick="loadStudent()" name="student" value="student">
-						GET STUDENT
+					GET STUDENT
+				</button><br /><br />
+				<button onclick="ftAPI.checkTokens()" name="cdb" value="cdb">
+					DEV: CHECK TOKENS
+				</button>
+				<button onclick="ftAPI.getNewToken()" name="fdb" value="fdb">
+					DEV: GET NEW TOKENS
 				</button>
                     <br><br>
             <button onclick="zone(this.id)" id="zone-1"> 
@@ -63,6 +75,8 @@
 		</div>
     
 </div>
+	<script src="../src/ftAPI.js"></script>
+	<script src="../src/mongodb.js"></script>
 	<script src="../modules/clock.js"></script>
 	<script src="../modules/weather.js"></script>
 	<script src="../modules/forecast.js"></script>

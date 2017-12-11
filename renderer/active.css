@@ -18,7 +18,7 @@ html, body {
 
 .wrapper {
 	background-color: black;
-	font-family: sans-serif;
+	font-family: "Futura PT", "Trebuchet MS", Arial, sans-serif;
 }
 
 .wrapper > div {
@@ -26,7 +26,7 @@ html, body {
 }
 
 .box {
-	font-family: sans-serif;
+	font-family: "Futura PT", "Trebuchet MS", Arial, sans-serif;
 	color: white;
 	font-weight: bold;
 	text-align: center;	

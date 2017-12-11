@@ -117,3 +117,9 @@ html, body {
 @keyframes blink {
   to { visibility: hidden; }
 }
+
+.map img {
+    
+    width: auto;
+    height: auto;
+}

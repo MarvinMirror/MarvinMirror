@@ -3,3 +3,5 @@
 node_modules/**
 
 config/config.js
+
+*.DS_Store

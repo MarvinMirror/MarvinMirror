@@ -41,22 +41,23 @@ function buildStudent(obj) {
 // Could be combined with above
 var getStudentInfo = function (obj) {
     
-    // removes from "content" div of app any div with id "wrapper"
-    manageDOM.clearContent("content");
-    
-    // create an array with all of the separate divs with
-    // appropriate names here
-    var elements = [
-        'ft_displayname', 'ft_login', 'ft_profile_pic', 'ft_location',
-        'ft_level', 'ft_correction_points'
-    ];
-    
-    // creates HTML
-    manageDOM.array2Div(elements, "content");
+   
+        // removes from "content" div of app any div with id "wrapper"
+        manageDOM.clearContent("content");
+        if (obj != null) {
+            
+        // create an array with all of the separate divs with
+        // appropriate names here
+        var elements = [
+            'ft_displayname', 'ft_login', 'ft_profile_pic', 'ft_location',
+            'ft_level', 'ft_correction_points'
+        ];
+        
+        // creates HTML
+        manageDOM.array2Div(elements, "content");
 
-    console.log(obj);
-
-    buildStudent(obj);
+        buildStudent(obj);
+    }
 }    
 
 // There is no direct-to-student from login via the API so 2 requests are needed. This is the second and 
@@ -64,17 +65,29 @@ var getStudentInfo = function (obj) {
 var getStudentID = function (obj) {
 
     if (obj.length > 0){
-        ftAPI.query42("/v2/users/" + obj[0].id, getStudentInfo)
+        return ftAPI.query42("/v2/users/" + obj[0].id);
+    }
+    else {
+        return (null);
     }
 }
 
-// The first step is to get the user/:id by using the login from this endpoin
+// The first step is to get the user/:id by using the login from this endpoint
 function loadStudent() {
     
     var login = getLocation(document.getElementById('student_form').value)
     
     if (login !== null) {
-        ftAPI.query42("/v2/users/?filter[login]=" + login, getStudentID);    
+        ftAPI.query42("/v2/users/?filter[login]=" + login)
+            .then(getStudentID)
+            .then(getStudentInfo)
+            .catch(e => {
+                console.log("error: " + e + "Getting new token and re-running");
+                ftAPI.getNewToken().then(ftAPI.query42("/v2/users/?filter[login]=" + login))
+                .then(getStudentID)
+                .then(getStudentInfo)
+                .catch(console.error);
+            });
     }
 }
 

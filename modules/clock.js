@@ -108,10 +108,11 @@ function dateLocalTime(timezone, place) {
 
         var dateString = now.format("dddd, MMMM D");
 
-        var contentdiv = document.getElementById("content")
-
-        contentdiv.innerHTML = "<br> Now in " + place + ':<br>'
+        manageDOM.array2Div(['locale', 'dateDiv'], "content");
         
+        var contentdiv = document.getElementById("content_wrapper");
+        contentdiv.innerHTML = "<br> Now in " + place + ':<br>'     
+
         var localTimediv = document.createElement("div");
         var hourDiv = document.createElement("div");
         var colonDiv = document.createElement("div");

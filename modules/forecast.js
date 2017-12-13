@@ -50,7 +50,6 @@ function weatherForecast() {
 
 	// request to the API and filling html
 	getJSON(weatherAPI, function(err, data){
-		console.log(data);
 		if (err) throw err;
 		document.getElementById('fore_location').innerHTML = "<p>" + data.city.name + " 5-Day Forecast</p>";
 		var j = 1;

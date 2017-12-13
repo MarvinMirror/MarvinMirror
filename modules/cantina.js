@@ -81,8 +81,12 @@ function updateMenuDB(day, menu) {
         }; 
         var options = { upsert: true, new: true };
         
-        Menu.findOneAndUpdate(find_query, update, options, function (err, doc) {
-            console.log("Updated menu for " + day + " in db!");
+        let promise = Menu.findOneAndUpdate(find_query, update, options);
+        
+        return promise
+            .then(() => {
+                console.log("Updated menu for " + day + " in db!");
+                return Promise.resolve();
         });
     }
 }
@@ -93,11 +97,24 @@ function updateMenuDay () {
     var update = { 'day': 'Today' };
     var options = { new: true };
 
-    Menu.findOneAndUpdate(find_query, update, options, function (err, doc) {
-        console.log("Updated tomorrow's menu for today");
+    let promise = Menu.findOneAndUpdate(find_query, update, options);
+    
+    return promise
+        .then (() => {
+            console.log("Updated tomorrow's menu for today");
+            return Promise.resolve();
     });
 }
 
+function menuTodayPromise() {
+    let today = Menu.findOne( {'day': 'Today'});
+    return today.exec();
+}
+
+function menuTomorrowPromise() {
+    let tomorrow = Menu.findOne( {'day': 'Tomorrow'});
+    return tomorrow.exec();
+}
 
 function getMenu(str) {
 
@@ -125,40 +142,41 @@ function getMenu(str) {
     // sort meal array by time
     a.sort(compare);
     b.sort(compare);
-    
-    // query mongoDB for cached menu
-    var today = Menu.findOne( {'day': 'Today'});
-    var tomorrow = Menu.findOne( {'day': 'Tomorrow'});
 
     // check if db is current and update appropriately if it is not
-    today.exec(function(err, data) {
-        if (data == null || (a.length > 0 && dateFormat(a[0].begin_at, "MMMM D YYYY") !== data.date)) {
-            tomorrow.exec(function(err, data2){
-                if (data2 == null || moment().format("MMMM D YYYY") !== data2.date) {
-                    updateMenuDB('Today', a);
-                    console.log("Tomorrow != today: " + data2.date);
+    // ****** Might be able to condense this with better understanding of promises
+    menuTodayPromise()
+        .then((menuToday) => {
+            if (menuToday == null || (a.length > 0 && dateFormat(a[0].begin_at, "MMMM D YYYY") !== menuToday.date)) {
+                return menuTomorrowPromise()
+                    .then((menuTomorrow) => {
+                        if (menuTomorrow == null || moment.format("MMMM D YYYY") !== menuToday.date) {
+                            updateMenuDB('Today', a)
+                            .then(() => updateMenuDB('Tomorrow', b));
+                        }
+                        else {
+                            updateMenuDay()
+                            .then(() => updateMenuDB('Tomorrow', b));
+                        }
+                        return Promise.resolve();
+                    })
                 }
-                else {
-                    updateMenuDay();
-                    console.log("Tomorrow == today: " + data2.date);                    
-                }
-                updateMenuDB('Tomorrow', b);                    
-            });
-        }
-        else {
-            tomorrow.exec(function(err, data3){
-                if (data3 == null) {
-                    updateMenuDB('Tomorrow', b);
-                    console.log("Should update tomorrow");                    
-                }
-                else {
-                    console.log("Nothing should update");                    
-                }
-            });
-        }
-    });
+            else {
+                return menuTomorrowPromise()
+                    .then((menuTomorrow) => {
+                        if (menuTomorrow == null) {
+                            return updateMenuDB('Tomorrow', b);
+                        }
+                    })
+            }
 
-    var when = str === "today" ? today : tomorrow;
+        });
+
+
+    // query mongoDB for cached menu
+    let today = Menu.findOne( {'day': 'Today'});
+    let tomorrow = Menu.findOne( {'day': 'Tomorrow'});
+    let when = str === "today" ? today : tomorrow;
     
     // Builds html elements for either today's or tomorrow's menu
     when.exec(function(err, data){
@@ -171,7 +189,7 @@ function getMenu(str) {
             if (data.meal_2 != null) {arr.push(JSON.parse(data.meal_2))}
             
             // create an array of elements to build the DOM
-            var meal_list = ['cantina_greet'];
+            let meal_list = ['cantina_greet'];
             arr.forEach(function() {
                 meal_list.push("spacer" + i);
                 meal_list.push("time" + i);
@@ -190,17 +208,17 @@ function getMenu(str) {
             // for each div, give it a class and add appropriate content whether it is time or meal descroption
             for (i = 1; i < meal_list.length; i++) {
                 if (meal_list[i][0] === "t") {
-                    var date = new moment(Date.parse(arr[Math.floor((i - 1) / 3)].begin_at));
-                    var date_end = new moment(Date.parse(arr[Math.floor((i - 1) / 3)].end_at));
-                    var t = document.getElementById(meal_list[i]);
+                    let date = new moment(Date.parse(arr[Math.floor((i - 1) / 3)].begin_at));
+                    let date_end = new moment(Date.parse(arr[Math.floor((i - 1) / 3)].end_at));
+                    let t = document.getElementById(meal_list[i]);
                     t.setAttribute("class", "cantina_hours");
                     t.innerHTML = "Served from " + date.format("HH:mm") + " until " + date_end.format("HH:mm") + ":";                   
                 }
                 else if (meal_list[i][0] === "m") {
-                    var m = document.getElementById(meal_list[i]);
+                    let m = document.getElementById(meal_list[i]);
                     m.setAttribute("class", "meal");
-                    var item = arr[Math.floor((i - 1) / 3)];
-                    var br = item.menu;
+                    let item = arr[Math.floor((i - 1) / 3)];
+                    let br = item.menu;
 
                     // Replaces 'line feed' and 'carriage return' with and HTML break
                     br = br.replace(/\r\n/g, '<br />').replace(/[\r\n]/g, '<br />');
@@ -208,15 +226,15 @@ function getMenu(str) {
                                             $" + item.price + "</span>";              
                 }
                 else if (meal_list[i][0] === 'c') {
-                    var c = document.getElementById('cafe');
+                    let c = document.getElementById('cafe');
                     c.setAttribute("class", "meal cafe");
                     console.log
-                    var cbr = JSON.parse(data.cafe42).menu;
+                    let cbr = JSON.parse(data.cafe42).menu;
                     cbr = cbr.replace(/\r\n/g, '<br />').replace(/[\r\n]/g, '<br />');
                     c.innerHTML = cbr;
                 }
                 else {
-                    var s = document.getElementById(meal_list[i]);
+                    let s = document.getElementById(meal_list[i]);
                     s.setAttribute("class", "spacing");
                 }
             }

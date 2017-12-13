@@ -51,9 +51,7 @@ function getWeather() {
 	getJSON(weatherAPI, function(err, data){
 		if (err) throw err;
 		else {
-			console.log(data);
 			var weather = data.weather[0];
-			// var desc = weather.description;
 			var icon = weather.icon;
 			w_icon.setAttribute("src", "http://openweathermap.org/img/w/" + icon + ".png");
 			document.getElementById("w_cur_temp").innerHTML = Math.floor(data.main.temp) + "\
@@ -106,9 +104,7 @@ function getWeatherAtLocation() {
 	getJSON(weatherAPI, function(err, data){
 		if (err) throw err;
 		else {
-			console.log(data);
 			var weather = data.weather[0];
-			// var desc = weather.description;
 			var icon = weather.icon;
 			wl_icon.setAttribute("src", "http://openweathermap.org/img/w/" + icon + ".png");
 			document.getElementById("wl_cur_temp").innerHTML = Math.floor(data.main.temp) + "\

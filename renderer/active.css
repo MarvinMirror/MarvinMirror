@@ -63,7 +63,6 @@ html, body {
 .user img {
 	max-width: 50%;
 	max-height: 50%;
-	border-radius: 50%;
 }
 
 .weather {
@@ -81,7 +80,6 @@ html, body {
 .content {
 	grid-column: 1/6; 
 	grid-row: 4/5;
-	/* font-size: 50%; */
 }
 
 .content img {
@@ -159,14 +157,9 @@ html, body {
 .forecast_wrapper {
 	height: 80%;
 	min-width: 400px;
-	/* border: 1px solid blue; */
 	display: grid;
 	grid-template-rows: repeat(6, 1fr);
 	grid-gap: 10px;
-}
-
-.forecast_wrapper > div {
-	/* min-height: 10%; */
 }
 
 .daycast {
@@ -191,10 +184,6 @@ html, body {
 	height: 10vmin;
 }
 
-/* #w_cur_temp, #w_conditions {
-	font-size: 3vmin;
-} */
-
 /* weather by location css */
 .weather_location {
 	width: 600px;
@@ -215,7 +204,5 @@ html, body {
 
 /* maps css */
 .map img {
-    
-    width: auto;
-    height: auto;
+    height: 60vmin;
 }

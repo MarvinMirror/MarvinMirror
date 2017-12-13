@@ -68,6 +68,16 @@ function loadUser(guest) {
         getUser(null);
     }
     else {
-        ftAPI.query42("/v2/me", getUser);    
+        ftAPI.query42("/v2/me")
+            .then(getUser)
+            .catch(e => {
+                console.log("error: " + e);
+                ftAPI.getNewToken()
+                    .then(() => {
+                        console.log('running v2 me again')
+                        ftAPI.query42("/v2/me");})
+                    .then(getUser)
+                    .catch(console.error);
+                });
     }
 }

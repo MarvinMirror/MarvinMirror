@@ -12,14 +12,13 @@ exports.win
 exports.createWindow = () => {
 
   this.win = new BrowserWindow({
-    // webPreferences: {
-    //   experimentalFeatures: true,
-    // },
     width: windowSize.width,
     height: windowSize.height,
+    // x: 0,
+    // y:0,
     // resizable: false,
     frame: false,
-    // blinkFeatures: 'CSSGridLayout',
+    // fullscreen: true,
     backgroundColor: '#000'
   })
 

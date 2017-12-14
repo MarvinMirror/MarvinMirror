@@ -2,12 +2,13 @@ html, body {
 		height: 100%;
 		width: 100%;
 		padding: 10px;
+		overflow: hidden;		
 }
 
 .wrapper {
 	height: 100%;
 	display: grid;
-	grid-template-columns: 1fr 1fr 50% 1fr 1fr;
+	grid-template-columns: 100px 1fr 40% 1fr 100px;
 	grid-template-rows: 1fr 1fr 3fr 50% 3fr;
 	grid-gap: 10px;
 	
@@ -56,7 +57,7 @@ html, body {
 }
 
 .user {
-	grid-column: 1/3;
+	grid-column: 2/3;
 	grid-row: 1/4;
 }
 
@@ -66,7 +67,7 @@ html, body {
 }
 
 .weather {
-	grid-column: 4/6;
+	grid-column: 4/5;
 	grid-row: 1/4;
 	display: grid;
 	align-items: start;
@@ -78,7 +79,7 @@ html, body {
 }
 
 .content {
-	grid-column: 1/6; 
+	grid-column: 2/5; 
 	grid-row: 4/5;
 }
 
@@ -88,7 +89,7 @@ html, body {
 }
 
 .announcements {
-	grid-column: 1/6;
+	grid-column: 2/5;
 	grid-row: 5/ 5;
 	padding: 10px;
 	font-size: 50%;
@@ -175,13 +176,12 @@ html, body {
 /* weather top right css */
 #weather_wrapper {
 	max-height: 80%;
-	width: 200px;
 	grid-template-rows: repeat(4, 1fr);
-	font-size: 3vmin;
+	font-size: 2vmin;
 }
 
 #weather_wrapper img {
-	height: 10vmin;
+	height: 7vmin;
 }
 
 /* weather by location css */

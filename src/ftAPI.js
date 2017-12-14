@@ -34,12 +34,13 @@ function execTokenPromise() {
 }
 
 // returns a promise containing the results of 42 API query
-function ftRequest(data, endPoint) {
+function ftRequest(data, endPoint, queryString) {
     let queryOptions = {
         url: ftOauth.ftUrl + endPoint, 
         auth: {
             'bearer': data.accessToken
-        }
+        },
+        qs: queryString
     }
     return request(queryOptions);
 }
@@ -101,9 +102,9 @@ var ftAPI = {
 
     // this set of promises queries the 42 API at 'endPoint' and returns 
     // the JSON data provided
-    query42: (endPoint) => {
+    query42: (endPoint, queryString) => {
         return execTokenPromise()
-            .then((data) => ftRequest(data, endPoint))
+            .then((data) => ftRequest(data, endPoint, queryString))
             .then((data) => {return Promise.resolve(JSON.parse(data));})
             .catch( err => {
                 console.log('error: ' + err);

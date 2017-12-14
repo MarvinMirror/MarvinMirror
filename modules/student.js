@@ -83,7 +83,8 @@ function loadStudent() {
             .then(getStudentInfo)
             .catch(e => {
                 console.log("error: " + e + "Getting new token and re-running");
-                ftAPI.getNewToken().then(ftAPI.query42("/v2/users/?filter[login]=" + login))
+                ftAPI.getNewToken()
+                .then(() => ftAPI.query42("/v2/users/?filter[login]=" + login))
                 .then(getStudentID)
                 .then(getStudentInfo)
                 .catch(console.error);

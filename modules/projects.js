@@ -6,47 +6,123 @@ var ftOauth = config.ftOauth;
 var mongoose = require('mongoose');
 var Token = require('../src/mongoDB').Token;
 
-var projectsList = function (){
-
-    ftAPI.query42("/v2/projects/?sort=id&page[size]=100", function (obj) {
-        for (var key in obj) {
-            console.log(obj[key].id + ": " + obj[key].name);
-        }
-    });
-    // ftAPI.query42("/v2/projects/27/users/?filter=status", function (data) {
-    //     console.log(data);
-    // });
-}
-
-function prjkt(obj) {
-    // for (var key in obj) {
-    //     console.log(obj[key].id + ": " + obj[key].name);
-    // }
-    console.log(JSON.parse(obj));
-}
-
+var projectID = 1;
 
 var projectFunctions = {
 
-    // whoIs: function(project_name) {
-    //     projectsList().then(console.log);
-    // }
-    whoIs: function() {
-        var query = Token.findOne({'db_id': '42'});
-        
-        query.exec(function(err, data){
-            request({
-                url: ftOauth.ftUrl + "/v2/projects/27/users/",
-                auth: {
-                    'bearer': data.accessToken
-                },
-                qs: {
-                    sort: "id",
-                    // "filter[pool_year]": "2017",
-                    // "filter[first_name]": "Kyle",
-                    campus_id: "1"                  
-                }
-            }).then(prjkt);
-        });
+    // Takes 5+ secs
+    // Lists projects by course
+    getProjectId: () => {
+        let qs = {
+            sort: "id",
+            "page[size]": "100"
+        }
+        ftAPI.query42("/v2/cursus/1/projects", qs)
+        .then(array => {
+            for (var i = 0; i < array.length; i++) {
+                console.log(array[i].name + ":" + array[i].id);
+            }
+        })
+        .catch(console.error);
+    },
+
+    // for any projects with subprojects like piscines
+    getProjectsProjects: () => {
+        let qs = {
+            sort: "id",
+            "page[size]": "100"
+        }
+        ftAPI.query42("/v2/projects/" + projectID + "/projects", qs)
+        .then(console.log)
+        .catch(console.error);
+    },
+    
+    // Takes 5+ secs
+    // List all projects
+    getProjects1: () => {
+        let qs = {
+            sort: "id",
+            "page[size]": "100"
+        }
+        ftAPI.query42("/v2/projects/", qs)
+        .then(array => {
+            for (var i = 0; i < array.length; i++) {
+                console.log(array[i].name + ":" + array[i].id);
+            }
+        })
+        .catch(console.error);
+    },
+   
+    // Takes 10+ secs
+    // List all projects for current user
+    getProjectsMe: () => {
+        let qs = {
+            // sort: "id",
+            "page[size]": "100"
+        }
+        ftAPI.query42("/v2/me/projects/", qs)
+        .then(console.log)
+        .catch(console.error);
+    },
+    
+    // Returns basic info about the project
+    getProjectDetails: () => {
+        let qs = {
+            // sort: "id",
+            // "page[size]": "100"
+        }
+        ftAPI.query42("/v2/projects/" + projectID, qs)
+        .then(console.log)
+        .catch(console.error);
+    },
+    
+    // Not authorized
+    getProjectSessionsByID: () => {
+        let qs = {
+            // sort: "id",
+            // "page[size]": "100"
+        }
+        ftAPI.query42("/v2/project_sessions/1", qs)
+        .then(console.log)
+        .catch(console.error);
+    },
+    
+    // THIS MIGHT BE IT! Campus filter still doesn't work :(
+    getProjectsUsersByID: () => {
+        let qs = {
+            "range[final_mark]": "70,125",
+            sort: "updated_at",
+            "filter[campus]": "7"
+            // "page[size]": "100"
+        }
+        ftAPI.query42("/v2/projects/" + projectID + "/projects_users", qs)
+        .then(console.log)
+        .catch(console.error);
+    },
+
+    // Weird sudo data about projects
+    getProjectsUsers: () => {
+        let qs = {
+            sort: "project_id",
+            // "page[size]": "100"
+        }
+        ftAPI.query42("/v2/projects_users", qs)
+        .then(console.log)
+        .catch(console.error);
+    },
+
+    // Returns coordinates? and project_sessions id
+    getProjectsData: () => {
+        let qs = {
+            sort: "id",
+            // "filter[pool_year]": "2017",
+            // "filter[first_name]": "David",
+            // campus_id: 7,
+            "page[size]": "100"           
+        };
+        ftAPI.query42("/v2/project_data", qs)
+        .then(console.log)
+        .catch(console.error); 
     }
 }
+

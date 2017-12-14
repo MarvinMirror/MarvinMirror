@@ -74,8 +74,9 @@ function loadUser(guest) {
                 console.log("error: " + e);
                 ftAPI.getNewToken()
                     .then(() => {
-                        console.log('running v2 me again')
-                        ftAPI.query42("/v2/me");})
+                        ftAPI.query42("/v2/me");
+                        console.log('running v2 me again');
+                        })
                     .then(getUser)
                     .catch(console.error);
                 });

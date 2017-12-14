@@ -150,7 +150,7 @@ function getMenu(str) {
             if (menuToday == null || (a.length > 0 && dateFormat(a[0].begin_at, "MMMM D YYYY") !== menuToday.date)) {
                 return menuTomorrowPromise()
                     .then((menuTomorrow) => {
-                        if (menuTomorrow == null || moment.format("MMMM D YYYY") !== menuToday.date) {
+                        if (menuTomorrow == null || moment().format("MMMM D YYYY") !== menuTomorrow.date) {
                             updateMenuDB('Today', a)
                             .then(() => updateMenuDB('Tomorrow', b));
                         }

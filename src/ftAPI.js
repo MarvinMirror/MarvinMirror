@@ -107,7 +107,6 @@ var ftAPI = {
             .then((data) => ftRequest(data, endPoint, queryString))
             .then((data) => {return Promise.resolve(JSON.parse(data));})
             .catch( err => {
-                console.log('error: ' + err);
                 throw err;
             });
     }

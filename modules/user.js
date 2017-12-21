@@ -45,6 +45,8 @@ function buildInfo(obj) {
 // Could be comined with above
 var getUser = function (obj) {
 
+    console.log(obj);
+
     // removes from "content" div of app any div with id "wrapper"
     manageDOM.clearContent("user");
     
@@ -74,8 +76,8 @@ function loadUser(guest) {
                 console.log("error: " + e);
                 ftAPI.getNewToken()
                     .then(() => {
-                        ftAPI.query42("/v2/me");
                         console.log('running v2 me again');
+                        return Promise.resolve(ftAPI.query42("/v2/me"));
                         })
                     .then(getUser)
                     .catch(console.error);

@@ -1,11 +1,16 @@
 
 <html>
 <head>
+
 	<link rel="stylesheet" type="text/css" href="active.css">
+	<link rel='stylesheet' href='../css/fullcalendar.css' />
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
 </head>
 <body onload="dateTime(),getWeather(),loadUser(null),incatvityTime(!null),connectDB()">
-	
+
 <div class="wrapper">
 		<div class="box clock" id="time"></div>
 		<div class="box date" id="date"></div>
@@ -18,6 +23,7 @@
 		</div>
 		<div class="box content" id="content">
         </div>
+
 		<div class="box announcements">
 			<form>
 				Location:<br>
@@ -36,7 +42,14 @@
 			</button>
 			<button onclick="getMenu('tomorrow')" name="menu" value="menu">
 				CANTINA TOMORROW
-			</button><br /><br />
+			</button>
+
+			<!--calendar button-->
+			<button onclick="Calendar()" name="calendar" value="calendar">
+				calendar
+			</button>
+
+			<br /><br />
 			<button onclick="manageDOM.clearContent('content')" name="coff" value="coff">
 				CONTENT OFF
 			</button>
@@ -56,16 +69,16 @@
 			<button onclick="loadCorrections()" name="student" value="student">
 				GET CORRECTIONS
 			</button><br/><br/>
-            <button onclick="zone(this.id)" id="zone-1"> 
+            <button onclick="zone(this.id)" id="zone-1">
                     ZONE1
             </button>
-            <button onclick="zone(this.id)" id="zone-2"> 
+            <button onclick="zone(this.id)" id="zone-2">
                     ZONE2
             </button>
-            <button onclick="zone(this.id)" id="zone-3"> 
+            <button onclick="zone(this.id)" id="zone-3">
                     ZONE3
             </button>
-            <button onclick="zone(this.id)" id="zone-4"> 
+            <button onclick="zone(this.id)" id="zone-4">
                     ZONE4
             </button>
 		</div>
@@ -80,7 +93,7 @@
 						DEV: PROJECTS OBJ
 					</button>
 		</div>
-			
+
 </div>
 	<script src="../src/ftAPI.js"></script>
 	<script src="../src/mongoDB.js"></script>
@@ -93,6 +106,8 @@
 	<script src="../modules/corrections.js"></script>
 	<script src="../modules/cantina.js"></script>
 	<script src="../modules/map.js"></script>
-    <script src="../src/inactive.js"></script>
+  <script src="../src/inactive.js"></script>
+	<script src="../modules/calendar.js"></script>
+
 </body>
 </html>

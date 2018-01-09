@@ -9,7 +9,6 @@ var cantinaAPI = require('../config/config').cantinaAPI;
 
 // compare function for the array.sort method for organizing meals
 function compare(f,g) {
-    console.log("HERE");
     if (f.place_id > g.place_id)
         return 1;
     else if (f.place_id < g.place_id)
@@ -56,8 +55,9 @@ function updateMenuDB(day, menu) {
     var cafe_42 = "";
     var arr = [];
     var i = 0;
-
+    
     menu.forEach( function (){
+        
         if (menu[i].place_id == 1){
            arr.push(menu[i]);
         }
@@ -79,8 +79,21 @@ function updateMenuDB(day, menu) {
             'meal_2': arr.length > 2 ? JSON.stringify(arr[2]) : null,
             'cafe42': cafe_42 === "" ? null : JSON.stringify(cafe_42)
         }; 
+    }
+    else {
+        var update = {
+            'day': day,
+            'date': day === "Today" ? moment().format("MMMM D YYYY") : moment().add(1, 'days').format("MMMM D YYYY"),
+            'meal_0': null,
+            'meal_1': null,
+            'meal_2': null,
+            'cafe42': null
+        };
+    }
+
         var options = { upsert: true, new: true };
-        
+        console.log("HERE");
+
         let promise = Menu.findOneAndUpdate(find_query, update, options);
         
         return promise
@@ -88,7 +101,6 @@ function updateMenuDB(day, menu) {
                 console.log("Updated menu for " + day + " in db!");
                 return Promise.resolve();
         });
-    }
 }
 
 // Updates menu doc for 'Today' with mongoDB data for 'Tomorrow'
@@ -126,7 +138,7 @@ function getMenu(str) {
     // get JSON string from 42 api
     getJSON(cantinaAPI, function(err, data) {
         if (err) throw err;
-        console.log("2");
+        console.log(data);
 
         // adds only today's meal objects to array
         for (var key in data) {

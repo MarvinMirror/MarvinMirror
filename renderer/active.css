@@ -167,6 +167,8 @@ html, body {
 	display: grid;
 	border: 1px solid teal;
 	grid-template-columns: repeat(3, 1fr);
+	/* align-items: center;
+	justify-content: center; */
 }
 
 #fore_location, .daycast {

@@ -78,7 +78,7 @@ function weatherForecast() {
 				
 				var w_icon = document.createElement("img");
 				var icon = weather.weather[0].icon;
-				w_icon.setAttribute("src", "http://openweathermap.org/img/w/" + icon + ".png")
+				w_icon.setAttribute("src", "../img/weather/" + icon + ".png")
 				
 				img.appendChild(w_icon);
 				wrap.appendChild(day);

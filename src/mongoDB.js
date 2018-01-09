@@ -26,12 +26,18 @@ var cantinaSchema = new Schema ({
   meal_1: String,
   meal_2: String,
   cafe42: String
-})
+});
+
+var projectIDSchema = new Schema ({
+  projectID: Number,
+  projectName: String
+});
 
 var ourModels = {
 
   Token: mongoose.model('Tokens', tokenSchema),
-  Menu: mongoose.model('Menu', cantinaSchema)
+  Menu: mongoose.model('Menu', cantinaSchema),
+  ProjectID: mongoose.model('ProjectID', projectIDSchema)
 
 }
 

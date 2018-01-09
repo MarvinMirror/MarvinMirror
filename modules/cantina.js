@@ -5,17 +5,16 @@ var mongoose = require('mongoose');
 var Menu = require('../src/mongoDB').Menu;
 var cantinaAPI = require('../config/config').cantinaAPI;
 
+'use strict';
+
 // compare function for the array.sort method for organizing meals
-var compare = function(a,b) {
-    console.log("HERE");
-    if (a.place_id > b.place_id)
+function compare(f,g) {
+    if (f.place_id > g.place_id)
         return 1;
-    else if (a.place_id < b.place_id)
+    else if (f.place_id < g.place_id)
         return -1;
-    var A = new Date(a.begin_at);
-    console.log("A = " + A);
-    var B = new Date(b.begin_at);
-    console.log("B = "+ B);
+    var A = new Date(f.begin_at);
+    var B = new Date(g.begin_at);
     if (A < B)
       return -1;
     if (A > B)
@@ -56,8 +55,9 @@ function updateMenuDB(day, menu) {
     var cafe_42 = "";
     var arr = [];
     var i = 0;
-
+    
     menu.forEach( function (){
+        
         if (menu[i].place_id == 1){
            arr.push(menu[i]);
         }
@@ -79,8 +79,21 @@ function updateMenuDB(day, menu) {
             'meal_2': arr.length > 2 ? JSON.stringify(arr[2]) : null,
             'cafe42': cafe_42 === "" ? null : JSON.stringify(cafe_42)
         }; 
+    }
+    else {
+        var update = {
+            'day': day,
+            'date': day === "Today" ? moment().format("MMMM D YYYY") : moment().add(1, 'days').format("MMMM D YYYY"),
+            'meal_0': null,
+            'meal_1': null,
+            'meal_2': null,
+            'cafe42': null
+        };
+    }
+
         var options = { upsert: true, new: true };
-        
+        console.log("HERE");
+
         let promise = Menu.findOneAndUpdate(find_query, update, options);
         
         return promise
@@ -88,7 +101,6 @@ function updateMenuDB(day, menu) {
                 console.log("Updated menu for " + day + " in db!");
                 return Promise.resolve();
         });
-    }
 }
 
 // Updates menu doc for 'Today' with mongoDB data for 'Tomorrow'
@@ -119,13 +131,14 @@ function menuTomorrowPromise() {
 function getMenu(str) {
 
     manageDOM.clearContent("content");
-  
-    var a = [];
-    var b = [];
+
+    let a = [];
+    let b = [];
 
     // get JSON string from 42 api
     getJSON(cantinaAPI, function(err, data) {
         if (err) throw err;
+        console.log(data);
 
         // adds only today's meal objects to array
         for (var key in data) {
@@ -137,28 +150,31 @@ function getMenu(str) {
                 b.push(data[key]);
             }
         }
+        a.sort(compare);
+        b.sort(compare);
     });
-    
-    // sort meal array by time
-    a.sort(compare);
-    b.sort(compare);
 
     // check if db is current and update appropriately if it is not
     // ****** Might be able to condense this with better understanding of promises
     menuTodayPromise()
         .then((menuToday) => {
-            if (menuToday == null || (a.length > 0 && dateFormat(a[0].begin_at, "MMMM D YYYY") !== menuToday.date)) {
+            if (menuToday == null || moment().format("MMMM D YYYY") !== menuToday.date) {
                 return menuTomorrowPromise()
                     .then((menuTomorrow) => {
                         if (menuTomorrow == null || moment().format("MMMM D YYYY") !== menuTomorrow.date) {
-                            updateMenuDB('Today', a)
-                            .then(() => updateMenuDB('Tomorrow', b));
+                            return updateMenuDB('Today', a)
+                            .then(() => {
+                                console.log("updating today's with a");
+                                return Promise.resolve(updateMenuDB('Tomorrow', b))
+                            });
                         }
                         else {
-                            updateMenuDay()
-                            .then(() => updateMenuDB('Tomorrow', b));
+                            return updateMenuDay()
+                            .then(() => {
+                                console.log("updated today's with tomorrow");
+                                return Promise.resolve(updateMenuDB('Tomorrow', b))
+                            });
                         }
-                        return Promise.resolve();
                     })
                 }
             else {
@@ -169,9 +185,7 @@ function getMenu(str) {
                         }
                     })
             }
-
         });
-
 
     // query mongoDB for cached menu
     let today = Menu.findOne( {'day': 'Today'});

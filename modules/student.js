@@ -41,6 +41,7 @@ function buildStudent(obj) {
 // Could be combined with above
 var getStudentInfo = function (obj) {
     
+        console.log(obj);
    
         // removes from "content" div of app any div with id "wrapper"
         manageDOM.clearContent("content");
@@ -84,10 +85,12 @@ function loadStudent() {
             .catch(e => {
                 console.log("error: " + e + "Getting new token and re-running");
                 ftAPI.getNewToken()
-                .then(() => ftAPI.query42("/v2/users/?filter[login]=" + login))
-                .then(getStudentID)
-                .then(getStudentInfo)
-                .catch(console.error);
+                    .then(() => {
+                        return Promise.resolve(ftAPI.query42("/v2/users/?filter[login]=" + login));
+                        })
+                    .then(getStudentID)
+                    .then(getStudentInfo)
+                    .catch(console.error);
             });
     }
 }

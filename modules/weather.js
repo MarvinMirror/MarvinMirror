@@ -53,7 +53,7 @@ function getWeather() {
 		else {
 			var weather = data.weather[0];
 			var icon = weather.icon;
-			w_icon.setAttribute("src", "http://openweathermap.org/img/w/" + icon + ".png");
+			w_icon.setAttribute("src", "../img/weather/" + icon + ".png");
 			document.getElementById("w_cur_temp").innerHTML = Math.floor(data.main.temp) + "\
 											&deg" + deg;
 			document.getElementById("w_conditions").innerHTML = weather.main;
@@ -106,7 +106,7 @@ function getWeatherAtLocation() {
 		else {
 			var weather = data.weather[0];
 			var icon = weather.icon;
-			wl_icon.setAttribute("src", "http://openweathermap.org/img/w/" + icon + ".png");
+			wl_icon.setAttribute("src", "../img/weather/" + icon + ".png");
 			document.getElementById("wl_cur_temp").innerHTML = Math.floor(data.main.temp) + "\
 																&deg" + deg;
 			document.getElementById("wl_conditions").innerHTML = weather.main;

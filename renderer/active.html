@@ -6,7 +6,17 @@
 	<link rel='stylesheet' href='../css/fullcalendar.css' />
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+<script>
+		require('electron').ipcRenderer.on('todo', (event, message) => {
+			var result = JSON.parse(message)
+			console.log(result.intent)
+			if (result.intent === 'get_weather')
+			{
+				getWeatherAtLocation(result.location, result.units)
+			}
+			
+		})
+	</script>
 
 </head>
 <body onload="dateTime(),getWeather(),loadUser(null),incatvityTime(!null),connectDB()">

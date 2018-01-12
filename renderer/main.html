@@ -3,6 +3,10 @@
 <head>
 <link rel="stylesheet" type="text/css" href="main.css">
 <script src="../src/jquery.min.js"></script>
+<script>
+	require('electron').ipcRenderer.on('active', (event, message) => {
+		window.location.href = "active.html"})
+</script>
 </head>
 
 <body onload="dateTime(), fb_post(), slack_post()">

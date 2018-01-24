@@ -18,8 +18,23 @@
 			})
 		</script>
 
+<<<<<<< HEAD
 	</head>
 	<body onload="dateTime(),getWeather(),loadUser(null),incatvityTime(!null),connectDB()" id="body">
+=======
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+		require('electron').ipcRenderer.on('todo', (event, message) => {
+			var result = JSON.parse(message)
+			console.log(result.intent)
+			if (result.intent === 'get_weather')
+			{
+				getWeatherAtLocation(result.location, result.units)
+			}
+
+		})
+	</script>
+>>>>>>> master
 
 		<div class="wrapper">
 			<div class="box clock" id="time"></div>
@@ -72,10 +87,12 @@
 			
 			<br /><br />
 			
-			<button onclick="Calendar()" name="calendar" value="calendar">
+			<button onclick="Calendar('month')" name="calendar" value="calendar">
 				GET CALENDAR
 			</button>
-
+			<button onclick="wordOfADay(1)" name="word" value="word">
+				get word
+			</button>
 			<br /><br />
 			
 			<button onclick="loadUser(1)" name="user" value="user">

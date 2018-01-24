@@ -24,7 +24,7 @@
   "homepage": "https://github.com/electron/electron-quick-start#readme",
   "devDependencies": {
     "devtron": "*",
-    "electron-reload": "*",
+    "electron-reload": "^1.2.2",
     "moment-timezone": "^0.5.14"
   },
   "dependencies": {
@@ -32,9 +32,11 @@
     "electron": "^1.8.1",
     "express": "^4.16.2",
     "fs-extra": "^4.0.3",
+    "fullcalendar": "^3.8.0",
     "jquery": "^3.2.1",
     "moment": "^2.20.1",
     "mongoose": "^4.13.8",
+    "node-record-lpcm16": "^0.3.0",
     "node-wit": "^4.3.0",
     "promise": "^8.0.1",
     "request": "^2.83.0",

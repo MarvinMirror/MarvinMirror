@@ -100,6 +100,8 @@ html, body {
   animation:         blink 2s steps(3, start) infinite;
 }
 
+
+
 @-webkit-keyframes blink {
   to { visibility: hidden; }
 }

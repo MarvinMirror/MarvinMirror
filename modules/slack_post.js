@@ -1,5 +1,3 @@
-//Needs Fixing: if the message has '<>' (any link, ex. <https://code.org/learn> ), everything between '<' and '>' is not printed
-
 var getJSON = require('../src/getJSON');
 var config = require('../config/config');
 
@@ -20,7 +18,7 @@ function slack_post() {
         dots = "...";
       //going through all messages in the channel and stop if it's not 'channel_join'
       for (var i = 0; i < 100; i++) {
-        if(data.messages[i].subtype != 'channel_join')
+        if (data.messages[i].subtype != 'channel_join')
         break ;
       }
       var slack_icon = document.createElement("img");
@@ -29,7 +27,27 @@ function slack_post() {
 
       var slack_text = document.createElement("div");
       slack_text.setAttribute("class", "post_text");
-      slack_text.innerHTML = data.messages[i].text.substring(0, 300) + dots;
+
+      //replaceing the code of the user by the username
+      var text = data.messages[i].text.replace("<@" + data.messages[i].user + ">", data.messages[i].username);
+
+      // if they post a picture, insert "/img here/" instead of empty space
+      if(data.messages[i].subtype == 'file_share')
+        text = text.replace("uploaded a file:", "uploaded a file: /img here/.");
+        // if the title is not empty print it, because most likely the 'message' property is empty
+        if ("file" in data.messages[i] &&  "title" in data.messages[i].file)
+          text = text + data.messages[i].file.title;
+
+      // if the post is "simple pole"
+
+      if ("attachments" in data.messages[i] && "fallback" in data.messages[i].attachments[0])
+        text = text + data.messages[i].attachments[0].fallback;
+        if ("title" in data.messages[i].attachments[0])
+          text = text + ' \"' + data.messages[i].attachments[0].title + '\"';
+
+
+      // if message is longer then 500 characters then cut it and add "..."
+      slack_text.innerHTML = text.substring(0, 500) + dots;
       slackdiv.appendChild(slack_text);
       }
   });

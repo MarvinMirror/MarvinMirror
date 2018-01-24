@@ -14,7 +14,7 @@
 			{
 				getWeatherAtLocation(result.location, result.units)
 			}
-			
+
 		})
 	</script>
 
@@ -54,11 +54,13 @@
 				CANTINA TOMORROW
 			</button>
 
-			<!--calendar button-->
-			<button onclick="Calendar()" name="calendar" value="calendar">
+			<!-- for more parameter options for Calendar() go to https://fullcalendar.io/docs/views/Available_Views/-->
+			<button onclick="Calendar('month')" name="calendar" value="calendar">
 				calendar
 			</button>
-
+			<button onclick="wordOfADay(1)" name="word" value="word">
+				get word
+			</button>
 			<br /><br />
 			<button onclick="manageDOM.clearContent('content')" name="coff" value="coff">
 				CONTENT OFF
@@ -118,6 +120,7 @@
 	<script src="../modules/map.js"></script>
   <script src="../src/inactive.js"></script>
 	<script src="../modules/calendar.js"></script>
+	<script src="../modules/word_of_a_day.js"></script>
 
 </body>
 </html>

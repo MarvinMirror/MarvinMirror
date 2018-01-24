@@ -15,7 +15,7 @@ function wordOfADay(flag) {
 // creates HTML
 
   var elements = [
-    'word', 'word_definition', 'word_example'
+    'WOD', 'word', 'word_definition', 'word_example'
   ];
 
 manageDOM.array2Div(elements, "content");

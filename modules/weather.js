@@ -26,7 +26,7 @@ function getWeather() {
 
 	// array of elements for builing new html
 	var elements = [
-		'w_location', 'w_img_wrap', 'w_cur_temp', 'w_conditions'
+		'weather-corner', 'w_location', 'w_img_wrap', 'w_cur_temp', 'w_conditions'
 	];
 	
 	// creating new html
@@ -79,7 +79,7 @@ function getWeatherAtLocation() {
 
 	// array of elements for builing new html
 	var elements = [
-		'wl_location', 'wl_img_wrap', 'wl_cur_temp', 'wl_conditions'
+		'weather-content', 'wl_location', 'wl_img_wrap', 'wl_cur_temp', 'wl_conditions'
 	];
 	
 	// creating new html

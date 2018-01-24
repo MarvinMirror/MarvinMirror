@@ -53,7 +53,7 @@ var getUser = function (obj) {
     // create an array with all of the separate divs with
     // appropriate names here
     var elements = [
-        'me_displayname', 'me_login', 'me_profile_pic', 'me_location',
+        'user', 'me_displayname', 'me_login', 'me_profile_pic', 'me_location',
         'me_level', 'me_correction_points'
     ];
     

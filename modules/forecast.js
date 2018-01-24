@@ -34,7 +34,7 @@ function weatherForecast() {
 
 	// array of elements for builing new html
 	var elements = [
-		'fore_location', 'day00', 'day01', 'day02',
+		'forecast', 'fore_location', 'day00', 'day01', 'day02',
 		'day03', 'day04'
 	];
 	
@@ -52,10 +52,10 @@ function weatherForecast() {
 	getJSON(weatherAPI, function(err, data){
 		if (err) throw err;
 		document.getElementById('fore_location').innerHTML = "<p>" + data.city.name + " 5-Day Forecast</p>";
-		var j = 1;
+		var j = 2;
 
 		// Loop through all 40 objects in the list and get attributes for 5 days at 1:00 pm PST
-		for (i = 0; i < data.list.length; i++){
+		for (i = 1; i < data.list.length; i++){
 			var weather = data.list[i];
 
 			// This only gets an afternoon temperature for US/Pacific time
@@ -63,7 +63,7 @@ function weatherForecast() {
 				var wrap = document.createDocumentFragment();
 
 				var d = document.getElementById(elements[j]);
-				d.setAttribute("class", "daycast");
+				d.setAttribute("class", "daycast daycast--" + (j - 2));
 
 				var day = document.createElement("div");
 				day.setAttribute("class", "fore_day");

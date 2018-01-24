@@ -7,16 +7,9 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script>
-			require('electron').ipcRenderer.on('todo', (event, message) => {
-				var result = JSON.parse(message)
-				console.log(result.intent)
-				if (result.intent === 'get_weather')
-				{
-					getWeatherAtLocation(result.location, result.units)
-				}
-				
-			})
-		</script>
+	var command = require('../src/controller.js')
+	require('electron').ipcRenderer.on('todo', command)
+</script>
 
 	</head>
 	<body onload="dateTime(),getWeather(),loadUser(null),incatvityTime(!null),connectDB()" id="body">
@@ -104,23 +97,12 @@
 			<button onclick="manageDOM.studentPopup('loadCorrections')" name="student" value="student">
 				GET CORRECTIONS
 			</button>
+			<button onclick="manageDOM.studentPopup('studentOnMap')" name="student" value="student">
+				GET STUDENT ON THE MAP
+			</button>
 
 			<br/><br/>
 
-			<button onclick="zone(this.id)" id="zone-1">
-				ZONE1
-			</button>
-			<button onclick="zone(this.id)" id="zone-2">
-				ZONE2
-			</button>
-			<button onclick="zone(this.id)" id="zone-3">
-				ZONE3
-			</button>
-			<button onclick="zone(this.id)" id="zone-4">
-				ZONE4
-			</button>
-			
-			<br /><br />
 
 			<button onclick="manageDOM.clearContent('content')" name="coff" value="coff">
 				CONTENT OFF
@@ -168,6 +150,7 @@
 		<script src="../modules/student.js"></script>
 		<script src="../modules/user.js"></script>
 		<script src="../modules/weather.js"></script>
+		<script src="../modules/maps.js"></script>
 		<script src="../modules/word_of_a_day.js"></script>
 
 	</body>

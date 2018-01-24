@@ -127,6 +127,10 @@ html, body {
   to { visibility: hidden; }
 }
 
+@keyframes blinkChair {
+	to { background-color: black; }
+}
+
 /* Cantina elements css */
 .cantina .spacing {
 	height: 1.5rem;
@@ -247,10 +251,6 @@ html, body {
 	font-style: italic;
 }
 
-/* maps css */
-.map img {
-    height: 60vmin;
-}
 
 /* authors */
 .author-wrapper {
@@ -658,4 +658,71 @@ body .actions {
 		opacity: 1;
 		transform: scale(1);      
 	}
+}
+:root {
+	--size: 1fr;
+	--width: 30;
+	--height: 49;
+  }
+
+.zone {
+    display: grid;
+    grid-template-columns: repeat(var(--width), var(--size));
+    grid-template-rows: repeat(var(--height), var(--size));
+	background-color: black;
+	position: static;
+}
+
+.zone img {
+	display: block;
+    margin-left: auto;
+	margin-right: auto;
+	max-width: 90%;
+	max-height: 90%;
+}
+
+
+.row_container_zone1 {
+    display: grid;
+    grid-template-rows: repeat(3, var(--size));
+}
+
+.row_container_zone2 {
+    display: grid;
+    grid-template-columns: repeat(14, var(--size));
+    grid-template-rows: repeat(14, var(--size));
+}
+
+.row_container_zone2_0 {
+    display: grid;
+    grid-template-columns: repeat(4, var(--size));
+    grid-template-rows: repeat(3, var(--size));
+}
+
+.row_container_zone3 {
+	display: grid;
+    grid-template-columns: repeat(6, var(--size));
+    grid-template-rows: repeat(7, var(--size));
+}
+
+.seat-occupied {
+	background-color: red;
+	animation:         blinkChair 1s steps(3, start) infinite;	
+}
+
+.seat-occupied img {
+	animation:         blink 1s steps(3, start) infinite;	
+}
+
+.seat {
+    background-color: black;
+}
+
+.table {
+    background-color: grey;
+}
+
+.user_position img{
+	max-width: 300%;
+	max-height: 300%;
 }

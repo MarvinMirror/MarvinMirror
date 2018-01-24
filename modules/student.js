@@ -56,7 +56,7 @@ var getStudentInfo = function (obj) {
         
         // creates HTML
         manageDOM.array2Div(elements, "content");
-
+        console.log(document.getElementById('ft_level'))
         buildStudent(obj);
     }
 }    

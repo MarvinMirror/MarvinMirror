@@ -1,40 +1,40 @@
+<html lang="en">
+	<head>
 
-<html>
-<head>
+		<link rel="stylesheet" type="text/css" href="active.css">
+		<link rel='stylesheet' href='../css/fullcalendar.css' />
+		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="active.css">
-	<link rel='stylesheet' href='../css/fullcalendar.css' />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+			require('electron').ipcRenderer.on('todo', (event, message) => {
+				var result = JSON.parse(message)
+				console.log(result.intent)
+				if (result.intent === 'get_weather')
+				{
+					getWeatherAtLocation(result.location, result.units)
+				}
+				
+			})
+		</script>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-		require('electron').ipcRenderer.on('todo', (event, message) => {
-			var result = JSON.parse(message)
-			console.log(result.intent)
-			if (result.intent === 'get_weather')
-			{
-				getWeatherAtLocation(result.location, result.units)
-			}
-			
-		})
-	</script>
+	</head>
+	<body onload="dateTime(),getWeather(),loadUser(null),incatvityTime(!null),connectDB()" id="body">
 
-</head>
-<body onload="dateTime(),getWeather(),loadUser(null),incatvityTime(!null),connectDB()">
+		<div class="wrapper">
+			<div class="box clock" id="time"></div>
+			<div class="box date" id="date"></div>
+			<div class="box user" id="user"></div>
+			<div class="box weather" id="weather"></div>
+			<div class="box dialog" id="dialog">
+			</div>
+			<div class="box content" id="content">
+			</div>
 
-<div class="wrapper">
-		<div class="box clock" id="time"></div>
-		<div class="box date" id="date"></div>
-		<div class="box user" id="user"></div>
-		<div class="box weather" id="weather"></div>
-		<div class="box dialog">
-			<br />Marvin
-			<br />You
-			<br />Marvin
+			<div class="box announcements">
+			</div>
 		</div>
-		<div class="box content" id="content">
-        </div>
-
-		<div class="box announcements">
+		<div class="actions">
 			<form>
 				Location:<br>
 				<input type="text" id="location_form"><br>
@@ -45,52 +45,72 @@
 				GET WEATHER
 			</button>
 			<button onclick="weatherForecast()" name="forecast" value="forecast">
-				Forecast
-			</button> <br /><br />
+				GET FORECAST
+			</button>
+			<button onclick="localDateTime()" name="localTime" value="localTime">
+				LOCAL TIME
+			</button>
+			
+			<br /><br />
+			
 			<button onclick="getMenu('today')" name="menu" value="menu">
 				CANTINA TODAY
 			</button>
 			<button onclick="getMenu('tomorrow')" name="menu" value="menu">
 				CANTINA TOMORROW
 			</button>
-
-			<!--calendar button-->
+			
+			<br /><br />
+			
+			
+			<button onclick="marvinHelp()" name="help" value="help">
+				HELP WITH COMMANDS
+			</button>
+			<button onclick="authors()" name="author" value="author">
+				SHOW AUTHORS
+			</button>
+			
+			<br /><br />
+			
 			<button onclick="Calendar()" name="calendar" value="calendar">
-				calendar
+				GET CALENDAR
 			</button>
 
 			<br /><br />
-			<button onclick="manageDOM.clearContent('content')" name="coff" value="coff">
-				CONTENT OFF
-			</button>
+			
 			<button onclick="loadUser(1)" name="user" value="user">
 				GET ME
 			</button>
-			<button onclick="localDateTime()" name="localTime" value="localTime">
-				LocalTime
-			</button>
-			<form>
-				student login:<br>
-				<input type="text" id="student_form">
-			</form>
-			<button onclick="loadStudent()" name="student" value="student">
+			<button onclick="manageDOM.studentPopup('loadStudent')" name="student" value="student">
 				GET STUDENT
 			</button>
-			<button onclick="loadCorrections()" name="student" value="student">
+			<button onclick="manageDOM.studentPopup('loadStudentProjects')" name="student" value="student">
+				GET BEST PROJECTS
+			</button>
+			<button onclick="manageDOM.studentPopup('loadCorrections')" name="student" value="student">
 				GET CORRECTIONS
-			</button><br/><br/>
-            <button onclick="zone(this.id)" id="zone-1">
-                    ZONE1
-            </button>
-            <button onclick="zone(this.id)" id="zone-2">
-                    ZONE2
-            </button>
-            <button onclick="zone(this.id)" id="zone-3">
-                    ZONE3
-            </button>
-            <button onclick="zone(this.id)" id="zone-4">
-                    ZONE4
-            </button>
+			</button>
+
+			<br/><br/>
+
+			<button onclick="zone(this.id)" id="zone-1">
+				ZONE1
+			</button>
+			<button onclick="zone(this.id)" id="zone-2">
+				ZONE2
+			</button>
+			<button onclick="zone(this.id)" id="zone-3">
+				ZONE3
+			</button>
+			<button onclick="zone(this.id)" id="zone-4">
+				ZONE4
+			</button>
+			
+			<br /><br />
+
+			<button onclick="manageDOM.clearContent('content')" name="coff" value="coff">
+				CONTENT OFF
+			</button>
 		</div>
 		<div class="box developer">
 				<button onclick="ftAPI.checkTokens()" name="cdb" value="cdb">
@@ -99,25 +119,41 @@
 					<button onclick="ftAPI.getNewToken()" name="fdb" value="fdb">
 						DEV: GET NEW TOKENS
 					</button>
-					<button onclick="" name="whois" value="whois">
+					<button onclick="checkProjectDB()" name="whois" value="whois">
 						DEV: PROJECTS OBJ
 					</button>
+					<button onclick="checkTest(checkDBProjects)" name="cron" value="cron">
+						DEV: DB CRON TEST
+					</button>
+					<button onclick="autoFocus()" name="yo" value="yo">
+						FOCUS STUDENT
+					</button>
+					<button onclick="menuUpdateMongo()" name="devCantina" value="devCantina">
+						DEV: UPDATE DB CANTINA
+					</button>
+					<button onclick="showMenu()" name="devCantina" value="devCantina">
+						DEV: CANTINA MONGO
+					</button>
 		</div>
+		
+		<script src="../src/card_reader.js"></script>
+		<script src="../src/ftAPI.js"></script>
+		<script src="../src/inactive.js"></script>
+		<script src="../src/manageDOM.js"></script>
+		<script src="../src/mongoDB.js"></script>
+		<script src="../modules/author.js"></script>
+		<script src="../modules/calendar.js"></script>
+		<script src="../modules/cantina.js"></script>
+		<script src="../modules/clock.js"></script>
+		<script src="../modules/corrections.js"></script>
+		<script src="../modules/forecast.js"></script>
+		<script src="../modules/help.js"></script>
+		<script src="../modules/map.js"></script>
+		<script src="../modules/popup.js"></script>
+		<script src="../modules/projects.js"></script>
+		<script src="../modules/student.js"></script>
+		<script src="../modules/user.js"></script>
+		<script src="../modules/weather.js"></script>
 
-</div>
-	<script src="../src/ftAPI.js"></script>
-	<script src="../src/mongoDB.js"></script>
-	<script src="../modules/clock.js"></script>
-	<script src="../modules/weather.js"></script>
-	<script src="../modules/forecast.js"></script>
-	<script src="../modules/student.js"></script>
-	<script src="../modules/user.js"></script>
-	<script src="../modules/projects.js"></script>
-	<script src="../modules/corrections.js"></script>
-	<script src="../modules/cantina.js"></script>
-	<script src="../modules/map.js"></script>
-  <script src="../src/inactive.js"></script>
-	<script src="../modules/calendar.js"></script>
-
-</body>
+	</body>
 </html>

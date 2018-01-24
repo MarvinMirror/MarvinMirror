@@ -57,7 +57,7 @@ function dateFormat(dateTime, format) {
 }
 
 // Handles filling html with student information passed as JSON object
-function buildStudent(obj) {
+function buildStudentCorrections(obj) {
    
        document.getElementById('title').innerHTML = "Last correction:";
        document.getElementById('begin_at').innerHTML = dateFormat(obj.begin_at, "MMMM D, YYYY @ HH:mm");
@@ -74,19 +74,20 @@ var showCorrections = function (obj) {
 
     // removes from "content" div of app any div with id "wrapper"
     manageDOM.clearContent("content");
+    
     if (obj != null) {
             
         // create an array with all of the separate divs with
         // appropriate names here
         var elements = [
-            'title', 'begin_at', 'corrector', 'corrected', 'project',
+            'corrections', 'title', 'begin_at', 'corrector', 'corrected', 'project',
             'final_mark', 'comments'
         ];
         
         // creates HTML
         manageDOM.array2Div(elements, "content");
 
-        buildStudent(obj[0]);
+        buildStudentCorrections(obj[0]);
     }
 }
 
@@ -110,23 +111,18 @@ var getScaleTeams = function (obj) {
     }
 }
 
-function loadCorrections() {
+var loadCorrections = () => {
     
-    var login = getLocation(document.getElementById('student_form').value)
+    var login = getLocation(document.getElementById('popup__form').value)
     
     if (login !== null) {
         ftAPI.query42("/v2/users/?filter[login]=" + login)
             .then(getScaleTeams)
             .then(showCorrections)
-            .catch(e => {
-                console.log("error: " + e + "Getting new token and re-running");
-                // ftAPI.getNewToken()
-                //     .then(() => {
-                //         return Promise.resolve(ftAPI.query42("/v2/users/?filter[login]=" + login));
-                //         })
-                //     .then(getScaleTeams)
-                //     .then(showCorrections)
-                //     .catch(console.error);
-            });
+            .catch(console.error);
     }
+
+    document.body.removeChild(document.getElementById('popup'));
 }
+
+module.exports = loadCorrections;

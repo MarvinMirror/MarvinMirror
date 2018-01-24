@@ -5,12 +5,69 @@ var fs = require('fs-extra');
 var config = require('../config/config');
 var ftOauth = config.ftOauth;
 var mongoose = require('mongoose');
-var Token = require('../src/mongoDB').Token;
+var Token = require('../src/mongoDB').Models.Token;
 mongoose.Promise = require('bluebird');
 
 "use strict";
 
-// This function is used in both getToken() and getNewToken to update the database entry
+// RETURNS THE RESULTS OF DB REQUEST CONTAINING 42 API TOKENS
+function execTokenPromise() {
+    let query = Token.findOne({'db_id': '42'});
+    let promise = query.exec();
+    return promise;
+}
+
+// RETURNS A PROMISE CONTAINING THE RESULTS OF A 42 API QUERY
+function ftRequest(data, endPoint, queryString) {
+    let queryOptions = {
+        url: ftOauth.ftUrl + endPoint, 
+        auth: {
+            'bearer': data.accessToken
+        },
+        qs: queryString
+    }
+    
+    var ftPromise = new Promise ( (resolve, reject) => {
+        
+        console.log("Inside ftPromise");
+        request(queryOptions, (err, result) => {
+            if (err)
+                reject (err);
+            else if (result.statusCode === 401)
+                reject (result.body);
+            else
+                resolve (result.body);
+        });
+    });
+    
+    return ftPromise
+    .catch( err => {
+        console.log(err);
+        return ftAPI.getNewToken()
+            .then( newData => {
+                queryOptions.auth.bearer = newData.accessToken;
+                return ftPromise
+            });
+    });
+}
+        
+// INTEGRAL PART OF ftAPI.getNewToken() THAT USES THE REFRESH TOKEN
+// FROM OUR MONGO DB TO UPDATE OUR DB WITH NEW TOKENS
+function ftNewToken(data) {
+    let queryOptions = {
+        url: ftOauth.tokenURL,
+        method: 'POST',
+        form: {
+            'refresh_token': data.refreshToken,
+            'client_id': ftOauth.client_id,
+            'client_secret': ftOauth.client_secret,
+            'grant_type': 'refresh_token'
+        }
+    }
+    return request(queryOptions);
+}
+    
+// USED IN BOTH ftAPI.getToken AND ftAPI.getNewToken TO UPDATE THE DB
 function updateFields(data) {
     let newJSON = JSON.parse(data);
     let find_query   = { 'db_id': '42' }; 
@@ -26,42 +83,8 @@ function updateFields(data) {
         .catch(e => {return Promise.reject(e);});
 }
 
-// returns a promise containing the results of DB query for tokens
-function execTokenPromise() {
-    let query = Token.findOne({'db_id': '42'});
-    let promise = query.exec();
-    return promise;
-}
-
-// returns a promise containing the results of 42 API query
-function ftRequest(data, endPoint, queryString) {
-    let queryOptions = {
-        url: ftOauth.ftUrl + endPoint, 
-        auth: {
-            'bearer': data.accessToken
-        },
-        qs: queryString
-    }
-    return request(queryOptions);
-}
-
-// returns a promise 
-function ftNewToken(data) {
-    let queryOptions = {
-        url: ftOauth.tokenURL,
-        method: 'POST',
-        form: {
-            'refresh_token': data.refreshToken,
-            'client_id': ftOauth.client_id,
-            'client_secret': ftOauth.client_secret,
-            'grant_type': 'refresh_token'
-        }
-    }
-    return request(queryOptions);
-}
-
 var ftAPI = {
-    
+            
     //this function should be obsolete but don't remove it yet just in case
     //we lose tokens for some reason
     getToken: function () {
@@ -105,10 +128,8 @@ var ftAPI = {
     query42: (endPoint, queryString) => {
         return execTokenPromise()
             .then((data) => ftRequest(data, endPoint, queryString))
-            .then((data) => {return Promise.resolve(JSON.parse(data));})
-            .catch( err => {
-                throw err;
-            });
+            .then((data) => { return JSON.parse(data); })
+            .catch( err => { throw err; });
     }
 }
 

@@ -2,7 +2,7 @@ var moment = require('moment');
 var getJSON = require('../src/getJSON');
 var manageDOM = require('../src/manageDOM');
 var mongoose = require('mongoose');
-var Menu = require('../src/mongoDB').Menu;
+var Menu = require('../src/mongoDB').Models.Menu;
 var cantinaAPI = require('../config/config').cantinaAPI;
 
 'use strict';
@@ -37,7 +37,7 @@ function delMenu () {
     });
 }
 
-// dev function to log current meny docs in mongoDB 
+// dev function to log current menu docs in mongoDB 
 function showMenu () {
     var today = Menu.findOne({'day' : 'Today'});
     var tomorrow = Menu.findOne({'day' : 'Tomorrow'});
@@ -51,165 +51,110 @@ function showMenu () {
 }
 
 // Updates menu doc for a given day, as needed
-function updateMenuDB(day, menu) {
+function updateMenuByDay(day, menu) {
     var cafe_42 = "";
     var arr = [];
-    var i = 0;
-    
-    menu.forEach( function (){
-        
+ 
+    for (i = 0; i < menu.length; i++ ) {        
         if (menu[i].place_id == 1){
            arr.push(menu[i]);
         }
         else {
             cafe_42 = menu[i];
         }
-        i++; 
-    });
+    };
 
     var find_query = { 'day': day };
+    var update = {
+        'day': day,
+        'date': day === "Today" ? moment().format("MMMM D YYYY") : moment().add(1, 'days').format("MMMM D YYYY"),
+        'meal_0': arr.length > 0 ? JSON.stringify(arr[0]) : null,
+        'meal_1': arr.length > 1 ? JSON.stringify(arr[1]) : null,
+        'meal_2': arr.length > 2 ? JSON.stringify(arr[2]) : null,
+        'cafe42': cafe_42 === "" ? null : JSON.stringify(cafe_42)
+    }; 
+    var options = { upsert: true, new: true };
     
-    // update the doc if there is any data to update
-    if (menu.length > 0) {
-        var update = {
-            'day': day,
-            'date': dateFormat(menu[0].begin_at, "MMMM D YYYY"),
-            'meal_0': arr.length > 0 ? JSON.stringify(arr[0]) : null,
-            'meal_1': arr.length > 1 ? JSON.stringify(arr[1]) : null,
-            'meal_2': arr.length > 2 ? JSON.stringify(arr[2]) : null,
-            'cafe42': cafe_42 === "" ? null : JSON.stringify(cafe_42)
-        }; 
-    }
-    else {
-        var update = {
-            'day': day,
-            'date': day === "Today" ? moment().format("MMMM D YYYY") : moment().add(1, 'days').format("MMMM D YYYY"),
-            'meal_0': null,
-            'meal_1': null,
-            'meal_2': null,
-            'cafe42': null
-        };
-    }
-
-        var options = { upsert: true, new: true };
-        console.log("HERE");
-
-        let promise = Menu.findOneAndUpdate(find_query, update, options);
-        
-        return promise
-            .then(() => {
-                console.log("Updated menu for " + day + " in db!");
-                return Promise.resolve();
-        });
-}
-
-// Updates menu doc for 'Today' with mongoDB data for 'Tomorrow'
-function updateMenuDay () {
-    var find_query = { 'day': 'Tomorrow' };
-    var update = { 'day': 'Today' };
-    var options = { new: true };
-
-    let promise = Menu.findOneAndUpdate(find_query, update, options);
-    
-    return promise
-        .then (() => {
-            console.log("Updated tomorrow's menu for today");
+    Menu.findOneAndUpdate(find_query, update, options)
+        .then(() => {
+            console.log("Updated menu for " + day + " in db!");
             return Promise.resolve();
     });
 }
 
-function menuTodayPromise() {
-    let today = Menu.findOne( {'day': 'Today'});
-    return today.exec();
-}
-
-function menuTomorrowPromise() {
-    let tomorrow = Menu.findOne( {'day': 'Tomorrow'});
-    return tomorrow.exec();
-}
-
-function getMenu(str) {
-
-    manageDOM.clearContent("content");
-
+// Promise function that gets a JSON object from the 42 Cantina API and 
+// resolves with an object that contains arrays for today's and tomorrow's meals
+var menuArrays = new Promise( (resolve, reject) => {
     let a = [];
     let b = [];
-
-    // get JSON string from 42 api
-    getJSON(cantinaAPI, function(err, data) {
-        if (err) throw err;
-        console.log(data);
-
-        // adds only today's meal objects to array
-        for (var key in data) {
-            var date = dateFormat(data[key].begin_at, "MMMM D YYYY");        
-            if (date === moment().format("MMMM D YYYY")) {
-                a.push(data[key]);
-            }
-            else if (date === moment().add(1, 'days').format("MMMM D YYYY")) {
-                b.push(data[key]);
-            }
+    
+    getJSON(cantinaAPI, (err, cantinaObj) => {
+        if (err) {
+            console.log("rejected");
+            reject(err);
         }
-        a.sort(compare);
-        b.sort(compare);
-    });
-
-    // check if db is current and update appropriately if it is not
-    // ****** Might be able to condense this with better understanding of promises
-    menuTodayPromise()
-        .then((menuToday) => {
-            if (menuToday == null || moment().format("MMMM D YYYY") !== menuToday.date) {
-                return menuTomorrowPromise()
-                    .then((menuTomorrow) => {
-                        if (menuTomorrow == null || moment().format("MMMM D YYYY") !== menuTomorrow.date) {
-                            return updateMenuDB('Today', a)
-                            .then(() => {
-                                console.log("updating today's with a");
-                                return Promise.resolve(updateMenuDB('Tomorrow', b))
-                            });
-                        }
-                        else {
-                            return updateMenuDay()
-                            .then(() => {
-                                console.log("updated today's with tomorrow");
-                                return Promise.resolve(updateMenuDB('Tomorrow', b))
-                            });
-                        }
-                    })
+        else {
+            console.log("resolved");
+            for (var key in cantinaObj) {
+                let date = dateFormat(cantinaObj[key].begin_at, "MMMM D YYYY");        
+                if (date === moment().format("MMMM D YYYY")) {
+                    a.push(cantinaObj[key]);
                 }
-            else {
-                return menuTomorrowPromise()
-                    .then((menuTomorrow) => {
-                        if (menuTomorrow == null) {
-                            return updateMenuDB('Tomorrow', b);
-                        }
-                    })
+                else if (date === moment().add(1, 'days').format("MMMM D YYYY")) {
+                    b.push(cantinaObj[key]);
+                }
             }
-        });
+            a.sort(compare);
+            b.sort(compare);
+            var menuDays = {
+                today: a,
+                tomorrow: b
+            };            
+            resolve(menuDays);
+        }
+    })
+});
+
+// Function to update our DB with today's and tomorrow's menus
+var menuUpdateMongo = () => {
+    menuArrays
+        .then( (menuDays) => {
+            updateMenuByDay('Today', menuDays.today)
+            updateMenuByDay('Tomorrow', menuDays.tomorrow)
+        })
+        .catch(console.error);
+};
+
+
+// Retrieves today's or tomorrow's 42 Cantina menu from our DB
+function getMenu(str) {
+     
+    manageDOM.clearContent("content");
 
     // query mongoDB for cached menu
-    let today = Menu.findOne( {'day': 'Today'});
-    let tomorrow = Menu.findOne( {'day': 'Tomorrow'});
-    let when = str === "today" ? today : tomorrow;
+    let day = str === "today" ? 'Today' : 'Tomorrow';
+    let menuDay = Menu.findOne( {'day': day});
     
     // Builds html elements for either today's or tomorrow's menu
-    when.exec(function(err, data){
-        if (data != null) {
-            var arr = [];
-            var i = 0;
+    menuDay.exec( (err, data) => {
+        if (err)
+            console.error(err);
+        else if (data != null) {
+            let arr = [];
+            let i = 1;
 
-            if (data.meal_0 != null) {arr.push(JSON.parse(data.meal_0))}
-            if (data.meal_1 != null) {arr.push(JSON.parse(data.meal_1))}
-            if (data.meal_2 != null) {arr.push(JSON.parse(data.meal_2))}
+            if (data.meal_0 != null) { arr.push(JSON.parse(data.meal_0)) }
+            if (data.meal_1 != null) { arr.push(JSON.parse(data.meal_1)) }
+            if (data.meal_2 != null) { arr.push(JSON.parse(data.meal_2)) }
             
             // create an array of elements to build the DOM
-            let meal_list = ['cantina_greet'];
-            arr.forEach(function() {
+            let meal_list = ['cantina', 'cantina_greet'];
+            for (j = 0; j < arr.length; j++) {
                 meal_list.push("spacer" + i);
                 meal_list.push("time" + i);
                 meal_list.push("meal" + i);
                 i++;
-            });
+            };
             if (data.cafe42 != null) {
                 meal_list.push("spacer" + i);
                 meal_list.push("cafe");
@@ -220,10 +165,10 @@ function getMenu(str) {
             document.getElementById("cantina_greet").innerHTML = "the 42 cantina menu for " + str + " is";
             
             // for each div, give it a class and add appropriate content whether it is time or meal descroption
-            for (i = 1; i < meal_list.length; i++) {
+            for (i = 2; i < meal_list.length; i++) {
                 if (meal_list[i][0] === "t") {
-                    let date = new moment(Date.parse(arr[Math.floor((i - 1) / 3)].begin_at));
-                    let date_end = new moment(Date.parse(arr[Math.floor((i - 1) / 3)].end_at));
+                    let date = new moment(Date.parse(arr[Math.floor((i - 2) / 3)].begin_at));
+                    let date_end = new moment(Date.parse(arr[Math.floor((i - 2) / 3)].end_at));
                     let t = document.getElementById(meal_list[i]);
                     t.setAttribute("class", "cantina_hours");
                     t.innerHTML = "Served from " + date.format("HH:mm") + " until " + date_end.format("HH:mm") + ":";                   
@@ -231,21 +176,25 @@ function getMenu(str) {
                 else if (meal_list[i][0] === "m") {
                     let m = document.getElementById(meal_list[i]);
                     m.setAttribute("class", "meal");
-                    let item = arr[Math.floor((i - 1) / 3)];
+                    let item = arr[Math.floor((i - 2) / 3)];
                     let br = item.menu;
 
                     // Replaces 'line feed' and 'carriage return' with and HTML break
-                    br = br.replace(/\r\n/g, '<br />').replace(/[\r\n]/g, '<br />');
+                    br = br.replace(/\r\n/g, '<br />');
                     m.innerHTML = br + " ~ <span style='font-style:italic;text-decoration:underline'>\
                                             $" + item.price + "</span>";              
                 }
                 else if (meal_list[i][0] === 'c') {
                     let c = document.getElementById('cafe');
-                    c.setAttribute("class", "meal cafe");
-                    console.log
-                    let cbr = JSON.parse(data.cafe42).menu;
-                    cbr = cbr.replace(/\r\n/g, '<br />').replace(/[\r\n]/g, '<br />');
-                    c.innerHTML = cbr;
+                    c.setAttribute("class", "meal");
+                    let cafe42 = JSON.parse(data.cafe42);
+                    let cafe42Menu = cafe42.menu;
+                    let cafe42Price = cafe42.price;
+                    cafe42Menu = cafe42Menu.replace(/\r\n/g, '<br />').replace('cafe 42',
+                    '<span class="cafe">Cafe 42:</span> ~ \
+                    <span style="font-style:italic;text-decoration:underline">\
+                    $' + cafe42.price + '</span>');
+                    c.innerHTML = cafe42Menu;
                 }
                 else {
                     let s = document.getElementById(meal_list[i]);
@@ -253,5 +202,10 @@ function getMenu(str) {
                 }
             }
         }
+        else {
+            console.log("Error retrieving Cantina menu from Mongo DB")
+        }
      });
 }
+
+module.exports = menuUpdateMongo;

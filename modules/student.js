@@ -50,8 +50,8 @@ var getStudentInfo = function (obj) {
         // create an array with all of the separate divs with
         // appropriate names here
         var elements = [
-            'ft_displayname', 'ft_login', 'ft_profile_pic', 'ft_location',
-            'ft_level', 'ft_correction_points'
+            'student', 'ft_displayname', 'ft_login', 'ft_profile_pic',
+            'ft_location', 'ft_level', 'ft_correction_points'
         ];
         
         // creates HTML
@@ -65,6 +65,7 @@ var getStudentInfo = function (obj) {
 // feeds comprehensive student data object to callback function
 var getStudentID = function (obj) {
 
+    console.log(obj);
     if (obj.length > 0){
         return ftAPI.query42("/v2/users/" + obj[0].id);
     }
@@ -74,24 +75,18 @@ var getStudentID = function (obj) {
 }
 
 // The first step is to get the user/:id by using the login from this endpoint
-function loadStudent() {
+var loadStudent = () => {
     
-    var login = getLocation(document.getElementById('student_form').value)
+    var login = document.getElementById('popup__form').value;
     
     if (login !== null) {
         ftAPI.query42("/v2/users/?filter[login]=" + login)
             .then(getStudentID)
             .then(getStudentInfo)
-            .catch(e => {
-                console.log("error: " + e + "Getting new token and re-running");
-                ftAPI.getNewToken()
-                    .then(() => {
-                        return Promise.resolve(ftAPI.query42("/v2/users/?filter[login]=" + login));
-                        })
-                    .then(getStudentID)
-                    .then(getStudentInfo)
-                    .catch(console.error);
-            });
+            .catch(console.error);
     }
+
+    document.body.removeChild(document.getElementById('popup'));
 }
 
+module.exports = loadStudent;

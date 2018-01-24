@@ -1,6 +1,7 @@
 var mongoDB = require('../config/config').mongoDB;
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
+var moment = require('moment');
 
 var connectDB = function () {
 
@@ -33,12 +34,29 @@ var projectIDSchema = new Schema ({
   projectName: String
 });
 
-var ourModels = {
+var testSchema = new Schema ({
+  testID: String,
+  testName: String
+});
 
-  Token: mongoose.model('Tokens', tokenSchema),
-  Menu: mongoose.model('Menu', cantinaSchema),
-  ProjectID: mongoose.model('ProjectID', projectIDSchema)
+var marvinMongo = {
+
+  Models: {
+
+    Token: mongoose.model('Tokens', tokenSchema),
+    Menu: mongoose.model('Menu', cantinaSchema),
+    ProjectID: mongoose.model('ProjectID', projectIDSchema),
+    Test: mongoose.model('Test', testSchema)
+
+  },
+
+  updateDaily: {
+
+    cantina: () => {
+      console.log('cantina');
+    }
+  }
 
 }
 
-module.exports = ourModels;
+module.exports = marvinMongo;

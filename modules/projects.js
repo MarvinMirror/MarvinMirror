@@ -4,11 +4,11 @@ var request = require('request-promise');
 var config = require('../config/config');
 var ftOauth = config.ftOauth;
 var mongoose = require('mongoose');
-var ProjectID = require('../src/mongoDB').ProjectID;
+var ProjectID = require('../src/mongoDB').Models.ProjectID;
 
 // Dummy vars for testing
 var projectID = 1;
-var userID = 23626;
+var userID = 22978;
 
 // Recursive call to get all projects and IDs and cycle through pages
 function getAllProjects (n) {
@@ -25,6 +25,74 @@ function checkProjectDB () {
         if (err) console.error(err);
         console.log(data.projectID + " : " + data.projectName);
     }) ;
+}
+
+function compare(a,b) {
+    if (a.final_mark > b.final_mark) { return 1; }
+    else { return 0; }
+}
+
+function printUserProjectSpecs (pass) {
+    
+    let arr = pass[1];
+    console.log(pass[0]);
+
+    manageDOM.clearContent("content");
+    
+    for (i = 0 ; i < arr.length ; i++) {
+        let obj = arr[i];
+        if (obj.status === "in_progress") {
+            console.log("Project: " + obj.project.name);    
+        }
+    }
+
+    let done = [];
+    for (i = 0 ; i < arr.length ; i++) {
+        let obj = arr[i];
+        if (obj.cursus_ids[0] === 1 && obj.status === "finished"
+            // && obj.project.slug.search("piscine") < 0
+            // && obj.project.slug.search("hercules") < 0
+            ) {
+            done.push(obj);
+            // console.log("Project: " + arr[i].project.name);
+            // console.log(obj);
+        }
+    }
+    done.sort(compare);
+
+    let divs = ['best-projects', 'best-projects__header', 'best-projects__person'];
+    let innerName = [];
+    let innerScore = [];
+    
+    for (i = 0 ; i < 5 && i < done.length ; i++) {
+        let obj = done[done.length - 1 - i];
+        divs.push("best-projects--" + i);
+        innerName.push(obj.project.name);
+        innerScore.push(obj.final_mark);
+        console.log("Project: " + obj.project.name + " & Score: " + obj.final_mark);
+    }
+
+    manageDOM.array2Div(divs, "content");
+
+    let header = document.getElementById('best-projects__header');
+    let person = document.getElementById('best-projects__person');
+
+    header.innerHTML = "Here are the top 5 projects for:";
+    person.innerHTML = pass[0][0].login;
+
+    header.setAttribute('class', 'best-projects__header');
+    person.setAttribute('class', 'best-projects__person');
+
+    for (i = 3 ; i < 8 && i < divs.length ; i++) {
+        let d = document.getElementById(divs[i]);
+        d.setAttribute('class', 'best-projects__item');
+        let a = document.createElement('div');
+        let b = document.createElement('div');
+
+        d.append(a, b);
+        a.innerHTML = innerName[i - 3];
+        b.innerHTML = innerScore[i - 3];
+    }
 }
 
 var projectFunctions = {
@@ -143,16 +211,20 @@ var projectFunctions = {
     },
     
     // Returns details for every project done or in progress by user
-    getProjectsUsersByUser: () => {
+    getProjectsUsersByUser: (id) => {
         let qs = {
-            "range[final_mark]": "70,125",
+            // "range[final_mark]": "null,null",
             sort: "updated_at",
-            "filter[campus]": "7"
-            // "page[size]": "100"
+            "filter[cursus]": "1",
+            "page[size]": "100"
         }
-        ftAPI.query42("/v2/users/" + userID + "/projects_users", qs)
-        .then(console.log)
-        .catch(console.error);
+        console.log("id = " + id[0].id);
+        ftAPI.query42("/v2/users/" + id[0].id + "/projects_users", qs)
+            .then((arr) => {
+                let pass = [id, arr];
+                printUserProjectSpecs(pass);
+            })
+            .catch(console.error);
     },
 
     // Weird sudo data about projects
@@ -180,3 +252,20 @@ var projectFunctions = {
         .catch(console.error); 
     }
 }
+
+// The first step is to get the user/:id by using the login from this endpoint
+var loadStudentProjects = () => {
+    
+    var login = document.getElementById('popup__form').value;
+    
+    console.log(login);
+    if (login !== null) {
+        ftAPI.query42("/v2/users/?filter[login]=" + login)
+            .then(projectFunctions.getProjectsUsersByUser)
+            .catch(console.error);
+    }
+
+    document.body.removeChild(document.getElementById('popup'));
+}
+
+module.exports = loadStudentProjects;

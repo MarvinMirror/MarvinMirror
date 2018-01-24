@@ -25,7 +25,7 @@
   "homepage": "https://github.com/electron/electron-quick-start#readme",
   "devDependencies": {
     "devtron": "*",
-    "node-sass": "^4.7.2"
+    "node-sass": "^4.7.2",
     "electron-reload": "^1.2.2",
     "moment-timezone": "^0.5.14"
   },

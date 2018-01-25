@@ -17,10 +17,10 @@
 				
 			})
 		</script> -->
-	<script>
-	var command = require('../src/controller.js')
-	require('electron').ipcRenderer.on('todo', command)
-</script>
+		<script>
+			var command = require('../src/controller.js');
+			require('electron').ipcRenderer.on('todo', command);
+		</script>
 
 	</head>
 	<body onload="dateTime(),getWeather(),loadUser(),incatvityTime(!null),connectDB()" id="body">

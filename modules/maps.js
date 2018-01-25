@@ -199,11 +199,18 @@ function zone(num, row, seat) {
     //    create_floor_4("zone" + num, row, seat);
 }
 
+function send_no_student_message(message)
+{
+    manageDOM.array2Div(["message","not_found"], "content");
+    var message_div = document.getElementById('not_found');
+    message_div.innerHTML = message;
+}
+
 function showMap(obj)
 {
     // removes from "content" div of app any div with id "wrapper"
     manageDOM.clearContent("content");
-    console.log(obj.location)
+    console.log(obj)
     if (obj != null) {
         var location = obj.location;
         if (location != null)
@@ -212,7 +219,9 @@ function showMap(obj)
             console.log(res)
             zone(res[2], res[3], res[4]);
         }
+        else send_no_student_message(obj.displayname + ' is not here at the moment');
     }
+    else send_no_student_message('I didn\'t find this username in our database');
 }
 
 // There is no direct-to-student from login via the API so 2 requests are needed. This is the second and 

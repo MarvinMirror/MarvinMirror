@@ -6,33 +6,31 @@
 		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script>
-	var command = require('../src/controller.js')
-	require('electron').ipcRenderer.on('todo', command)
-</script>
+		<!-- <script>
+			require('electron').ipcRenderer.on('todo', (event, message) => {
+				var result = JSON.parse(message)
+				console.log(result.intent)
+				if (result.intent === 'get_weather')
+				{
+					getWeatherAtLocation(result.location, result.units)
+				}
+
+			})
+		</script> -->
+		<script>
+			var command = require('../src/controller.js');
+			require('electron').ipcRenderer.on('todo', command);
+		</script>
 
 	</head>
-	<body onload="dateTime(),getWeather(),loadUser(null),incatvityTime(!null),connectDB()" id="body">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-		require('electron').ipcRenderer.on('todo', (event, message) => {
-			var result = JSON.parse(message)
-			console.log(result.intent)
-			if (result.intent === 'get_weather')
-			{
-				getWeatherAtLocation(result.location, result.units)
-			}
-
-		})
-	</script>
-
+	<body onload="dateTime(),getWeather(),loadUser(),incatvityTime(!null),connectDB()" id="body">
 		<div class="wrapper">
-			<div class="box clock" id="time"></div>
-			<div class="box date" id="date"></div>
-			<div class="box user" id="user"></div>
-			<div class="box weather" id="weather"></div>
-			<div class="box dialog" id="dialog">
+			<div class="dashboard">
+				<div class="box date-time" id="date-time"></div>
+				<div class="box user" id="user"></div>
+				<div class="box weather" id="weather"></div>
 			</div>
+			<div class="box dialog" id="dialog"></div>
 			<div class="box content" id="content">
 			</div>
 
@@ -84,8 +82,8 @@
 				get word
 			</button>
 			<br /><br />
-
-			<button onclick="loadUser(1)" name="user" value="user">
+			
+			<button onclick="manageDOM.studentPopup('loadUser')" name="user" value="user">
 				GET ME
 			</button>
 			<button onclick="manageDOM.studentPopup('loadStudent')" name="student" value="student">
@@ -102,7 +100,6 @@
 			</button>
 
 			<br/><br/>
-
 
 			<button onclick="manageDOM.clearContent('content')" name="coff" value="coff">
 				CONTENT OFF
@@ -144,11 +141,8 @@
 		<script src="../modules/corrections.js"></script>
 		<script src="../modules/forecast.js"></script>
 		<script src="../modules/help.js"></script>
-		<script src="../modules/map.js"></script>
-		<script src="../modules/popup.js"></script>
 		<script src="../modules/projects.js"></script>
 		<script src="../modules/student.js"></script>
-		<script src="../modules/user.js"></script>
 		<script src="../modules/weather.js"></script>
 		<script src="../modules/maps.js"></script>
 		<script src="../modules/word_of_a_day.js"></script>

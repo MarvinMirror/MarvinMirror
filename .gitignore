@@ -4,4 +4,6 @@ node_modules/**
 
 config/config.js
 
+config/google_key.json
+
 *.DS_Store

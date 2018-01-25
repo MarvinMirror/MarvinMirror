@@ -10,6 +10,7 @@
 //Requirements for listening 
 const record = require('node-record-lpcm16');
 const stream = require('stream');
+var path = require("path");;
 
 //Reqirements for wake-up-word detection
 const { Detector, Models } = require('snowboy');
@@ -130,7 +131,7 @@ Speech_command.init = (options, recognizer, nlp) => {
   speech_options.models = models
   
   const detector = listener.detector = new Detector({
-    resource: my_config.wakeUpWord.resource,
+    resource: path.resolve(__dirname, '..') + my_config.wakeUpWord.resource,
     models: models,
     audioGain: my_config.wakeUpWord.audioGain
   });

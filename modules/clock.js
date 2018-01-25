@@ -2,7 +2,7 @@ var moment = require('moment');
 var moment = require('moment-timezone');
 var getJSON = require('../src/getJSON');
 var config = require('../config/config.js');
-var now = moment();
+// var now = moment();
 
 var request = require('request-promise')
 
@@ -72,23 +72,29 @@ function dateTime() {
     var newDay = moment('12:00:01am', 'h:mm:ssa');
     var dateString = now.format("dddd, MMMM D");
 
-    var clockdiv = document.getElementById("time");
-    var datediv = document.getElementById("date");
-
+    var clockDiv = document.getElementById("date-time");
+    
+    var timeDiv = document.createElement("div");
+    var dateDiv = document.createElement("div");
+    timeDiv.setAttribute('class', 'clock');
+    dateDiv.setAttribute('class', 'date');
+    
     var hourDiv = document.createElement("div");
     var colonDiv = document.createElement("div");
     var minutesDiv = document.createElement("div");
+    
 
     hourDiv.className = "hour";
     colonDiv.className = "colon";
     minutesDiv.className = "minutes";
    
-    clockdiv.appendChild(hourDiv);
-    clockdiv.appendChild(colonDiv);
-    clockdiv.appendChild(minutesDiv);
+    clockDiv.append(timeDiv, dateDiv);
+    timeDiv.append(hourDiv, colonDiv, minutesDiv);
 
     colonDiv.innerHTML = ":";
-    datediv.innerHTML = dateString;
+    dateDiv.innerHTML = dateString;
+    // dateDiv.innerHTML = "Wednesday, 30 November";
+    
 
     setInterval(function getTime () {
         now = moment();
@@ -111,7 +117,7 @@ function dateLocalTime(timezone, place) {
         manageDOM.array2Div(['locale', 'dateDiv'], "content");
         
         var contentdiv = document.getElementById("content_wrapper");
-        contentdiv.innerHTML = "<br> Now in " + place + ':<br>'     
+        contentdiv.innerHTML = "Now in " + place + ':'     
 
         var localTimediv = document.createElement("div");
         var hourDiv = document.createElement("div");
@@ -158,6 +164,7 @@ function localDateTime()
         dateLocalTime(config.timeZone, config.location)
     }
 }
+
 function makeTimeZoneQuiry(geoLocation)
 {
     return (config.geoNamesAPI.timezone + 'lat=' + geoLocation.lat + '&lng=' + geoLocation.lng + '&username=' + config.geoNamesAPI.username)
@@ -167,4 +174,3 @@ function makeSearchQuiry(place, amount)
 {
     return (config.geoNamesAPI.search + place + '&maxRows=' + amount + '&username=' + config.geoNamesAPI.username)
 }
-

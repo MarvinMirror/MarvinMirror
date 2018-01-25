@@ -23,32 +23,37 @@ function ftRequest(data, endPoint, queryString) {
         url: ftOauth.ftUrl + endPoint, 
         auth: {
             'bearer': data.accessToken
+            // 'bearer': "1234" // FOR REFRESH TOKEN TESTING PURPOSES
         },
         qs: queryString
     }
     
     var ftPromise = new Promise ( (resolve, reject) => {
-        
-        console.log("Inside ftPromise");
+
         request(queryOptions, (err, result) => {
             if (err)
                 reject (err);
-            else if (result.statusCode === 401)
-                reject (result.body);
             else
-                resolve (result.body);
+                resolve (result);
         });
     });
     
     return ftPromise
-    .catch( err => {
-        console.log(err);
-        return ftAPI.getNewToken()
-            .then( newData => {
-                queryOptions.auth.bearer = newData.accessToken;
-                return ftPromise
-            });
-    });
+        .then ( ftObj => {
+            if (ftObj.statusCode === 401) {
+                return ftAPI.getNewToken()
+                    .then(execTokenPromise)
+                    .then( newData => {
+                        queryOptions.auth.bearer = newData.accessToken;
+                        return request(queryOptions)
+                    })
+            }
+            else 
+                return ftObj.body;
+        })
+        .catch( err => {
+            console.log(err);
+        });
 }
         
 // INTEGRAL PART OF ftAPI.getNewToken() THAT USES THE REFRESH TOKEN

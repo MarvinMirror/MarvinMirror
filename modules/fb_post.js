@@ -10,7 +10,7 @@ function fb_post() {
 
     var fbdiv = document.getElementById("fb_post");
     var fb_app = config.fb_app;
-    var fbAPI = config.fbAPI+'?fields=posts&access_token=' + fb_app.client_id +'|'+fb_app.app_secret;
+    var fbAPI = fb_app.fbAPI+'?fields=posts&access_token=' + fb_app.client_id +'|'+fb_app.app_secret;
 
     getJSON(fbAPI, function(err, data){
       if (err) throw err;

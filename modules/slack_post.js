@@ -6,7 +6,7 @@ console.log("slack_post");
 function slack_post() {
   var slackdiv = document.getElementById("slack_post");
   var slack_app = config.slack_app
-  var slackAPI = config.slackAPI+'channels.history?token=' + slack_app.token +
+  var slackAPI = slack_app.slackAPI+'channels.history?token=' + slack_app.token +
                   '&channel=' + slack_app.channel_announcements + '&count=100';
 
   getJSON(slackAPI, function(err, data){
@@ -39,12 +39,11 @@ function slack_post() {
           text = text + data.messages[i].file.title;
 
       // if the post is "simple pole"
-
-      if ("attachments" in data.messages[i] && "fallback" in data.messages[i].attachments[0])
+      if ("attachments" in data.messages[i] && "fallback" in data.messages[i].attachments[0]){
         text = text + data.messages[i].attachments[0].fallback;
         if ("title" in data.messages[i].attachments[0])
           text = text + ' \"' + data.messages[i].attachments[0].title + '\"';
-
+        }
 
       // if message is longer then 500 characters then cut it and add "..."
       slack_text.innerHTML = text.substring(0, 500) + dots;

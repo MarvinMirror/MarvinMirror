@@ -19,10 +19,11 @@ function Calendar_create(data, view){
   contentdiv.appendChild(caldiv);
 
    // page is now ready, initialize the calendar...
-   $('#customCalendar').fullCalendar({
+   var cal = $('#customCalendar').fullCalendar({
      defaultView: data['view'],
+     duration: { days: 10 },
      weekends:true,
-     aspectRatio: 1.6,
+     aspectRatio: 0.91,
      // contentHeight: 300,
      events: data['key'],
        // put your options and callbacks here
@@ -34,10 +35,14 @@ function Calendar_create(data, view){
           //  right: 'month,agendaWeek,agendaDay'
         }
      });
+
+     // if user wants to see calendar for specific month or date
+     if ('date' in data)
+      cal.fullCalendar('changeView', data['view'], data['date']);
 };
 
 //creating json of events for calendar
-function Calendar(view){
+function Calendar(view, date){
   console.log("calendar");
   var res = ftAPI.query42("/v2/campus/7/events")
     .then(function(data)
@@ -55,8 +60,11 @@ function Calendar(view){
       }
       all_data[key].push(one_event);
     }
-    //adding the view parameter
+
+    //adding parameters
     all_data['view'] = view;
+    if (date)
+      all_data['date'] = date;
     //console.log(all_data);
     return(all_data);
   })

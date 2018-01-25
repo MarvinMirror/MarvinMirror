@@ -39,7 +39,7 @@ function getWeather() {
 	var units = getUnits(document.getElementById('units_form').checked);
 	var deg = units === "metric" ? "C" : "F";
 
-	document.getElementById('weather_wrapper').className = "center_center";
+	document.getElementById('weather_wrapper').className = "weather-wrapper";
 	document.getElementById('w_img_wrap').appendChild(w_icon);
 	
 	// making url for request to weather api
@@ -93,7 +93,7 @@ function getWeatherAtLocation() {
 	var deg = units === "metric" ? "C" : "F";
 
 	document.getElementById('wl_img_wrap').appendChild(wl_icon);
-	document.getElementById('content_wrapper').className = "weather_location";
+	document.getElementById('content_wrapper').className = "weather-by-location";
 	
 	// making url for request to weather api
 	var weatherAPI = 

@@ -6,17 +6,6 @@
 		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<!-- <script>
-			require('electron').ipcRenderer.on('todo', (event, message) => {
-				var result = JSON.parse(message)
-				console.log(result.intent)
-				if (result.intent === 'get_weather')
-				{
-					getWeatherAtLocation(result.location, result.units)
-				}
-
-			})
-		</script> -->
 		<script>
 			var command = require('../src/controller.js');
 			require('electron').ipcRenderer.on('todo', command);

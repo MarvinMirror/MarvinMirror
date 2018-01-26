@@ -70,7 +70,7 @@ function getTimeZone(place)
 function dateTime() {
 
     var newDay = moment('12:00:01am', 'h:mm:ssa');
-    var dateString = now.format("dddd, MMMM D");
+    var dateString = moment().format("dddd, MMMM D");
 
     var clockDiv = document.getElementById("date-time");
     

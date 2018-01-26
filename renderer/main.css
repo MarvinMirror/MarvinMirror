@@ -1,15 +1,45 @@
-html, body {
-	height: 100%;
-	padding: 10px;
-	overflow: hidden;
+/* BASE CSS */
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+	margin: 0;
+	padding: 0;
 }
 
+html {
+	font-size: 62.5%;
+}
+
+body {
+	box-sizing: border-box;
+	padding: 0rem;
+}
+
+/* TYPOGRAPHY */
+
+body {
+	font-family: 'Lato', sans-serif;
+	letter-spacing: 1.4;
+	word-spacing: 2.5;
+	line-height: 1.7;
+	text-align: center;
+	color: white;
+	background-color: black;
+}
+
+.center-div {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 .wrapper {
-	height: 100%;
+
 	display: grid;
 	grid-template-columns: 100px 1fr 80% 1fr 100px;
 	grid-template-rows: 2fr 1fr 60% 5fr;
-	grid-gap: 10px;
+	grid-gap: 1rem;
 
 }
 

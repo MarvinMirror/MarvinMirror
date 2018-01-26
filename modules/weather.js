@@ -12,12 +12,12 @@ function getLocation(place)
 // If user did not specify units the function returns default 'imperial' units (fahrenheit) from config file.
 function getUnits(units)
 {
-	if (!units || units === 'fahrenheit') return (config.units)
+	if (!units || units === 'Fahrenheit') return (config.units)
 	return("metric")
 }
 
 function getWeather() {
-	
+
 	// clear page
 	manageDOM.clearContent("weather");
 
@@ -28,22 +28,22 @@ function getWeather() {
 	var elements = [
 		'weather-corner', 'w_location', 'w_img_wrap', 'w_cur_temp', 'w_conditions'
 	];
-	
+
 	// creating new html
 	manageDOM.array2Div(elements, "weather");
 
     var w_icon = document.createElement("img");
 	w_icon.id = "wicon";
-	
+
 	// check input for units
 	var units = getUnits(document.getElementById('units_form').checked);
 	var deg = units === "metric" ? "C" : "F";
 
 	document.getElementById('weather_wrapper').className = "weather-wrapper";
 	document.getElementById('w_img_wrap').appendChild(w_icon);
-	
+
 	// making url for request to weather api
-	var weatherAPI = 
+	var weatherAPI =
 	config.openWeatherMapAPI + 'weather?q=' +
 	config.location + '&units=' + config.units + '&APPID=' + currentWeather.appKey;
 
@@ -58,19 +58,18 @@ function getWeather() {
 											&deg" + deg;
 			document.getElementById("w_conditions").innerHTML = weather.main;
 			document.getElementById("w_location").innerHTML = data.name;
-	
+
 		}
 	});
 }
 
-function getWeatherAtLocation() {
-	
-	// check input for location
-	var place = getLocation(document.getElementById('location_form').value)
+function getWeatherAtLocation(get_place, get_units) {
+
+	// check input
+	var place = getLocation(get_place);
 
 	// check input for units
-	var units = getUnits(document.getElementById('units_form').checked)
-	
+	var units = getUnits(get_units);
 	// clear page
 	manageDOM.clearContent("content");
 
@@ -81,22 +80,20 @@ function getWeatherAtLocation() {
 	var elements = [
 		'weather-content', 'wl_location', 'wl_img_wrap', 'wl_cur_temp', 'wl_conditions'
 	];
-	
+
 	// creating new html
 	manageDOM.array2Div(elements, "content");
 
     var wl_icon = document.createElement("img");
 	wl_icon.id = "wlicon";
-	
-	// check input for units
-	var units = getUnits(document.getElementById('units_form').checked);
+
 	var deg = units === "metric" ? "C" : "F";
 
 	document.getElementById('wl_img_wrap').appendChild(wl_icon);
 	document.getElementById('content_wrapper').className = "weather-by-location";
-	
+
 	// making url for request to weather api
-	var weatherAPI = 
+	var weatherAPI =
 	config.openWeatherMapAPI + 'weather?q=' +
 	place + '&units=' + units + '&APPID=' + currentWeather.appKey;
 
@@ -111,7 +108,7 @@ function getWeatherAtLocation() {
 																&deg" + deg;
 			document.getElementById("wl_conditions").innerHTML = weather.main;
 			document.getElementById("wl_location").innerHTML = data.name;
-	
+
 		}
 	});
 }

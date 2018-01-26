@@ -22,7 +22,7 @@ function slack_post() {
         break ;
       }
       var slack_icon = document.createElement("img");
-  		slack_icon.setAttribute("src", "../img/slack_icon.jpeg")
+  		slack_icon.setAttribute("src", "../img/slack_icon.png")
   		slackdiv.appendChild(slack_icon);
 
       var slack_text = document.createElement("div");

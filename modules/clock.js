@@ -19,7 +19,7 @@ function getTimeZone(place)
         lng: "",
         name: ""
     };
-    
+
     var url = makeSearchQuiry(place, 1);
 
     async function getLocation(url) {
@@ -44,13 +44,13 @@ function getTimeZone(place)
         geoLocation.name = data.geonames[0].toponymName;
 
         var new_url = makeTimeZoneQuiry(geoLocation);
-            
+
         const options = {
             method: 'GET',
             uri: new_url,
             json: true
         };
-        
+
         try {
             const response = await request(options);
             return Promise.resolve(response);
@@ -59,7 +59,7 @@ function getTimeZone(place)
         return Promise.reject(error);
         }
     }
-    
+
     getLocation(url).then(getTimeZone).then(function (data) {
         dateLocalTime(data['timezoneId'], place)
     })
@@ -73,28 +73,28 @@ function dateTime() {
     var dateString = now.format("dddd, MMMM D");
 
     var clockDiv = document.getElementById("date-time");
-    
+
     var timeDiv = document.createElement("div");
     var dateDiv = document.createElement("div");
     timeDiv.setAttribute('class', 'clock');
     dateDiv.setAttribute('class', 'date');
-    
+
     var hourDiv = document.createElement("div");
     var colonDiv = document.createElement("div");
     var minutesDiv = document.createElement("div");
-    
+
 
     hourDiv.className = "hour";
     colonDiv.className = "colon";
     minutesDiv.className = "minutes";
-   
+
     clockDiv.append(timeDiv, dateDiv);
     timeDiv.append(hourDiv, colonDiv, minutesDiv);
 
     colonDiv.innerHTML = ":";
     dateDiv.innerHTML = dateString;
     // dateDiv.innerHTML = "Wednesday, 30 November";
-    
+
 
     setInterval(function getTime () {
         now = moment();
@@ -115,9 +115,9 @@ function dateLocalTime(timezone, place) {
         var dateString = now.format("dddd, MMMM D");
 
         manageDOM.array2Div(['locale', 'dateDiv'], "content");
-        
+
         var contentdiv = document.getElementById("content_wrapper");
-        contentdiv.innerHTML = "Now in " + place + ':'     
+        contentdiv.innerHTML = "Now in " + place + ':'
 
         var localTimediv = document.createElement("div");
         var hourDiv = document.createElement("div");
@@ -130,17 +130,17 @@ function dateLocalTime(timezone, place) {
         colonDiv.className = "colon";
         minutesDiv.className = "minutes";
         dateDiv.className = "date"
-       
+
         contentdiv.appendChild(localTimediv);
         localTimediv.appendChild(hourDiv);
         localTimediv.appendChild(colonDiv);
         localTimediv.appendChild(minutesDiv);
         contentdiv.appendChild(dateDiv);
-    
+
         colonDiv.innerHTML = ":";
         dateDiv.innerHTML = dateString;
         setInterval(function getTime() {
-            
+
             now = moment().tz(timezone);
             hourDiv.innerHTML = now.format("HH");
             minutesDiv.innerHTML = now.format("mm");
@@ -151,12 +151,10 @@ function dateLocalTime(timezone, place) {
         }, 1000);
     }
 
-function localDateTime()
+function localDateTime(place)
 {
-    var place = document.getElementById('location_form').value;
-
     if (place.length != 0) {
-        
+
         getTimeZone(place)
     }
     else

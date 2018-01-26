@@ -22,12 +22,13 @@ function fb_post() {
 
         var fb_icon = document.createElement("img");
   			fb_icon.setAttribute("src", "../img/fb_icon.png")
-  			fbdiv.appendChild(fb_icon);
-
+        
+        var fb_img = document.createElement("div");
         var fb_text = document.createElement("div");
+  			fb_img.append(fb_icon);
         fb_text.setAttribute("class", "post_text");
         fb_text.innerHTML = data.posts.data[0].message.substring(0, 300) + dots;
-        fbdiv.appendChild(fb_text);
+        fbdiv.append(fb_img, fb_text);
       }
     });
 }

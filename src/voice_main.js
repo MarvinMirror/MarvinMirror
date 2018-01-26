@@ -46,6 +46,7 @@ const hi = Hello.init({}, recognizer, nlp)
 Hello.start(hi)
 
 hi.on('hotword', (index) => console.log("What do you want from me?!"))
-//hi.on('partial-result', result => console.log(result))
+hi.on('listening', (index) => console.log("Marvin is listening"))
+hi.on('delete_gif', (index) => console.log("Delete_sound_gif"))
 hi.on('final-result', result =>console.log(result))
 hi.on('error', error => console.error(error))

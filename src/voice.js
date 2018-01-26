@@ -74,7 +74,7 @@ Recogn.startStreaming = (options, microphone, Recogn) =>
       stopStream()
     })
     .on('data', data => {
-      if (data.results[0] && data.results[0].alternatives[0]) {
+        if (data.results[0] && data.results[0].alternatives[0]) {
         
         hasResults = true;
         // Emit partial or final results and end the streams
@@ -90,6 +90,7 @@ Recogn.startStreaming = (options, microphone, Recogn) =>
       } else {
         // Reached transcription time limit
         if(!hasResults){
+          Recogn.emit('delete_gif', '')
           Recogn.emit('final-result', '')
         }
         stopStream()
@@ -148,22 +149,20 @@ Speech_command.init = (options, recognizer, nlp) => {
   });
 
   csr.on('error', error => listener.emit('error', {streamingError: error}))
-  csr.on('partial-result', transcript => listener.emit('partial-result', transcript))
+  csr.on('delete_gif', data => listener.emit('delete_gif', data))
   csr.on('final-result', (transcript, callback)  => {
     listener.emit('final-result', transcript)
     if (typeof callback === "function")
     {
       return callback(transcript)
     }
-    //Speech_command.get_results(setImmediate(() => {
-      //return(transcript);
-        //  }))
   })
 
   listener.trigger = (index, hotword) => {
     if (listener.started) {
       try {
         listener.emit('hotword', index, hotword)
+        listener.emit('listening', index, hotword)
         Recogn.startStreaming(speech_options, listener.mic, csr)
       } catch (e) {
         throw ERROR.INVALID_INDEX

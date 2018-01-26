@@ -66,6 +66,18 @@ body {
 .dialog {
 	grid-column: 2/3;
 	grid-row: 2/3;
+	position: relative;
+    overflow: hidden;
+}
+
+.dialog img {
+    position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: block;
+        max-width: 100%;
+        height: auto;
 }
 
 .content {
@@ -786,6 +798,11 @@ body .actions {
 
 #not_found {
 	font-size: 2rem;
+}
+
+#message {
+	font-size: 2rem;
+
 }
 
 /* STANDARDS */

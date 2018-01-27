@@ -21,9 +21,10 @@ function slack_post() {
         if (data.messages[i].subtype != 'channel_join')
         break ;
       }
+      var slack_img = document.createElement("div");
       var slack_icon = document.createElement("img");
   		slack_icon.setAttribute("src", "../img/slack_icon.png")
-  		slackdiv.appendChild(slack_icon);
+  		slack_img.appendChild(slack_icon);
 
       var slack_text = document.createElement("div");
       slack_text.setAttribute("class", "post_text");
@@ -47,7 +48,7 @@ function slack_post() {
 
       // if message is longer then 500 characters then cut it and add "..."
       slack_text.innerHTML = text.substring(0, 500) + dots;
-      slackdiv.appendChild(slack_text);
+      slackdiv.append(slack_img, slack_text);
       }
   });
 }

@@ -49,7 +49,7 @@ body {
 
 .wrapper > div,
 .dashboard > div {
-	border: 3px solid grey;
+	/* border: 3px solid grey; */
 }
 
 .dashboard {
@@ -59,7 +59,6 @@ body {
 	grid-template-columns: 1fr 50% 1fr;
 	grid-template-rows: 100%;
 	grid-gap: 1rem;
-	/* padding-top: 3rem; */
 	position: relative;
 }
 
@@ -96,6 +95,9 @@ body {
 .announcements {
 	grid-column: 2/3;
 	grid-row: 4/5;
+	display: grid;
+	grid-template-rows: 1fr 1fr;
+	padding: 1rem;
 }
 
 /* -- MODULES -- */
@@ -509,6 +511,33 @@ body {
 .best-projects .best-projects__item > div:last-child {
 	width: 25%;
 	text-align: right;
+}
+
+/* ANNOUNCEMENTS */
+
+.posts {
+	display: grid;
+	grid-template-columns: 15% 1fr;
+	grid-template-rows: 1fr;
+	grid-gap: 1rem;
+}
+
+.posts > div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.posts img{
+	grid-column: 1/2;
+	height: 7rem;
+}
+
+.post_text {
+	display: block;
+	grid-column: 2/3;
+	font-size: 2rem;
+	text-align: left;
 }
 
 /* POPUP FOR STUDENT SEARCH */

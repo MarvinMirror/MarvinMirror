@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-<link rel="stylesheet" type="text/css" href="main.css">
-<script src="../src/jquery.min.js"></script>
-<script>
-	require('electron').ipcRenderer.on('active', (event, message) => {
-		window.location.href = "active.html"})
-</script>
-</head>
+	<head>
+		<link rel="stylesheet" type="text/css" href="main.css">
+		<script src="../src/jquery.min.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+		<script>
+			require('electron').ipcRenderer.on('active', (event, message) => {
+				window.location.href = "active.html"})
+		</script>
+	</head>
 
-<body onload="fb_post(), slack_post(), dateTime()">
-	<div class="wrapper">
-		<div class="box clock" id="time"></div>
-		<div class="box date" id="date"></div>
-		<!-- <div class="box marvin">
-			<img src="https://media.giphy.com/media/rrVqL0o7pinLy/giphy.gif">
-		</div> -->
-		<div class="box announcements">
-			<a href="active.html">GO TO ACTIVE</a>
-			<div class="class posts" id="fb_post"></div>
-			<div class="class posts" id="slack_post"></div>
+	<body onload="fb_post(), slack_post(), dateTime()">
+		<div class="wrapper">
+			<div class="date-time" id="date-time">
+				<!-- <div class="box clock" id="time"></div>
+				<div class="box date" id="date"></div> -->
+			</div>
+			<div class="box marvin">
+			</div>
+			<div class="box announcements">
+				<div class="class posts" id="fb_post"></div>
+				<div class="class posts" id="slack_post"></div>
+			</div>
 		</div>
-	</div>
-	<script src="../modules/clock.js"></script>
-	<script src="../modules/fb_post.js"></script>
-	<script src="../modules/slack_post.js"></script>
-
-</body>
-
+		<div class="active-link">
+			<a href="active.html">GO TO ACTIVE</a>
+		</div>
+		<script src="../modules/clock.js"></script>
+		<script src="../modules/fb_post.js"></script>
+		<script src="../modules/slack_post.js"></script>
+	</body>
 </html>

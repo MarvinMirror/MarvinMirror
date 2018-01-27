@@ -2,7 +2,7 @@ const Hello = require('./voice.js')
 
 const my_config = require('../config/config');
 
-//Speech API(Google SDK) and NLP API(Wit.ai) 
+//Speech API(Google SDK) and NLP API(Wit.ai)
 const speech = require('@google-cloud/speech');
 const {Wit, log} = require('node-wit');
 
@@ -29,6 +29,9 @@ var nlp = {
         .then((data) => {
             var result = JSON.parse(JSON.stringify(data))
             info.text = result['_text'];
+            info.check = (result.entities.datetime !== undefined) ? result.entities.datetime : null;
+            info.period = (result.entities.datetime !== undefined) ? result.entities.datetime[0].grain : null;
+            info.date = (result.entities.datetime !== undefined) ? result.entities.datetime[0].value : null;
             info.intent = (result.entities.intent !== undefined) ? result.entities.intent[0].value : 'I do not know that';
             info.location = (result.entities.location !== undefined) ? result.entities.location[0].value : null;
             info.units = (result.entities.degrees !== undefined) ? result.entities.degrees[0].value : null;
@@ -43,7 +46,7 @@ const hi = Hello.init({}, recognizer, nlp)
 Hello.start(hi)
 
 hi.on('hotword', (index) => console.log("What do you want from me?!"))
-//hi.on('partial-result', result => console.log(result))
+hi.on('listening', (index) => console.log("Marvin is listening"))
+hi.on('delete_gif', (index) => console.log("Delete_sound_gif"))
 hi.on('final-result', result =>console.log(result))
 hi.on('error', error => console.error(error))
-

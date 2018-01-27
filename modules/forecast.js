@@ -17,15 +17,16 @@ if (!units || units === 'fahrenheit') return (config.units)
 return("metric")
 }
 
-function weatherForecast() {
-	
-	// check input for location
-	var place = getLocation(document.getElementById('location_form').value)
+function weatherForecast(get_place, get_units) {
+
+	// check input
+	var place = getLocation(get_place);
 
 	// check input for units
-	var units = getUnits(document.getElementById('units_form').checked)
+	var units = getUnits(get_units);
+	// clear page
 	var deg = units === "metric" ? "C" : "F";
-	
+
 	// clear page
 	manageDOM.clearContent("content");
 
@@ -37,14 +38,14 @@ function weatherForecast() {
 		'forecast', 'fore_location', 'day00', 'day01', 'day02',
 		'day03', 'day04'
 	];
-	
+
 	// creating new html
 	manageDOM.array2Div(elements, "content");
-	
+
 	document.getElementById("content_wrapper").className = "forecast_wrapper";
 
 	// making url for request to weather api
-	var weatherAPI = 
+	var weatherAPI =
 		config.openWeatherMapAPI + 'forecast?q=' +
 		place + '&units=' + units + '&APPID=' + weatherForecast.appKey;
 
@@ -75,11 +76,11 @@ function weatherForecast() {
 
 				var img = document.createElement("div");
 				img.setAttribute("class", "fore_img");
-				
+
 				var w_icon = document.createElement("img");
 				var icon = weather.weather[0].icon;
 				w_icon.setAttribute("src", "../img/weather/" + icon + ".png")
-				
+
 				img.appendChild(w_icon);
 				wrap.appendChild(day);
 				wrap.appendChild(temp);

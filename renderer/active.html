@@ -4,15 +4,16 @@
 		<link rel="stylesheet" type="text/css" href="active.css">
 		<link rel='stylesheet' href='../css/fullcalendar.css' />
 		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script>
-			var command = require('../src/controller.js');
-			require('electron').ipcRenderer.on('todo', command);
+			var reaction = require('../src/controller.js');
+			require('electron').ipcRenderer.on('sound', reaction.listen_gif);
+			require('electron').ipcRenderer.on('todo', reaction.command_execution);
+			require('electron').ipcRenderer.on('delete_gif', reaction.delete_gif);
 		</script>
 
 	</head>
-	<body onload="dateTime(),getWeather(),loadUser(),incatvityTime(!null),connectDB()" id="body">
+	<body onload="dateTime(),getWeather(),loadUser(),incatvityTime(!null),connectDB(),gif()" id="body">
 		<div class="wrapper">
 			<div class="dashboard">
 				<div class="box date-time" id="date-time"></div>
@@ -134,6 +135,7 @@
 		<script src="../modules/student.js"></script>
 		<script src="../modules/weather.js"></script>
 		<script src="../modules/maps.js"></script>
+		<script src="../src/controller.js"></script>
 		<script src="../modules/word_of_a_day.js"></script>
 
 	</body>

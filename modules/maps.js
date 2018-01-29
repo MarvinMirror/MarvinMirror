@@ -1,4 +1,5 @@
-var info = require('../src/maps_info.js')
+var info = require('../src/maps_info.js');
+var marvin_reaction = require('../src/controller.js');
 
 function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_style) {
     //get HTML element to add new elements there
@@ -208,8 +209,8 @@ function send_no_student_message(message)
 
 function showMap(obj)
 {
-    // removes from "content" div of app any div with id "wrapper"
-    manageDOM.clearContent("content");
+    marvin_reaction.delete_gif();
+    marvin_reaction.talk_message();
     console.log(obj)
     if (obj != null) {
         var location = obj.location;
@@ -238,7 +239,9 @@ var getStudentID = function (obj) {
 
 // The first step is to get the user/:id by using the login from this endpoint
 var studentOnMap = () => {
-    
+   // removes from "content" div of app any div with id "wrapper"
+    manageDOM.clearContent("content"); 
+    marvin_reaction.process_gif();
     var login = document.getElementById('popup__form').value;
     
     if (login !== null) {

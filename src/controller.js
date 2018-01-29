@@ -1,3 +1,4 @@
+
 function send_no_student_message(message)
 {
     manageDOM.clearContent("content");
@@ -9,7 +10,6 @@ var marvinReacts = {
     command_execution : (event, message) => {
         var result = JSON.parse(message)
         console.log(result)
-        marvinReacts.delete_gif()
         if (result.intent === 'get_weather') getWeatherAtLocation(result.location, result.units);
         else if (result.intent === 'forecast') weatherForecast(result.location, result.units);
         else if (result.intent === 'local_time') localDateTime(result.location);
@@ -37,11 +37,34 @@ var marvinReacts = {
         sound_div.appendChild(gif);  
     },
 
+    process_gif: () => {
+        manageDOM.clearContent("dialog");
+        manageDOM.array2Div(["process_gif","process_gif"], "dialog");
+        var sound_div = document.getElementById('process_gif');
+        var gif = document.createElement("img");
+        gif.setAttribute("src", "../img/giphy2.gif");
+        sound_div.appendChild(gif);  
+    },
+    
     delete_gif : (event, message) => {
         manageDOM.clearContent("dialog");
+    },
+
+    talk_message: () => {
         manageDOM.array2Div(["message","message"], "dialog");
         document.getElementById('message').innerHTML = "Hey, there! Talk to me!";
+    },
+    
+    empty_response: () => {
+        manageDOM.clearContent("dialog");
+        setTimeout(talkToMe_dialog, 1000)
+        
     }
+}
+
+function talkToMe_dialog() {
+    var dialog = document.getElementById('dialog');
+    if (!dialog.innerHTML.length) marvinReacts.talk_message();
 }
 
 function gif() {

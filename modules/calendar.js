@@ -11,11 +11,13 @@ function Calendar_create(data, view){
 
   console.log(data);
   manageDOM.clearContent("content");
+
   var caldiv = document.createElement("div");
   caldiv.id = 'customCalendar';
-  manageDOM.array2Div(['calDiv'], "content");
+  manageDOM.array2Div(['calendar-wrapper'], "popup");
 
-  var contentdiv = document.getElementById("content_wrapper");
+  var contentdiv = document.getElementById("calendar-wrapper");
+  contentdiv.className = "calendar-wrapper center-div";
   contentdiv.appendChild(caldiv);
 
    // page is now ready, initialize the calendar...

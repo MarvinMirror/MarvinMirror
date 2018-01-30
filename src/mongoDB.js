@@ -14,12 +14,6 @@ var connectDB = function () {
 mongoose.models = {};
 mongoose.modelSchemas = {};
 
-var tokenSchema = new Schema({
-  db_id: Number,
-  accessToken: String,
-  refreshToken: String
-});
-
 var cantinaSchema = new Schema ({
   day: String,
   date: String,
@@ -34,6 +28,24 @@ var projectIDSchema = new Schema ({
   projectName: String
 });
 
+var studentSchema = new Schema ({
+  studentID: Number,
+  campus: Number,
+  cursus: Number,
+  correctionPoints: Number,
+  login: String,
+  displayName: String,
+  photo: String,
+  phone: String,
+  piscine: String
+});
+
+var tokenSchema = new Schema({
+  db_id: Number,
+  accessToken: String,
+  refreshToken: String
+});
+
 var testSchema = new Schema ({
   testID: String,
   testName: String
@@ -43,10 +55,11 @@ var marvinMongo = {
 
   Models: {
 
-    Token: mongoose.model('Tokens', tokenSchema),
     Menu: mongoose.model('Menu', cantinaSchema),
     ProjectID: mongoose.model('ProjectID', projectIDSchema),
-    Test: mongoose.model('Test', testSchema)
+    Student: mongoose.model('Student', testSchema),
+    Test: mongoose.model('Test', testSchema),
+    Token: mongoose.model('Tokens', tokenSchema)
 
   },
 

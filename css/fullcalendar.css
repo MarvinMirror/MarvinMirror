@@ -3,7 +3,7 @@
  * Docs & License: https://fullcalendar.io/
  * (c) 2017 Adam Shaw
  */
-
+/* 
 
 .fc {
 	direction: ltr;
@@ -14,9 +14,9 @@
 	text-align: right;
 }
 
-body .fc { /* extra precedence to overcome jqui */
+body .fc { //extra precedence to overcome jqui
 	font-size: 1em;
-}
+} */
 
 
 /* Colors
@@ -240,7 +240,7 @@ hr.fc-divider {
 	border-collapse: collapse;
 	border-spacing: 0;
 	font-size: 1em; /* normalize cross-browser */
-	color: green;
+	color: #72ff72;
 }
 
 .fc th {
@@ -694,7 +694,7 @@ TODO: more distinction between this file and common.css
 .fc-unthemed .fc-popover,
 .fc-unthemed .fc-list-view,
 .fc-unthemed .fc-list-heading td {
-	border-color: #ddd;
+	border-color: #fff;
 }
 
 .fc-unthemed .fc-popover {
@@ -713,6 +713,7 @@ TODO: more distinction between this file and common.css
 
 .fc-unthemed td.fc-today {
 	background: #fcf8e3;
+	color: black;
 }
 
 .fc-unthemed .fc-disabled-day {
@@ -951,6 +952,7 @@ NOTE: use percentage font sizes or else old IE chokes
 
 .fc-toolbar h2 {
 	margin: 0;
+	font-size: 4rem;
 }
 
 /* button layering (for border precedence) */

@@ -1,6 +1,8 @@
 var ftAPI = require('../src/ftAPI');
 var manageDOM = require('../src/manageDOM');
 var $ = require("jquery");
+var mongoose = require('mongoose');
+var Student = require('../src/mongoDB').Models.Student;
 
 'use strict';
 
@@ -72,13 +74,17 @@ var showStudentToScreen = (obj) => {
     
     if (obj != null) {    
 
+    console.log(obj);
+        
+
         var elements = [
             'student', 'ft_displayname', 'ft_login', 'ft_profile_pic',
             'ft_location', 'ft_level', 'ft_correction_points'
         ];
         
         // BUILDS DIVS IN HTML
-        manageDOM.array2Div(elements, "content");
+        manageDOM.array2Div(elements, "popup");
+        document.getElementById("student").className = "student center-div";
 
         student.name = "<p>" + obj.displayname  + "</p>";
         student.login = "<p>(" + obj.login + ")</p>";
@@ -150,6 +156,83 @@ var loadUser = () => {
     let popup = document.getElementById('popup');
     if (popup)
         document.body.removeChild(popup);
+}
+
+// Recursive call to get all projects and IDs and cycle through pages
+function getAllStudents (n) {
+    return getStudentJSON(n)
+         .then(() => {console.log(n); getAllStudents(n + 1)})
+         .catch(console.error);
+ }
+
+var getStudentJSON = (n) => {
+    let qs = {
+        sort: "id",
+        "page[size]": "100",
+        "page[number]": n
+    }
+    console.log(n);
+    return ftAPI.query42("/v2/users", qs)
+    .then(array => {
+        for (var i = 0; i < array.length; i++) {
+            let update = {
+                'studentID': array[i].id,
+                'campus' : 0,
+                'cursus' : 0,
+                'correctionPoints' : 0,
+                'login' : array[i].login,
+                'displayName' : 'n/a',
+                'photo' : 'n/a',
+                'phone' : 'n/a',
+                'piscine' : 'n/a'          
+            }
+            let find_query = {'studentID': array[i].id};
+            let options = { upsert: true, new: true, setDefaultsOnInsert: true  };
+            Student.findOneAndUpdate(find_query, update, options, () => {
+                console.log(update);
+            });
+        }
+        if (array.length === 0) throw ("no more pages");
+        return Promise.resolve();
+    })
+    .catch(e => {throw e});
+}
+
+var getLoginID = () => {
+    var login = document.getElementById('popup__form').value.toLowerCase();
+
+    query = Student.findOne({'login': 'test12'});
+    
+    query.exec((err, data) => {
+        if (err) console.error(err);
+        console.log(data);
+    }) ;
+
+    document.body.removeChild(document.getElementById('popup'));
+}
+
+var consoleStudentInfo = () => {
+    var login = document.getElementById('popup__form').value.toLowerCase();
+    
+    if (login !== null && login !== "") {
+        ftAPI.query42("/v2/users/?filter[login]=" + login)
+            .then(getStudentInfo)
+            .then( data => {
+                console.log(data.id);
+                console.log(data.campus[0].id);
+                console.log(data.cursus_users[0].cursus.id);
+                console.log(data.correction_point);
+                console.log(data.login);
+                console.log(data.displayname);
+                console.log(data.image_url);
+                console.log(data.phone);
+                console.log(data.pool_month + " " + data.pool_year);
+            })
+            .catch(console.error);
+    }
+
+    // THIS CODE WILL STAND UNTIL WE GET RID OF THE KEYBOARD
+    document.body.removeChild(document.getElementById('popup'));
 }
 
 // module.exports = loadStudent;

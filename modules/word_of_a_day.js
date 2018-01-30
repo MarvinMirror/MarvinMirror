@@ -9,7 +9,8 @@ function wordOfADay(flag) {
     'WOD', 'word', 'word_definition', 'word_example'
   ];
 
-manageDOM.array2Div(elements, "content");
+  manageDOM.array2Div(elements, "popup");
+  document.getElementById("WOD").className = "WOD center-div"
   if (flag)
   {  var wordAPI = config.urbanDictionaryAPI;
     console.log(wordAPI);}

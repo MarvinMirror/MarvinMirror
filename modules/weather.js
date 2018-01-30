@@ -39,7 +39,7 @@ function getWeather() {
 	var units = getUnits(document.getElementById('units_form').checked);
 	var deg = units === "metric" ? "C" : "F";
 
-	document.getElementById('weather_wrapper').className = "weather-wrapper";
+	document.getElementById('weather-corner').className = "weather-corner";
 	document.getElementById('w_img_wrap').appendChild(w_icon);
 
 	// making url for request to weather api
@@ -78,11 +78,11 @@ function getWeatherAtLocation(get_place, get_units) {
 
 	// array of elements for builing new html
 	var elements = [
-		'weather-content', 'wl_location', 'wl_img_wrap', 'wl_cur_temp', 'wl_conditions'
+		'weather-wrapper center-div', 'wl_location', 'wl_img_wrap', 'wl_cur_temp', 'wl_conditions'
 	];
 
 	// creating new html
-	manageDOM.array2Div(elements, "content");
+	manageDOM.array2Div(elements, "popup");
 
     var wl_icon = document.createElement("img");
 	wl_icon.id = "wlicon";
@@ -90,7 +90,6 @@ function getWeatherAtLocation(get_place, get_units) {
 	var deg = units === "metric" ? "C" : "F";
 
 	document.getElementById('wl_img_wrap').appendChild(wl_icon);
-	document.getElementById('content_wrapper').className = "weather-by-location";
 
 	// making url for request to weather api
 	var weatherAPI =

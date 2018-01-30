@@ -14,8 +14,8 @@ var windowSize = require('./config/config').window
 
 
 // Schedule daily tasks
-var jobDB = new CronJob ('*/20 * * * * *', () => { console.log(moment().format('h:mm:ss a')) }
-  , null, true, 'America/Los_Angeles');
+// var jobDB = new CronJob ('*/20 * * * * *', () => { console.log(moment().format('h:mm:ss a')) }
+//   , null, true, 'America/Los_Angeles');
 
 // jobDB.stop();
 

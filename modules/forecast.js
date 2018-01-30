@@ -35,14 +35,12 @@ function weatherForecast(get_place, get_units) {
 
 	// array of elements for builing new html
 	var elements = [
-		'forecast', 'fore_location', 'day00', 'day01', 'day02',
+		'forecast-wrapper center-div', 'fore_location', 'day00', 'day01', 'day02',
 		'day03', 'day04'
 	];
 
 	// creating new html
-	manageDOM.array2Div(elements, "content");
-
-	document.getElementById("content_wrapper").className = "forecast_wrapper";
+	manageDOM.array2Div(elements, "popup");
 
 	// making url for request to weather api
 	var weatherAPI =

@@ -1,4 +1,5 @@
-var info = require('../src/maps_info.js')
+var info = require('../src/maps_info.js');
+var marvin_reaction = require('../src/controller.js');
 
 function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_style) {
     //get HTML element to add new elements there
@@ -9,6 +10,7 @@ function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
         var start_c = 1;
         for (sections in zone_obj[row])
             {
+                var occupied = false;
                 var stations = zone_obj[row][sections];
                 if (stations.length > 0) {
                     var width = Math.round(stations[stations.length - 1]/2);
@@ -22,7 +24,11 @@ function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
                         var seat_num = zone_obj[row][sections][station]
                         seat.id = "station" + seat_num;
                         seat.setAttributeNode(creaty_element_style(Math.round(seat_num / 2), 1 + !(seat_num % 2)* 2))
-                        if (9 - row == get_row && zone_42[row][sections][station] == get_seat) seat.className = "seat-occupied"
+                        if (9 - row == get_row && zone_42[row][sections][station] == get_seat) 
+                        {
+                            seat.className = "seat-occupied";
+                            occupied = true;
+                        }
                             else seat.className = "seat"
                         var icon = document.createElement("img");
                         icon.setAttribute("src", "../img/mac.png")
@@ -30,7 +36,7 @@ function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
                         element.appendChild(seat)
                     }
                     var table_div = document.createElement("div")
-                    table_div.className = "table"
+                    table_div.className = (occupied) ? "table-occupied" : "table";
                     table_div.setAttributeNode(creaty_table_style(width, 1, start_c, 2 + (row - 1)* 4))
                     floor.appendChild(table_div)
                     floor.appendChild(element);
@@ -48,6 +54,7 @@ function create_floor_2(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
     //create sections/rows
     for (row in zone_obj)
     {
+        var occupied = false;
         var location = zone_style[row];
         var element = document.createElement("div")
         element.id = row;
@@ -63,7 +70,11 @@ function create_floor_2(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
             if (row === "0") row_start = row_start - 9;
             seat.id = "station" + zone_obj[row][station];
             seat.setAttributeNode(creaty_element_style(col_start, row_start))
-            if (zone_style['42_map'][row] == get_row && zone_42[row][station] == get_seat) seat.className = "seat-occupied"
+            if (zone_style['42_map'][row] == get_row && zone_42[row][station] == get_seat) 
+            {
+                seat.className = "seat-occupied";
+                occupied = true;
+            }
                 else seat.className = "seat"
             var icon = document.createElement("img");
             icon.setAttribute("src", "../img/mac.png")
@@ -81,7 +92,7 @@ function create_floor_2(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
             var start_r = (row % 2) ? zone_style.tables.odd_row[index] : zone_style.tables.even_row[index];
             if (row === "0") start_r = start_r - 9;
             var table_div = document.createElement("div")
-            table_div.className = "table"
+            table_div.className = (occupied) ? "table-occupied" : "table";
             table_div.setAttributeNode(creaty_table_style(table_size, 1, start_c, start_r))
             element.appendChild(table_div)
         }
@@ -111,7 +122,11 @@ function create_floor_3(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
             var row_start = zone_style.row[index];
             seat.id = "station" + zone_obj[row][station];
             seat.setAttributeNode(creaty_element_style(col_start, row_start))
-            if (row == get_row && zone_42[row][station] == get_seat) seat.className = "seat-occupied"
+            if (row == get_row && zone_42[row][station] == get_seat) 
+            {
+                seat.className = "seat-occupied";
+                occupied = true;
+            }
                 else seat.className = "seat"
             var icon = document.createElement("img");
             icon.setAttribute("src", "../img/mac.png")
@@ -125,7 +140,7 @@ function create_floor_3(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
             var start_c = zone_style.tables[table].start_c[row%2]
             var start_r = zone_style.tables[table].start_r[row%2]
             var table_div = document.createElement("div")
-            table_div.className = "table"
+            table_div.className = (occupied) ? "table-occupied" : "table";
             table_div.setAttributeNode(creaty_table_style(table_size[0], table_size[1], start_c, start_r))
             if (row < 10 || (row == 10 && table == 1)) element.appendChild(table_div)
         }
@@ -208,8 +223,8 @@ function send_no_student_message(message)
 
 function showMap(obj)
 {
-    // removes from "content" div of app any div with id "wrapper"
-    manageDOM.clearContent("content");
+    marvin_reaction.delete_gif();
+    marvin_reaction.talk_message();
     console.log(obj)
     if (obj != null) {
         var location = obj.location;
@@ -238,7 +253,9 @@ var getStudentID = function (obj) {
 
 // The first step is to get the user/:id by using the login from this endpoint
 var studentOnMap = () => {
-    
+   // removes from "content" div of app any div with id "wrapper"
+    manageDOM.clearContent("content"); 
+    marvin_reaction.process_gif();
     var login = document.getElementById('popup__form').value;
     
     if (login !== null) {

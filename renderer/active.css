@@ -583,23 +583,18 @@ body {
 
 /* 42 MAP */
 
-:root {
-	--size: 1fr;
-	--width: 30;
-	--height: 49;
-  }
 
 .zone {
-	display: grid;
-	grid-template-columns: repeat(var(--width), var(--size));
-	grid-template-rows: repeat(var(--height), var(--size));
+    display: grid;
+    grid-template-columns: repeat(var(--width), var(--size));
+    grid-template-rows: repeat(var(--height), var(--size));
 	background-color: black;
 	position: static;
 }
 
 .zone img {
 	display: block;
-	margin-left: auto;
+    margin-left: auto;
 	margin-right: auto;
 	max-width: 90%;
 	max-height: 90%;
@@ -607,26 +602,26 @@ body {
 
 
 .row_container_zone1 {
-	display: grid;
-	grid-template-rows: repeat(3, var(--size));
+    display: grid;
+    grid-template-rows: repeat(3, var(--size));
 }
 
 .row_container_zone2 {
-	display: grid;
-	grid-template-columns: repeat(14, var(--size));
-	grid-template-rows: repeat(14, var(--size));
+    display: grid;
+    grid-template-columns: repeat(14, var(--size));
+    grid-template-rows: repeat(14, var(--size));
 }
 
 .row_container_zone2_0 {
-	display: grid;
-	grid-template-columns: repeat(4, var(--size));
-	grid-template-rows: repeat(3, var(--size));
+    display: grid;
+    grid-template-columns: repeat(4, var(--size));
+    grid-template-rows: repeat(3, var(--size));
 }
 
 .row_container_zone3 {
 	display: grid;
-	grid-template-columns: repeat(6, var(--size));
-	grid-template-rows: repeat(7, var(--size));
+    grid-template-columns: repeat(6, var(--size));
+    grid-template-rows: repeat(7, var(--size));
 }
 
 .seat-occupied {
@@ -639,11 +634,15 @@ body {
 }
 
 .seat {
-	background-color: black;
+    background-color: black;
 }
 
 .table {
-	background-color: grey;
+    background-color: grey;
+}
+
+.table-occupied {
+    animation:         blinkChair 1s steps(4, start) infinite;
 }
 
 .user_position img{
@@ -657,8 +656,10 @@ body {
 
 #message {
 	font-size: 2rem;
+	color: white;
+  }
 
-}
+
 /* POPUP */
 
 .popup {
@@ -888,34 +889,6 @@ body .actions {
 	  transform: translate3d(-100%, 0, 0);
 	}
   }
-  .ticker-wrap {
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	overflow: hidden;
-	height: 4rem;
-	background-color: rgba(0, 0, 0, 0.9);
-	padding-left: 100%;
-  }
-  
-  .ticker {
-	display: inline-block;
-	height: 4rem;
-	line-height: 4rem;
-	white-space: nowrap;
-	padding-right: 100%;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;
-	animation-name: ticker;
-	animation-duration: 30s;
-  }
-  .ticker__item {
-	display: inline-block;
-	padding: 0 2rem;
-	font-size: 2rem;
-	color: white;
-  }
-
 
 /* STANDARDS */
 

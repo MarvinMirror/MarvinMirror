@@ -9,7 +9,7 @@
 			var reaction = require('../src/controller.js');
 			require('electron').ipcRenderer.on('sound', reaction.listen_gif);
 			require('electron').ipcRenderer.on('todo', reaction.command_execution);
-			require('electron').ipcRenderer.on('delete_gif', reaction.delete_gif);
+			require('electron').ipcRenderer.on('delete_gif', reaction.empty_response);
 		</script>
 
 	</head>

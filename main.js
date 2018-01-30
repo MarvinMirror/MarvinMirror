@@ -11,22 +11,24 @@ require('electron-reload')(__dirname)
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 
-var kwsProcess = spawn('node', ['./src/voice_main.js'], { detached: false })
-  // Handel messages from node
-	kwsProcess.stderr.on('data', function (data) {
-		var message = data.toString()
-		console.error("ERROR", message.substring(4))
-	})
 
-	kwsProcess.stdout.on('data', function (data) {
-   var message = data.toString()
-		console.log('[ ' + message + ' ]')
-		if (message.localeCompare("What do you want from me?!")) mainWindow.win.webContents.send('active', true);
-		if (message.includes("Marvin is listening")) mainWindow.win.webContents.send('sound', true);
-		if (message.includes("Delete_sound_gif")) mainWindow.win.webContents.send('delete_gif', true);
-		if (message.startsWith('{"text":')) mainWindow.win.webContents.send('todo', message);
-		
-	})
+var kwsProcess = spawn('node', ['./src/voice_main.js'], { detached: false })
+// Handel messages from node
+kwsProcess.stderr.on('data', function (data) {
+	var message = data.toString()
+	console.error("ERROR", message.substring(4))
+})
+// UNCOMMENT BELOW FOR VC USE
+
+kwsProcess.stdout.on('data', function (data) {
+ var message = data.toString()
+	console.log('[ ' + message + ' ]')
+	if (message.localeCompare("What do you want from me?!")) mainWindow.win.webContents.send('active', true);
+	if (message.includes("Marvin is listening")) mainWindow.win.webContents.send('sound', true);
+	if (message.includes("Delete_sound_gif")) mainWindow.win.webContents.send('delete_gif', true);
+	if (message.startsWith('{"text":')) mainWindow.win.webContents.send('todo', message);
+	
+})
 
 app.on('ready', mainWindow.createWindow)
 

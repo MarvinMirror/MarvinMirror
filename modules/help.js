@@ -1,5 +1,25 @@
 var manageDOM = require('../src/manageDOM');
 
+var helpHTML = '\
+    <div class="help-wrapper center-div">\
+        <div class="help__header">\
+            <h2>Start with "Hey Marvin," then try:</h2>\
+        </div>\
+        <ul>\
+            <li>What is the weather like in Paris?</li>\
+            <li>Show me the forecast for South Lake Tahoe.</li>\
+            <li>What is the cantina serving today (or tomorrow)?</li>\
+            <li>What is the time in Moscow?</li>\
+            <li>What is the word of the day?</li>\
+            <li>Show me 42\'s event calendar.</li>\
+            <li>Show a student\'s info.</li>\
+            <li>Show me a student\'s location in the lab.</li>\
+            <li>Show me a student\'s best projects.</li>\
+            <li>Who made you?</li>\
+        </ul>\
+    </div>\
+'
+
 
 function promptHelp() {
     
@@ -27,26 +47,8 @@ function marvinHelp() {
 
     //clear content div
     manageDOM.clearContent("content");
-
-    // var content = document.getElementById("content");
-
-    // array of elements for builing new html
-	var elements = [
-        'help', 'help__hey-marvin', 'help__weather', 'help__forecast',
-        'help__cantina', 'help__local-time',
-        'help__calendar', 'help__author'
-	];
 	
 	// creating new html
-	manageDOM.array2Div(elements, "content");
-    
-    document.getElementById("help__hey-marvin").innerHTML = 
-    "<h2>Start with \"Hey Marvin,\" then try:</h2>";
-
-    document.getElementById("help__weather").innerHTML = "What is the weather like in Paris?";
-    document.getElementById("help__forecast").innerHTML = "Show me the forecast for South Lake Tahoe.";
-    document.getElementById("help__local-time").innerHTML = "What is the time in Moscow?";
-    document.getElementById("help__cantina").innerHTML = "What is the cantina serving today (or tomorrow)?";
-    document.getElementById("help__calendar").innerHTML = "Show me 42's event calendar.";
-    document.getElementById("help__author").innerHTML = "Who made you?";
+	manageDOM.buildPopup();
+    document.getElementById("popup").innerHTML = helpHTML;
 }

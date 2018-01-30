@@ -128,9 +128,9 @@ var menuUpdateMongo = () => {
 
 // Retrieves today's or tomorrow's 42 Cantina menu from our DB
 function getMenu(str) {
-     
+    
     manageDOM.clearContent("content");
-
+    
     // query mongoDB for cached menu
     let day = str === "today" ? 'Today' : 'Tomorrow';
     let menuDay = Menu.findOne( {'day': day});
@@ -148,7 +148,7 @@ function getMenu(str) {
             if (data.meal_2 != null) { arr.push(JSON.parse(data.meal_2)) }
             
             // create an array of elements to build the DOM
-            let meal_list = ['cantina', 'cantina_greet'];
+            let meal_list = ['cantina-wrapper center-div', 'cantina-greet'];
             for (j = 0; j < arr.length; j++) {
                 meal_list.push("spacer" + i);
                 meal_list.push("time" + i);
@@ -160,9 +160,9 @@ function getMenu(str) {
                 meal_list.push("cafe");
             }
 
-            manageDOM.array2Div(meal_list, "content");
+            manageDOM.array2Div(meal_list, "popup");
             
-            document.getElementById("cantina_greet").innerHTML = "the 42 cantina menu for " + str + " is";
+            document.getElementById("cantina-greet").innerHTML = "the 42 cantina menu for " + str + " is";
             
             // for each div, give it a class and add appropriate content whether it is time or meal descroption
             for (i = 2; i < meal_list.length; i++) {
@@ -170,8 +170,11 @@ function getMenu(str) {
                     let date = new moment(Date.parse(arr[Math.floor((i - 2) / 3)].begin_at));
                     let date_end = new moment(Date.parse(arr[Math.floor((i - 2) / 3)].end_at));
                     let t = document.getElementById(meal_list[i]);
-                    t.setAttribute("class", "cantina_hours");
-                    t.innerHTML = "Served from " + date.format("HH:mm") + " until " + date_end.format("HH:mm") + ":";                   
+                    let item = arr[Math.floor((i - 1) / 3)];
+                    t.setAttribute("class", "cantina-hours");
+                    t.innerHTML = "<span style='text-decoration:underline'>\
+                    $" + item.price + "</span> -- \
+                    Served from " + date.format("HH:mm") + " until " + date_end.format("HH:mm") + ":";                   
                 }
                 else if (meal_list[i][0] === "m") {
                     let m = document.getElementById(meal_list[i]);
@@ -181,8 +184,7 @@ function getMenu(str) {
 
                     // Replaces 'line feed' and 'carriage return' with and HTML break
                     br = br.replace(/\r\n/g, '<br />');
-                    m.innerHTML = br + " ~ <span style='font-style:italic;text-decoration:underline'>\
-                                            $" + item.price + "</span>";              
+                    m.innerHTML = br;              
                 }
                 else if (meal_list[i][0] === 'c') {
                     let c = document.getElementById('cafe');

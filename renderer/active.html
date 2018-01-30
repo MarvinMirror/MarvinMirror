@@ -13,7 +13,7 @@
 		</script>
 
 	</head>
-	<body onload="dateTime(),getWeather(),loadUser(),incatvityTime(!null),connectDB(),gif()" id="body">
+	<body onload="fb_post(), slack_post(), dateTime(),getWeather(),loadUser(),incatvityTime(!null),connectDB(),gif()" id="body">
 		<div class="wrapper">
 			<div class="dashboard">
 				<div class="box date-time" id="date-time"></div>
@@ -25,10 +25,12 @@
 			</div>
 
 			<div class="box announcements">
+					<div class="class posts" id="fb_post"></div>
+					<div class="class posts" id="slack_post"></div>
 			</div>
 		</div>
 		<div class="actions">
-			<form>
+			<form style="display: none">
 				Location:<br>
 				<input type="text" id="location_form"><br>
 				in Celsius (default Fahrenheit)?
@@ -108,8 +110,14 @@
 					<button onclick="checkTest(checkDBProjects)" name="cron" value="cron">
 						DEV: DB CRON TEST
 					</button>
-					<button onclick="autoFocus()" name="yo" value="yo">
-						FOCUS STUDENT
+					<button onclick="getAllStudents(0)" name="yo" value="yo">
+						DEV: UPDATE MONGO STUDENT INFO
+					</button>
+					<button onclick="manageDOM.studentPopup('getLoginID')" name="yo" value="yo">
+						DEV: GET STUDENT ID
+					</button>
+					<button onclick="manageDOM.studentPopup('consoleStudentInfo')" name="yo" value="yo">
+						DEV: STUDENT INFO
 					</button>
 					<button onclick="menuUpdateMongo()" name="devCantina" value="devCantina">
 						DEV: UPDATE DB CANTINA
@@ -129,9 +137,11 @@
 		<script src="../modules/cantina.js"></script>
 		<script src="../modules/clock.js"></script>
 		<script src="../modules/corrections.js"></script>
+		<script src="../modules/fb_post.js"></script>
 		<script src="../modules/forecast.js"></script>
 		<script src="../modules/help.js"></script>
 		<script src="../modules/projects.js"></script>
+		<script src="../modules/slack_post.js"></script>
 		<script src="../modules/student.js"></script>
 		<script src="../modules/weather.js"></script>
 		<script src="../modules/maps.js"></script>

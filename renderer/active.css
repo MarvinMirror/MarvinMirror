@@ -820,6 +820,10 @@ body .actions {
     background-color: grey;
 }
 
+.table-occupied {
+    animation:         blinkChair 1s steps(4, start) infinite;
+}
+
 .user_position img{
 	max-width: 300%;
 	max-height: 300%;

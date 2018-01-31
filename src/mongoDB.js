@@ -57,7 +57,7 @@ var marvinMongo = {
 
     Menu: mongoose.model('Menu', cantinaSchema),
     ProjectID: mongoose.model('ProjectID', projectIDSchema),
-    Student: mongoose.model('Student', testSchema),
+    Student: mongoose.model('Student', studentSchema),
     Test: mongoose.model('Test', testSchema),
     Token: mongoose.model('Tokens', tokenSchema)
 

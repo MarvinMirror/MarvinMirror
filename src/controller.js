@@ -1,11 +1,4 @@
 
-function send_no_student_message(message)
-{
-    manageDOM.clearContent("content");
-    manageDOM.array2Div(["message","not_found"], "content");
-    document.getElementById('not_found').innerHTML = message;
-}
-
 var marvinReacts = {
     command_execution : (event, message) => {
         var result = JSON.parse(message)
@@ -24,7 +17,7 @@ var marvinReacts = {
         else if (result.intent === 'corrections') manageDOM.studentPopup('loadCorrections');
         else if (result.intent === 'map') manageDOM.studentPopup('studentOnMap');
         else if (result.intent === 'events') Calendar('month');
-        else send_no_student_message('You asked for "' + result.text + '".<br> I don\'t understand you.')
+        else send_message('You asked for "' + result.text + '".<br> I don\'t understand you.')
     },
 
     listen_gif : (event, message) => {
@@ -51,16 +44,23 @@ var marvinReacts = {
     },
 
     talk_message: () => {
-        manageDOM.array2Div(["message","message"], "dialog");
-        document.getElementById('message').innerHTML = "Hey, there! Talk to me!";
+        manageDOM.array2Div(["dialog-message","dialog-message"], "dialog");
+        document.getElementById('dialog-message').innerHTML = "Hey, there! Talk to me!";
     },
     
     empty_response: () => {
         manageDOM.clearContent("dialog");
-        setTimeout(talkToMe_dialog, 1000)
-        
-    }
+        setTimeout(talkToMe_dialog, 1000) 
+    },
 }
+function send_message(message)
+    {
+        manageDOM.clearContent("content");
+        manageDOM.array2Div(["message"], "popup");
+        var message_div = document.getElementById('message');
+        message_div.className += ' center-div';
+        message_div.innerHTML = message;
+    }
 
 function talkToMe_dialog() {
     var dialog = document.getElementById('dialog');

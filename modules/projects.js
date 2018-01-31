@@ -5,6 +5,8 @@ var config = require('../config/config');
 var ftOauth = config.ftOauth;
 var mongoose = require('mongoose');
 var ProjectID = require('../src/mongoDB').Models.ProjectID;
+var Student = require('../src/mongoDB').Models.Student;
+var Test = require('../src/mongoDB').Models.Test;
 
 // Dummy vars for testing
 var projectID = 1;
@@ -19,11 +21,17 @@ function getAllProjects (n) {
 
 // Dev function to make sure DB is updating appropriately
 function checkProjectDB () {
-    query = ProjectID.findOne({'projectID': 27});
-    
+    // query = ProjectID.findOne({'projectID': 27});
+    query = ProjectID.find();
+    // query = Student.find();
+    // query = Student.remove();
+    // query = Student.findOneAndUpdate({'studentID': 1234}, {'studentID': 1234, 'login': 'test12'}, {upsert: true});
+    // query = Student.create({'studentID': 1234});
+
     query.exec((err, data) => {
         if (err) console.error(err);
-        console.log(data.projectID + " : " + data.projectName);
+        // console.log(data.projectID + " : " + data.projectName);
+        console.log(data);
     }) ;
 }
 
@@ -35,27 +43,21 @@ function compare(a,b) {
 function printUserProjectSpecs (pass) {
     
     let arr = pass[1];
-    console.log(pass[0]);
 
     manageDOM.clearContent("content");
     
     for (i = 0 ; i < arr.length ; i++) {
         let obj = arr[i];
-        if (obj.status === "in_progress") {
-            console.log("Project: " + obj.project.name);    
-        }
+        // if (obj.status === "in_progress") {
+        //     console.log("Project: " + obj.project.name);    
+        // }
     }
 
     let done = [];
     for (i = 0 ; i < arr.length ; i++) {
         let obj = arr[i];
-        if (obj.cursus_ids[0] === 1 && obj.status === "finished"
-            // && obj.project.slug.search("piscine") < 0
-            // && obj.project.slug.search("hercules") < 0
-            ) {
+        if (obj.cursus_ids[0] === 1 && obj.status === "finished") {
             done.push(obj);
-            // console.log("Project: " + arr[i].project.name);
-            // console.log(obj);
         }
     }
     done.sort(compare);
@@ -69,15 +71,15 @@ function printUserProjectSpecs (pass) {
         divs.push("best-projects--" + i);
         innerName.push(obj.project.name);
         innerScore.push(obj.final_mark);
-        console.log("Project: " + obj.project.name + " & Score: " + obj.final_mark);
     }
 
-    manageDOM.array2Div(divs, "content");
+    manageDOM.array2Div(divs, "popup");
+    document.getElementById("best-projects").className = "best-projects center-div"
 
     let header = document.getElementById('best-projects__header');
     let person = document.getElementById('best-projects__person');
 
-    header.innerHTML = "Here are the top 5 projects for:";
+    header.innerHTML = "Here are the best-scoring projects for:";
     person.innerHTML = pass[0][0].login;
 
     header.setAttribute('class', 'best-projects__header');

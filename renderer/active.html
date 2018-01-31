@@ -13,7 +13,7 @@
 		</script>
 
 	</head>
-	<body onload="fb_post(), slack_post(), dateTime(),getWeather(),loadUser(),incatvityTime(!null),connectDB(),gif()" id="body">
+	<body onload="fb_post(), slack_post(), dateTime(),getWeather(),v2Users.userInfo(),incatvityTime(!null),connectDB(),gif()" id="body">
 		<div class="wrapper">
 			<div class="dashboard">
 				<div class="box date-time" id="date-time"></div>
@@ -42,7 +42,7 @@
 			<button onclick="weatherForecast()" name="forecast" value="forecast">
 				GET FORECAST
 			</button>
-			<button onclick="localDateTime()" name="localTime" value="localTime">
+			<button onclick="localDateTime('London')" name="localTime" value="localTime">
 				LOCAL TIME
 			</button>
 
@@ -75,10 +75,10 @@
 			</button>
 			<br /><br />
 			
-			<button onclick="manageDOM.studentPopup('loadUser')" name="user" value="user">
+			<button onclick="manageDOM.studentPopup('v2Users.userInfo')" name="user" value="user">
 				GET ME
 			</button>
-			<button onclick="manageDOM.studentPopup('loadStudent')" name="student" value="student">
+			<button onclick="manageDOM.studentPopup('v2Users.studentInfo')" name="student" value="student">
 				GET STUDENT
 			</button>
 			<button onclick="manageDOM.studentPopup('loadStudentProjects')" name="student" value="student">
@@ -137,6 +137,7 @@
 		<script src="../modules/cantina.js"></script>
 		<script src="../modules/clock.js"></script>
 		<script src="../modules/corrections.js"></script>
+		<script src="../modules/dev.js"></script>
 		<script src="../modules/fb_post.js"></script>
 		<script src="../modules/forecast.js"></script>
 		<script src="../modules/help.js"></script>

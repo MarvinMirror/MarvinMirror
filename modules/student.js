@@ -6,7 +6,7 @@ var Student = require('../src/mongoDB').Models.Student;
 
 'use strict';
 
-var getUser = function (obj) {
+let getUser = function (obj) {
 
     // removes from "content" div of app any div with id "wrapper"
     manageDOM.clearContent("user");
@@ -23,7 +23,6 @@ var getUser = function (obj) {
         manageDOM.array2Div(elements, "user");
 
         let splitName = obj.displayname.split(' ').join('<br />');
-        console.log(splitName);
 
         user.name = splitName;
         user.login = obj.login;
@@ -67,15 +66,12 @@ var getUser = function (obj) {
 }
 
 // CREATES HTML ELEMENTS WITH STUDENT INFO AND ADDS TO DOM
-var showStudentToScreen = (obj) => {
+let showStudentToScreen = (obj) => {
     
     // CLEARS THE MAIN BOX ON THE MIRROR OF CONTENT
     manageDOM.clearContent("content");
     
     if (obj != null) {    
-
-    console.log(obj);
-        
 
         var elements = [
             'student', 'ft_displayname', 'ft_login', 'ft_profile_pic',
@@ -105,134 +101,52 @@ var showStudentToScreen = (obj) => {
         document.getElementById('ft_correction_points').innerHTML = student.correction_point;
     }
 
-}    
-
-// There is no direct-to-student from login via the API so 2 requests are needed. This is the second and 
-// feeds comprehensive student data object to callback function
-var getStudentInfo = (obj) => {
-
-    if (obj.length > 0)
-        return ftAPI.query42("/v2/users/" + obj[0].id);
-    else 
-        return (null);
-
 }
 
-// The first step is to get the user/:id by using the login from this endpoint
-var loadStudent = () => {
-    
-    var login = document.getElementById('popup__form').value.toLowerCase();
-    
-    if (login !== null && login !== "") {
-        ftAPI.query42("/v2/users/?filter[login]=" + login)
-            .then(getStudentInfo)
-            .then(showStudentToScreen)
-            .catch(console.error);
-    }
+var v2Users = {
 
-    // THIS CODE WILL STAND UNTIL WE GET RID OF THE KEYBOARD
-    document.body.removeChild(document.getElementById('popup'));
-}
-
-// 42 API query that will build a user whether someone signs in or not
-var loadUser = () => {
+    // The first step is to get the user/:id by using the login from this endpoint
+    studentInfo: () => {
         
-    var login = null;
-    var form = document.getElementById('popup__form');
-
-    if (form)
-        login = form.value.toLowerCase();
-    
-    if (!login || login === "")
-        getUser(null);
-    else {
-        ftAPI.query42("/v2/users/?filter[login]=" + login)
-            .then(getStudentInfo)
-            .then(getUser)
-            .catch(console.error);
-    }
-
-    // THIS CODE WILL STAND UNTIL WE GET RID OF THE KEYBOARD
-    let popup = document.getElementById('popup');
-    if (popup)
-        document.body.removeChild(popup);
-}
-
-// Recursive call to get all projects and IDs and cycle through pages
-function getAllStudents (n) {
-    return getStudentJSON(n)
-         .then(() => {console.log(n); getAllStudents(n + 1)})
-         .catch(console.error);
- }
-
-var getStudentJSON = (n) => {
-    let qs = {
-        sort: "id",
-        "page[size]": "100",
-        "page[number]": n
-    }
-    console.log(n);
-    return ftAPI.query42("/v2/users", qs)
-    .then(array => {
-        for (var i = 0; i < array.length; i++) {
-            let update = {
-                'studentID': array[i].id,
-                'campus' : 0,
-                'cursus' : 0,
-                'correctionPoints' : 0,
-                'login' : array[i].login,
-                'displayName' : 'n/a',
-                'photo' : 'n/a',
-                'phone' : 'n/a',
-                'piscine' : 'n/a'          
-            }
-            let find_query = {'studentID': array[i].id};
-            let options = { upsert: true, new: true, setDefaultsOnInsert: true  };
-            Student.findOneAndUpdate(find_query, update, options, () => {
-                console.log(update);
+        let login = document.getElementById('popup__form').value.toLowerCase();
+        
+        if (login !== null && login !== "") {
+            // query = Student.findOne({'login': login});
+            
+            Student.findOne({'login': login}).exec((err, data) => {
+                ftAPI.query42("/v2/users/" + data.studentID)
+                    .then(showStudentToScreen)
+                    .catch(console.error);
             });
         }
-        if (array.length === 0) throw ("no more pages");
-        return Promise.resolve();
-    })
-    .catch(e => {throw e});
-}
 
-var getLoginID = () => {
-    var login = document.getElementById('popup__form').value.toLowerCase();
+        // THIS CODE WILL STAND UNTIL WE GET RID OF THE KEYBOARD
+        document.body.removeChild(document.getElementById('popup'));
+    },
 
-    query = Student.findOne({'login': 'test12'});
+    userInfo: () => {
+        let login = null;
+        let form = document.getElementById('popup__form');
     
-    query.exec((err, data) => {
-        if (err) console.error(err);
-        console.log(data);
-    }) ;
-
-    document.body.removeChild(document.getElementById('popup'));
-}
-
-var consoleStudentInfo = () => {
-    var login = document.getElementById('popup__form').value.toLowerCase();
+        if (form)
+            login = form.value.toLowerCase();
+        
+        if (!login || login === "")
+            getUser(null);
+        else {
+            Student.findOne({'login': login}).exec((err, data) => {
+                ftAPI.query42("/v2/users/" + data.studentID)
+                    .then(getUser)
+                    .catch(console.error);
+            });
+        }
     
-    if (login !== null && login !== "") {
-        ftAPI.query42("/v2/users/?filter[login]=" + login)
-            .then(getStudentInfo)
-            .then( data => {
-                console.log(data.id);
-                console.log(data.campus[0].id);
-                console.log(data.cursus_users[0].cursus.id);
-                console.log(data.correction_point);
-                console.log(data.login);
-                console.log(data.displayname);
-                console.log(data.image_url);
-                console.log(data.phone);
-                console.log(data.pool_month + " " + data.pool_year);
-            })
-            .catch(console.error);
+        // THIS CODE WILL STAND UNTIL WE GET CARD READER
+        let popup = document.getElementById('popup');
+        if (popup)
+            document.body.removeChild(popup);
     }
 
-    // THIS CODE WILL STAND UNTIL WE GET RID OF THE KEYBOARD
-    document.body.removeChild(document.getElementById('popup'));
 }
 
-// module.exports = loadStudent;
+module.exports = v2Users;

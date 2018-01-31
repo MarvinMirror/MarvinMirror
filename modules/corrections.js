@@ -56,26 +56,14 @@ function dateFormat(dateTime, format) {
     return moment(Date.parse(dateTime)).format(format);
 }
 
-// Handles filling html with student information passed as JSON object
-function buildStudentCorrections(obj) {
-   
-       document.getElementById('title').innerHTML = "Last correction:";
-       document.getElementById('begin_at').innerHTML = dateFormat(obj.begin_at, "MMMM D, YYYY @ HH:mm");
-       document.getElementById('corrected').innerHTML = obj.correcteds[0].login;
-       document.getElementById('corrector').innerHTML = "Corrected by: " + obj.corrector.login;
-       document.getElementById('project').innerHTML = "Project ID: " + obj.team.project_id;
-       document.getElementById('final_mark').innerHTML = "Final mark: " + obj.final_mark;
-       document.getElementById('comments').innerHTML = "Corrector comments: " + obj.comment;
-   }
-
-var showCorrections = function (obj) {
+var showCorrections = function (data) {
     
-    console.log(obj);
+    console.log(data);
 
     // removes from "content" div of app any div with id "wrapper"
     manageDOM.clearContent("content");
     
-    if (obj != null) {
+    if (data != null) {
             
         // create an array with all of the separate divs with
         // appropriate names here
@@ -85,9 +73,20 @@ var showCorrections = function (obj) {
         ];
         
         // creates HTML
-        manageDOM.array2Div(elements, "content");
+        manageDOM.array2Div(elements, "popup");
 
-        buildStudentCorrections(obj[0]);
+        document.getElementById('corrections').className = "corrections center-div";
+    
+        let obj = data[0];
+        console.log(obj);
+
+        document.getElementById('title').innerHTML = "Last correction:";
+        document.getElementById('begin_at').innerHTML = dateFormat(obj.begin_at, "MMMM D, YYYY @ HH:mm");
+        document.getElementById('corrected').innerHTML = obj.correcteds[0].login;
+        document.getElementById('corrector').innerHTML = "Corrected by: " + obj.corrector.login;
+        document.getElementById('project').innerHTML = "Project ID: " + obj.team.project_id;
+        document.getElementById('final_mark').innerHTML = "Final mark: " + obj.final_mark;
+        document.getElementById('comments').innerHTML = "Corrector comments: " + obj.comment;
     }
 }
 

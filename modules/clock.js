@@ -114,9 +114,10 @@ function dateLocalTime(timezone, place) {
 
         var dateString = now.format("dddd, MMMM D");
 
-        manageDOM.array2Div(['locale', 'dateDiv'], "content");
+        manageDOM.array2Div(['locale', 'dateDiv'], "popup");
 
-        var contentdiv = document.getElementById("content_wrapper");
+        var contentdiv = document.getElementById("locale");
+        contentdiv.className = "locale center-div"
         contentdiv.innerHTML = "Now in " + place + ':'
 
         var localTimediv = document.createElement("div");
@@ -154,7 +155,6 @@ function dateLocalTime(timezone, place) {
 function localDateTime(place)
 {
     if (place.length != 0) {
-
         getTimeZone(place)
     }
     else

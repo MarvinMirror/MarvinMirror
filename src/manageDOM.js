@@ -9,7 +9,7 @@ var manageDOM = {
         let checkPopup = document.getElementById('popup');
 
         if (checkPopup) {
-            this.delPopup();
+            manageDOM.delPopup();
         }
 
         let popup = document.createElement('div');

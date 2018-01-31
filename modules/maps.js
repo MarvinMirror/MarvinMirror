@@ -1,9 +1,10 @@
 var info = require('../src/maps_info.js');
 var marvin_reaction = require('../src/controller.js');
+var manageDOM = require('../src/manageDOM');
 
 function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_style) {
     //get HTML element to add new elements there
-    var floor = document.getElementById(zone_name);
+    var floor = document.getElementById("zone");
     //create sections/rows
     for (row in zone_obj)
     {
@@ -17,7 +18,7 @@ function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
                     var element = document.createElement("div");
                     element.id = "row " + row + " " + sections;
                     element.className = "row_container_" + zone_name;
-                    element.setAttributeNode(creaty_row_style(width, 3, start_c, 1 + (row - 1)* 4));
+                    element.setAttributeNode(creaty_row_style(width, 3, start_c + 1, 2 + (row - 1)* 4));
                     for (station in zone_obj[row][sections])
                     {
                         var seat = document.createElement("div")
@@ -37,7 +38,7 @@ function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
                     }
                     var table_div = document.createElement("div")
                     table_div.className = (occupied) ? "table-occupied" : "table";
-                    table_div.setAttributeNode(creaty_table_style(width, 1, start_c, 2 + (row - 1)* 4))
+                    table_div.setAttributeNode(creaty_table_style(width, 1, start_c + 1, 3 + (row - 1)* 4))
                     floor.appendChild(table_div)
                     floor.appendChild(element);
                     start_c = start_c + width + 1;
@@ -49,8 +50,7 @@ function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
 
 function create_floor_2(zone_name, get_row, get_seat, zone_obj, zone_42, zone_style) {
     //get HTML element to add new elements there
-    var floor = document.getElementById(zone_name);
-    floor.className = "zone";
+    var floor = document.getElementById("zone");
     //create sections/rows
     for (row in zone_obj)
     {
@@ -60,7 +60,7 @@ function create_floor_2(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
         element.id = row;
         if (row === "0") element.className = "row_container_" + zone_name + '_0';
             else element.className = "row_container_" + zone_name;
-        element.setAttributeNode(creaty_element_style(location[0], location[1]));
+        element.setAttributeNode(creaty_element_style(location[0] + 1, location[1] + 1));
         for (station in zone_obj[row])
         {
             var seat = document.createElement("div")
@@ -104,15 +104,16 @@ function create_floor_2(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
 
 function create_floor_3(zone_name, get_row, get_seat, zone_obj, zone_42, zone_style) {
     //get HTML element to add new elements there
-    var floor = document.getElementById(zone_name);
+    var floor = document.getElementById("zone");
     //create sections/rows
     for (row in zone_obj)
     {
+        var occupied = false;
         var location = zone_style[row];
         var element = document.createElement("div")
         element.id = row;
         element.className = "row_container_" + zone_name;
-        element.setAttributeNode(creaty_element_style(location[0], location[1]))
+        element.setAttributeNode(creaty_element_style(location[0] + 1, location[1] + 1))
         //create seats in each section/row
         for (station in zone_obj[row])
         {
@@ -146,7 +147,7 @@ function create_floor_3(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
         }
     floor.appendChild(element)
     }
-    add_user_position(zone_name, zone_style.width, zone_style.height)
+    add_user_position(zone_name, zone_style.width + 1, zone_style.height + 1)
 }
 
 function creaty_element_style(col_start, row_start)
@@ -178,8 +179,8 @@ function creaty_row1_style(col_start, col_end, row_start, row_end)
 }
 
 function add_user_position(zone_name, width, height) {
-    if (zone_name === 'zone1') height = 1;
-    else if (zone_name == 'zone3') width = 1;
+    if (zone_name === 'zone1') height = 2;
+    else if (zone_name == 'zone3') width = 2;
     var userPosition = document.getElementById("userPosition")
     userPosition.className = "user_position"
     userPosition.setAttributeNode(creaty_table_style(1, 1, width, height))
@@ -190,16 +191,17 @@ function add_user_position(zone_name, width, height) {
 
 function zone(num, row, seat) {
 
-    manageDOM.array2Div(["zone","zone" + num,"userPosition"], "content");
-    document.getElementById("zone" + num).className = "zone";
+    manageDOM.array2Div(["zone","userPosition","zone_name"], "popup");
+    document.getElementById("zone").className = "zone";
     var zone_obj = info["zone" + num].map
     var zone_42 = info["zone" + num]['42']
     var zone_style = info["zone" + num].style
-    var element = document.getElementById('content');
-    var shortestWindowSide = (element.clientWidth > element.clientHeight) ? element.clientHeight : element.clientWidth;
-    var widestZoneSide = (zone_style.width > zone_style.height) ? zone_style.width : zone_style.height;
-    var seat_size = Math.floor(shortestWindowSide/widestZoneSide);
-    
+    var element = document.getElementById('zone');
+    var zone_name = document.getElementById('zone_name');
+    zone_name.innerHTML = 'Zone ' + num;
+    zone_name.className = 'zone_name';
+    zone_name.setAttributeNode(creaty_table_style(zone_style.width, 1, 2, 1))
+    var seat_size = (element.clientWidth/zone_style.width > element.clientHeight/zone_style.height) ? element.clientHeight/zone_style.height : element.clientWidth/zone_style.width;
     document.documentElement.style.setProperty(`--size`, seat_size + 'px');
     document.documentElement.style.setProperty(`--width`, zone_style.width);
     document.documentElement.style.setProperty(`--height`, zone_style.height);
@@ -214,29 +216,22 @@ function zone(num, row, seat) {
     //    create_floor_4("zone" + num, row, seat);
 }
 
-function send_no_student_message(message)
-{
-    manageDOM.array2Div(["message","not_found"], "content");
-    var message_div = document.getElementById('not_found');
-    message_div.innerHTML = message;
-}
-
 function showMap(obj)
 {
     marvin_reaction.delete_gif();
     marvin_reaction.talk_message();
+    manageDOM.buildPopup();
     console.log(obj)
     if (obj != null) {
         var location = obj.location;
         if (location != null)
         {
             var res = location.split(/[^1-9]/);
-            console.log(res)
             zone(res[2], res[3], res[4]);
         }
-        else send_no_student_message(obj.displayname + ' is not here at the moment');
+        else send_no_student_message(obj);
     }
-    else send_no_student_message('I didn\'t find this username in our database');
+    else send_message('I can not find any user with this login in our database');
 }
 
 // There is no direct-to-student from login via the API so 2 requests are needed. This is the second and 
@@ -251,13 +246,30 @@ var getStudentID = function (obj) {
     }
 }
 
+var absent_student = function(student) 
+{
+    return ('\
+        <img src="' + student.image_url + '">\
+        <p>'+student.displayname+'</p>\
+        <p>('+student.login+')</p>\
+        <p> is not here</p>')
+}
+
+var send_no_student_message = function (student) {
+    manageDOM.clearContent("content");
+    manageDOM.array2Div(["message"], "popup");
+    var message_div = document.getElementById('message');
+    message_div.className += ' center-div';
+    message_div.innerHTML = absent_student(student);
+}
+
 // The first step is to get the user/:id by using the login from this endpoint
 var studentOnMap = () => {
    // removes from "content" div of app any div with id "wrapper"
-    manageDOM.clearContent("content"); 
+    manageDOM.clearContent("content");
+    
     marvin_reaction.process_gif();
     var login = document.getElementById('popup__form').value;
-    
     if (login !== null) {
         ftAPI.query42("/v2/users/?filter[login]=" + login)
             .then(getStudentID)
@@ -265,7 +277,7 @@ var studentOnMap = () => {
             .catch(console.error);
     }
 
-    document.body.removeChild(document.getElementById('popup'));
+    //document.body.removeChild(document.getElementById('popup'));
 }
 
-module.exports = loadStudent;
+//module.exports = loadStudent;

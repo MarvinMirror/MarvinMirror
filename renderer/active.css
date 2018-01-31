@@ -599,11 +599,15 @@ body {
 
 .zone {
     display: grid;
-    grid-template-columns: repeat(var(--width), var(--size));
-    grid-template-rows: repeat(var(--height), var(--size));
+    grid-template-columns: 1fr repeat(var(--width), var(--size)) 1fr;
+    grid-template-rows: auto repeat(var(--height), var(--size)) auto;
 	background-color: black;
-	position: static;
-}
+	position: absolute;
+	height: 80vh;
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+	}
 
 .zone img {
 	display: block;
@@ -613,7 +617,10 @@ body {
 	max-height: 90%;
 }
 
-
+.zone_name {
+	font-size: 5rem;
+	align-self: flex-end;
+}
 .row_container_zone1 {
     display: grid;
     grid-template-rows: repeat(3, var(--size));
@@ -655,6 +662,7 @@ body {
 }
 
 .table-occupied {
+	background-color: grey;
     animation:         blinkChair 1s steps(4, start) infinite;
 }
 
@@ -667,10 +675,20 @@ body {
 	font-size: 2rem;
 }
 
-#message {
+.message {
+	display: grid;
+	grid-template-rows: repeat(4, auto);
 	font-size: 2rem;
 	color: white;
   }
+
+.message img {
+	margin-left: 50%;
+	transform: translate(-50%, -50%);
+	grid-row: 1/2;
+	max-width: 20%;
+	max-height: 20%;
+}
 
 
 /* POPUP */
@@ -684,6 +702,7 @@ body {
 	z-index: 1000;
 	position: fixed;
 	transition: all .3s;
+	justify-content: center;
 }
 
 .popup > div {
@@ -751,7 +770,7 @@ body .developer {
 .actions button {
 	width: 100%;
 	display: block;
-	color: black;
+	color: white;
 }
 
 /* ACTION BUTTONS */

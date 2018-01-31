@@ -18,7 +18,7 @@ var manageDOM = {
         popup.setAttribute('id', 'popup');
         popup.setAttribute('class', 'popup');
 
-        // setTimeout(manageDOM.delPopup, timer / 2);
+        setTimeout(manageDOM.delPopup, timer / 2);
         // setTimeout(manageDOM.delPopup, 10000);
     },
 

@@ -11,8 +11,8 @@ var marvinReacts = {
         else if (result.intent === 'help') marvinHelp();
         else if (result.intent === 'authors') authors();
         else if (result.intent === 'word_of_the_day') wordOfADay(1);
-        else if (result.intent === 'get_me') manageDOM.studentPopup('loadUser');
-        else if (result.intent === 'get_student') manageDOM.studentPopup('loadStudent');
+        else if (result.intent === 'get_me') manageDOM.studentPopup('v2Users.userInfo');
+        else if (result.intent === 'get_student') manageDOM.studentPopup('v2Users.studentInfo');
         else if (result.intent === 'projects') manageDOM.studentPopup('loadStudentProjects');
         else if (result.intent === 'corrections') manageDOM.studentPopup('loadCorrections');
         else if (result.intent === 'map') manageDOM.studentPopup('studentOnMap');
@@ -23,6 +23,7 @@ var marvinReacts = {
     listen_gif : (event, message) => {
         manageDOM.clearContent("content");
         manageDOM.clearContent("dialog");
+        document.body.removeChild(document.getElementById('popup'));
         manageDOM.array2Div(["sound_gif","sound_gif"], "dialog");
         var sound_div = document.getElementById('sound_gif');
         var gif = document.createElement("img");

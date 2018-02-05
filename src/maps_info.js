@@ -45,8 +45,9 @@ var data = {
             },
         },
         "style" : {
+            "position" : [15 ,35],
             "width" : 36,
-            "height" : 30, 
+            "height" : 45, 
         },
         "42" : {
             "1" : {
@@ -110,6 +111,7 @@ var data = {
         },
         "style" : 
           {
+            "position" : [25, 37],
             "width" : 29,
             "height" : 74, 
             "42_map" : [12,9,10,11,7,8,6,5,3,4,2,2,11,1],
@@ -183,8 +185,9 @@ var data = {
           },
           "style" : 
           {
+            "position" : [3, 42],
             "width" : 13,
-            "height" : 39, 
+            "height" : 54, 
             //location of the rows/section
             "1" : [8, 33],
             "2" : [1, 29],

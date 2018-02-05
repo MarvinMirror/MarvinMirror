@@ -45,7 +45,6 @@ function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
                 }
             }
     }
-    add_user_position(zone_name, zone_style.width, zone_style.height)
 }
 
 function create_floor_2(zone_name, get_row, get_seat, zone_obj, zone_42, zone_style) {
@@ -99,7 +98,7 @@ function create_floor_2(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
         floor.appendChild(element);
         
     }
-    add_user_position(zone_name, zone_style.width, zone_style.height)
+
 }
 
 function create_floor_3(zone_name, get_row, get_seat, zone_obj, zone_42, zone_style) {
@@ -147,7 +146,6 @@ function create_floor_3(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
         }
     floor.appendChild(element)
     }
-    add_user_position(zone_name, zone_style.width + 1, zone_style.height + 1)
 }
 
 function creaty_element_style(col_start, row_start)
@@ -178,9 +176,29 @@ function creaty_row1_style(col_start, col_end, row_start, row_end)
     return (att);
 }
 
+function add_student_info(student, position)
+{
+    var studentPosition = document.getElementById("studentPosition")
+    studentPosition.className = "student_position";
+    studentPosition.setAttributeNode(creaty_table_style(10, 10, position[0], position[1]));
+    studentPosition.innerHTML = student_info(student);
+}
+
+function add_zone_name(num, zone_style)
+{
+    var zone_name = document.getElementById('zone_name');
+    zone_name.innerHTML = 'Zone ' + num;
+    zone_name.className = 'zone_name';
+    zone_name.setAttributeNode(creaty_table_style(zone_style.width, 1, 2, 1));
+}
+
 function add_user_position(zone_name, width, height) {
-    if (zone_name === 'zone1') height = 2;
-    else if (zone_name == 'zone3') width = 2;
+    if (zone_name === '1') height = 2;
+    else if (zone_name == '3') 
+    {
+        width = 2;
+        height += 1;
+    }
     var userPosition = document.getElementById("userPosition")
     userPosition.className = "user_position"
     userPosition.setAttributeNode(creaty_table_style(1, 1, width, height))
@@ -189,18 +207,14 @@ function add_user_position(zone_name, width, height) {
     userPosition.appendChild(icon);
 }
 
-function zone(num, row, seat) {
+function zone(num, row, seat, student) {
 
-    manageDOM.array2Div(["zone","userPosition","zone_name"], "popup");
+    manageDOM.array2Div(["zone","userPosition","zone_name", "studentPosition"], "popup");
     document.getElementById("zone").className = "zone";
     var zone_obj = info["zone" + num].map
     var zone_42 = info["zone" + num]['42']
     var zone_style = info["zone" + num].style
     var element = document.getElementById('zone');
-    var zone_name = document.getElementById('zone_name');
-    zone_name.innerHTML = 'Zone ' + num;
-    zone_name.className = 'zone_name';
-    zone_name.setAttributeNode(creaty_table_style(zone_style.width, 1, 2, 1))
     var seat_size = (element.clientWidth/zone_style.width > element.clientHeight/zone_style.height) ? element.clientHeight/zone_style.height : element.clientWidth/zone_style.width;
     document.documentElement.style.setProperty(`--size`, seat_size + 'px');
     document.documentElement.style.setProperty(`--width`, zone_style.width);
@@ -214,6 +228,9 @@ function zone(num, row, seat) {
         create_floor_3("zone" + num, row, seat, zone_obj, zone_42, zone_style);
     //if (num == 4)
     //    create_floor_4("zone" + num, row, seat);
+    add_user_position(num, zone_style.width, zone_style.height);
+    add_student_info(student, zone_style.position);
+    add_zone_name(num, zone_style);
 }
 
 function showMap(obj)
@@ -227,7 +244,7 @@ function showMap(obj)
         if (location != null)
         {
             var res = location.split(/[^1-9]/);
-            zone(res[2], res[3], res[4]);
+            zone(res[2], res[3], res[4], obj);
         }
         else send_no_student_message(obj);
     }
@@ -255,6 +272,14 @@ var absent_student = function(student)
         <p> is not here</p>')
 }
 
+var student_info = function(student) 
+{
+    return ('\
+        <p>'+student.displayname+'</p>\
+        <p>('+student.login+')</p>\
+        <img src="' + student.image_url + '">')
+}
+
 var send_no_student_message = function (student) {
     manageDOM.clearContent("content");
     manageDOM.array2Div(["message"], "popup");
@@ -277,7 +302,7 @@ var studentOnMap = () => {
             .catch(console.error);
     }
 
-    //document.body.removeChild(document.getElementById('popup'));
+    document.body.removeChild(document.getElementById('popup'));
 }
 
 //module.exports = loadStudent;

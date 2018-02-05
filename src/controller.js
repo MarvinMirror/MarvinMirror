@@ -17,6 +17,8 @@ var marvinReacts = {
         else if (result.intent === 'corrections') manageDOM.studentPopup('loadCorrections');
         else if (result.intent === 'map') manageDOM.studentPopup('studentOnMap');
         else if (result.intent === 'events') Calendar('month');
+        else if (result.intent === 'wikiDefinition') wikiDefinition(result.wikiword);
+
         else send_message('You asked for "' + result.text + '".<br> I don\'t understand you.')
     },
 
@@ -28,7 +30,7 @@ var marvinReacts = {
         var sound_div = document.getElementById('sound_gif');
         var gif = document.createElement("img");
         gif.setAttribute("src", "../img/giphy.gif");
-        sound_div.appendChild(gif);  
+        sound_div.appendChild(gif);
     },
 
     process_gif: () => {
@@ -37,9 +39,9 @@ var marvinReacts = {
         var sound_div = document.getElementById('process_gif');
         var gif = document.createElement("img");
         gif.setAttribute("src", "../img/giphy2.gif");
-        sound_div.appendChild(gif);  
+        sound_div.appendChild(gif);
     },
-    
+
     delete_gif : (event, message) => {
         manageDOM.clearContent("dialog");
     },
@@ -48,10 +50,10 @@ var marvinReacts = {
         manageDOM.array2Div(["dialog-message","dialog-message"], "dialog");
         document.getElementById('dialog-message').innerHTML = "Hey, there! Talk to me!";
     },
-    
+
     empty_response: () => {
         manageDOM.clearContent("dialog");
-        setTimeout(talkToMe_dialog, 1000) 
+        setTimeout(talkToMe_dialog, 1000)
     },
 }
 function send_message(message)
@@ -75,7 +77,7 @@ function gif() {
     var sound_div = document.getElementById('sound_gif');
     var gif_img = document.createElement("img");
     gif_img.setAttribute("src", "../img/giphy.gif");
-    sound_div.appendChild(gif_img); 
+    sound_div.appendChild(gif_img);
 }
 
 module.exports = marvinReacts;

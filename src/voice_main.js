@@ -35,6 +35,7 @@ var nlp = {
             info.intent = (result.entities.intent !== undefined) ? result.entities.intent[0].value : 'I do not know that';
             info.location = (result.entities.location !== undefined) ? result.entities.location[0].value : null;
             info.units = (result.entities.degrees !== undefined) ? result.entities.degrees[0].value : null;
+            info.wikiword = (result.entities.wikipedia_search_query !== undefined) ? result.entities.wikipedia_search_query[0].value : null;
             console.log(JSON.stringify(info))
             return (info)
         })

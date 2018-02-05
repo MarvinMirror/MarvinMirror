@@ -646,11 +646,11 @@ body {
 
 .seat-occupied {
 	background-color: red;
-	animation:         blinkChair 1s steps(3, start) infinite;	
+	animation:         blinkChair 1s steps(3, start) infinite;
 }
 
 .seat-occupied img {
-	animation:         blink 1s steps(3, start) infinite;	
+	animation:         blink 1s steps(3, start) infinite;
 }
 
 .seat {
@@ -804,7 +804,7 @@ body .actions {
 
     100% {
         opacity: 1;
-        transform: translate(0);      
+        transform: translate(0);
     }
 }
 
@@ -820,7 +820,7 @@ body .actions {
 
     100% {
         opacity: 1;
-        transform: translate(0);      
+        transform: translate(0);
     }
 }
 
@@ -836,7 +836,7 @@ body .actions {
 
     100% {
         opacity: 1;
-        transform: translate(0);      
+        transform: translate(0);
     }
 }
 
@@ -845,14 +845,14 @@ body .actions {
 		opacity: 0;
         transform: translate(-5rem, 5rem);
     }
-	
+
     80% {
 		transform: translate(1rem, -1rem);
     }
-	
+
     100% {
 		opacity: 1;
-        transform: translate(0);      
+        transform: translate(0);
     }
 }
 
@@ -861,14 +861,14 @@ body .actions {
 		opacity: 0;
         transform: translateX(-10rem);
     }
-	
+
     80% {
 		transform: translateX(2rem) scale(1.5);
     }
-	
+
     100% {
 		opacity: 1;
-        transform: translate(0) scale(1);      
+        transform: translate(0) scale(1);
     }
 }
 
@@ -877,14 +877,14 @@ body .actions {
 		opacity: 0;
         transform: translateX(10rem);
     }
-	
+
     80% {
 		transform: translateX(-2rem) scale(1.5);
     }
-	
+
     100% {
 		opacity: 1;
-        transform: translate(0) scale(1);      
+        transform: translate(0) scale(1);
     }
 }
 
@@ -903,7 +903,7 @@ body .actions {
 
 	100% {
 		opacity: 1;
-		transform: scale(1);      
+		transform: scale(1);
 	}
 }
 

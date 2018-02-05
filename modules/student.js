@@ -3,6 +3,7 @@ var manageDOM = require('../src/manageDOM');
 var $ = require("jquery");
 var mongoose = require('mongoose');
 var Student = require('../src/mongoDB').Models.Student;
+var CronJob = require('cron').CronJob;
 
 'use strict';
 

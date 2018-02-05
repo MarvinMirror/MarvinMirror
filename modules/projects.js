@@ -59,6 +59,8 @@ function printUserProjectSpecs (pass) {
         if (obj.cursus_ids[0] === 1 && obj.status === "finished") {
             done.push(obj);
         }
+        else if (obj.cursus_ids[0] === 1 && obj.status === "in_progress")
+            console.log(obj.project.name);
     }
     done.sort(compare);
 

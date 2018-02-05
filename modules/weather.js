@@ -1,6 +1,8 @@
 var getJSON = require('../src/getJSON');
 var config = require('../config/config.js');
 var manageDOM = require('../src/manageDOM');
+const {BrowserWindow} = require('electron')
+var CronJob = require('cron').CronJob;
 
 // If user did not specify location the function returns default location from config file.
 function getLocation(place)
@@ -15,6 +17,23 @@ function getUnits(units)
 	if (!units || units === 'Fahrenheit') return (config.units)
 	return("metric")
 }
+
+var autoWeather = new CronJob ('00 37 15 * * *', () => {
+	console.log(moment().format('h:mm:ss a')) 
+	let currentWeather = config.currentWeather;
+	let weatherAPI =
+	config.openWeatherMapAPI + 'weather?q=' +
+	config.location + '&units=' + config.units + '&APPID=' + currentWeather.appKey;
+
+	getJSON(weatherAPI, function(err, data){
+		if (err) throw err;
+		else {
+			console.log(data);
+
+		}
+	});
+}
+  , null, true, 'America/Los_Angeles');
 
 function getWeather() {
 

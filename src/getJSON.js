@@ -1,16 +1,15 @@
+const request = require('request');
+
 var getJSON = function(url, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.responseType = 'json';
-    xhr.onload = function() {
-      var status = xhr.status;
-      if (status === 200) {
-        callback(null, xhr.response);
-      } else {
-        callback(status, xhr.response);
-      }
-    };
-    xhr.send();
+
+  request.get(url, (error, response, body) => {
+    let json = JSON.parse(body);
+    if (response.statusCode !== 200)
+      callback(error, response);
+    else
+      callback(null, json);
+  })
+
 };
 
 module.exports = getJSON;

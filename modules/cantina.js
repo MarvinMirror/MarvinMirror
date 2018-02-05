@@ -4,6 +4,8 @@ var manageDOM = require('../src/manageDOM');
 var mongoose = require('mongoose');
 var Menu = require('../src/mongoDB').Models.Menu;
 var cantinaAPI = require('../config/config').cantinaAPI;
+var CronJob = require('cron').CronJob;
+
 
 'use strict';
 
@@ -82,41 +84,44 @@ function updateMenuByDay(day, menu) {
     });
 }
 
-// Promise function that gets a JSON object from the 42 Cantina API and 
-// resolves with an object that contains arrays for today's and tomorrow's meals
-var menuArrays = new Promise( (resolve, reject) => {
-    let a = [];
-    let b = [];
-    
-    getJSON(cantinaAPI, (err, cantinaObj) => {
-        if (err) {
-            console.log("rejected");
-            reject(err);
-        }
-        else {
-            console.log("resolved");
-            for (var key in cantinaObj) {
-                let date = dateFormat(cantinaObj[key].begin_at, "MMMM D YYYY");        
-                if (date === moment().format("MMMM D YYYY")) {
-                    a.push(cantinaObj[key]);
-                }
-                else if (date === moment().add(1, 'days').format("MMMM D YYYY")) {
-                    b.push(cantinaObj[key]);
-                }
-            }
-            a.sort(compare);
-            b.sort(compare);
-            var menuDays = {
-                today: a,
-                tomorrow: b
-            };            
-            resolve(menuDays);
-        }
-    })
-});
+
 
 // Function to update our DB with today's and tomorrow's menus
 var menuUpdateMongo = () => {
+
+    // Promise function that gets a JSON object from the 42 Cantina API and 
+    // resolves with an object that contains arrays for today's and tomorrow's meals
+    let menuArrays = new Promise( (resolve, reject) => {
+        let a = [];
+        let b = [];
+        
+        getJSON(cantinaAPI, (err, cantinaObj) => {
+            if (err) {
+                console.log("rejected");
+                reject(err);
+            }
+            else {
+                console.log("resolved");
+                for (var key in cantinaObj) {
+                    let date = dateFormat(cantinaObj[key].begin_at, "MMMM D YYYY");        
+                    if (date === moment().format("MMMM D YYYY")) {
+                        a.push(cantinaObj[key]);
+                    }
+                    else if (date === moment().add(1, 'days').format("MMMM D YYYY")) {
+                        b.push(cantinaObj[key]);
+                    }
+                }
+                a.sort(compare);
+                b.sort(compare);
+                var menuDays = {
+                    today: a,
+                    tomorrow: b
+                };            
+                resolve(menuDays);
+            }
+        })
+    });
+
     menuArrays
         .then( (menuDays) => {
             updateMenuByDay('Today', menuDays.today)
@@ -209,5 +214,11 @@ function getMenu(str) {
         }
      });
 }
+
+var autoCantina = new CronJob ('00 30 04 * * *', () => {
+	console.log(moment().format('h:mm:ss a')) 
+	menuUpdateMongo();
+}
+  , null, true, 'America/Los_Angeles');
 
 module.exports = menuUpdateMongo;

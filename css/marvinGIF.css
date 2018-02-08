@@ -1,0 +1,39 @@
+#content{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(9, minmax(70px, auto));
+    grid-gap: 2px;
+    max-width: auto;
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+.a8{
+    grid-column: 2/2;
+    grid-row: 2/8;
+}
+.a1, .a4, .a6{
+    transform: matrix(1, 0, 0.5, 1, 120, 3);
+    text-align: right;
+}
+
+.a3, .a7, .a5{
+    transform: matrix(1, 0, 0.5, 1, -120, 3);
+    text-align: left;   
+}
+
+.a5{
+   transform: translate(-50px, 10px) rotate(10deg);
+}
+
+.a4{
+   transform: rotate(-10deg);
+}
+
+.a7{
+   transform: rotate(-15deg);
+}
+
+.a6{
+   transform: rotate(15deg);
+}

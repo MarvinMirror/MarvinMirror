@@ -9,7 +9,7 @@ var Student = require('../src/mongoDB').Models.Student;
 var Test = require('../src/mongoDB').Models.Test;
 
 // Dummy vars for testing
-var projectID = 1;
+var projectID = 985;
 var userID = 22978;
 
 // Recursive call to get all projects and IDs and cycle through pages
@@ -175,6 +175,17 @@ var projectFunctions = {
             "page[size]": "100"
         }
         ftAPI.query42("/v2/me/projects/", qs)
+        .then(console.log)
+        .catch(console.error);
+    },
+    
+    getProjectsTeams: () => {
+        let qs = {
+            "filter[closed]": "false",
+            "sort": "-created_at",
+            "page[size]": "100"
+        }
+        ftAPI.query42("/v2/projects/" + projectID + "/teams", qs)
         .then(console.log)
         .catch(console.error);
     },

@@ -23,6 +23,12 @@ var cantinaSchema = new Schema ({
   cafe42: String
 });
 
+var postSchema = new Schema ({
+  type: String,
+  timestamp: String,
+  message: String
+})
+
 var projectIDSchema = new Schema ({
   projectID: Number,
   projectName: String
@@ -56,6 +62,7 @@ var marvinMongo = {
   Models: {
 
     Menu: mongoose.model('Menu', cantinaSchema),
+    Post: mongoose.model('Post', postSchema),
     ProjectID: mongoose.model('ProjectID', projectIDSchema),
     Student: mongoose.model('Student', studentSchema),
     Test: mongoose.model('Test', testSchema),

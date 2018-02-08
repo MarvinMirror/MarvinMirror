@@ -4,6 +4,7 @@ var $ = require("jquery");
 var mongoose = require('mongoose');
 var Student = require('../src/mongoDB').Models.Student;
 var CronJob = require('cron').CronJob;
+var marvin_reaction = require('../src/controller.js');
 
 'use strict';
 
@@ -110,14 +111,20 @@ var v2Users = {
     studentInfo: () => {
         
         let login = document.getElementById('popup__form').value.toLowerCase();
-        
+        marvin_reaction.delete_gif();
+        marvin_reaction.talk_message();
+        manageDOM.buildPopup();
         if (login !== null && login !== "") {
             // query = Student.findOne({'login': login});
             
             Student.findOne({'login': login}).exec((err, data) => {
-                ftAPI.query42("/v2/users/" + data.studentID)
+                if (data !== null)
+                {
+                    ftAPI.query42("/v2/users/" + data.studentID)
                     .then(showStudentToScreen)
                     .catch(console.error);
+                }
+                else send_message('I can not find any user with this login in our database');
             });
         }
 
@@ -135,6 +142,7 @@ var v2Users = {
         if (!login || login === "")
             getUser(null);
         else {
+            marvin_reaction.process_gif();
             Student.findOne({'login': login}).exec((err, data) => {
                 ftAPI.query42("/v2/users/" + data.studentID)
                     .then(getUser)

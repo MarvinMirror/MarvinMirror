@@ -4,19 +4,29 @@
 		<link rel="stylesheet" type="text/css" href="main.css">
 		<script src="../src/jquery.min.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <link rel="stylesheet" href="../css/marvinGIF.css">
+        <script src="../modules/marvinGIF.js"></script>
 		<script>
 			require('electron').ipcRenderer.on('active', (event, message) => {
 				window.location.href = "active.html"})
 		</script>
 	</head>
 
-	<body onload="fb_post(), slack_post(), dateTime()">
+	<body onload="fb_post(), slack_post(), dateTime(), randText()">
 		<div class="wrapper">
 			<div class="date-time" id="date-time">
 				<!-- <div class="box clock" id="time"></div>
 				<div class="box date" id="date"></div> -->
 			</div>
-			<div class="box marvin">
+			<div class="box marvin" id="content">
+                <div class="a1" id="a1"></div>
+                <div class="a2" id="a2"></div>
+                <div class="a3" id="a3"></div>
+                <div class="a4" id="a4"></div>
+                <div class="a5" id="a5"></div>
+                <div class="a6" id="a6"></div>
+                <div class="a7" id="a7"></div>
+                <div class="a8" id="a8"><img src="../img/marvin.gif"></div>
 			</div>
 			<div class="box announcements">
 				<div class="class posts" id="fb_post"></div>

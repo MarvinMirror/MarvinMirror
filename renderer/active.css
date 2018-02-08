@@ -671,6 +671,10 @@ body {
 	max-height: 300%;
 }
 
+.student_position {
+	font-size: 2rem;
+}
+
 #not_found {
 	font-size: 2rem;
 }

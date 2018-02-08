@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 var ProjectID = require('../src/mongoDB').Models.ProjectID;
 var Student = require('../src/mongoDB').Models.Student;
 var Test = require('../src/mongoDB').Models.Test;
+var marvin_reaction = require('../src/controller.js');
 
 // Dummy vars for testing
 var projectID = 1;
@@ -214,12 +215,16 @@ var projectFunctions = {
     
     // Returns details for every project done or in progress by user
     getProjectsUsersByUser: (id) => {
+        marvin_reaction.delete_gif();
+        marvin_reaction.talk_message();
         let qs = {
             // "range[final_mark]": "null,null",
             sort: "updated_at",
             "filter[cursus]": "1",
             "page[size]": "100"
         }
+        if (id.length)
+        {
         console.log("id = " + id[0].id);
         ftAPI.query42("/v2/users/" + id[0].id + "/projects_users", qs)
             .then((arr) => {
@@ -227,6 +232,8 @@ var projectFunctions = {
                 printUserProjectSpecs(pass);
             })
             .catch(console.error);
+        }
+        else send_message('I can not find any user with this login in our database');
     },
 
     // Weird sudo data about projects
@@ -259,7 +266,7 @@ var projectFunctions = {
 var loadStudentProjects = () => {
     
     var login = document.getElementById('popup__form').value;
-    
+    marvin_reaction.process_gif();
     console.log(login);
     if (login !== null) {
         ftAPI.query42("/v2/users/?filter[login]=" + login)

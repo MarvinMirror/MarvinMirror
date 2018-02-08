@@ -5,6 +5,7 @@ var config = require('../config/config');
 var ftOauth = config.ftOauth;
 var mongoose = require('mongoose');
 var ProjectID = require('../src/mongoDB').ProjectID;
+var marvin_reaction = require('../src/controller.js');
 
 var correctionFunctions = {
 
@@ -59,7 +60,9 @@ function dateFormat(dateTime, format) {
 var showCorrections = function (data) {
     
     console.log(data);
-
+    marvin_reaction.delete_gif();
+    marvin_reaction.talk_message();
+    manageDOM.buildPopup();
     // removes from "content" div of app any div with id "wrapper"
     manageDOM.clearContent("content");
     
@@ -88,6 +91,7 @@ var showCorrections = function (data) {
         document.getElementById('final_mark').innerHTML = "Final mark: " + obj.final_mark;
         document.getElementById('comments').innerHTML = "Corrector comments: " + obj.comment;
     }
+    else send_message('I can not find any user with this login in our database');
 }
 
 var getStudentInfo = function (obj) {
@@ -113,7 +117,7 @@ var getScaleTeams = function (obj) {
 var loadCorrections = () => {
     
     var login = getLocation(document.getElementById('popup__form').value)
-    
+    marvin_reaction.process_gif();
     if (login !== null) {
         ftAPI.query42("/v2/users/?filter[login]=" + login)
             .then(getScaleTeams)

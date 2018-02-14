@@ -39,7 +39,7 @@ var correctionFunctions = {
             "page[size]": "10"
         };
         return ftAPI.query42("/v2/users/" + id + 
-        "/scale_teams", qs)
+        "/scale_teams/as_corrector", qs)
     },
 
     // I had no corrections but I assume it has all of current user's stuff
@@ -119,13 +119,26 @@ var loadCorrections = () => {
     var login = getLocation(document.getElementById('popup__form').value)
     marvin_reaction.process_gif();
     if (login !== null) {
-        ftAPI.query42("/v2/users/?filter[login]=" + login)
-            .then(getScaleTeams)
-            .then(showCorrections)
-            .catch(console.error);
+        Student.findOne({'login': login}).exec((err, data) => {
+            console.log(err);
+            console.log(data);
+            correctionFunctions.getUserScaleTeams(data.studentID)
+                .then(showCorrections)
+                .catch(console.error);
+        });
+
+
+        // ftAPI.query42("/v2/users/?filter[login]=" + login)
+        //     .then(getScaleTeams)
+        //     .then(showCorrections)
+        //     .catch(console.error);
     }
 
     document.body.removeChild(document.getElementById('popup'));
+}
+
+var loadScaleTeams = () => {
+    correctionFunctions.getScaleTeams();
 }
 
 module.exports = loadCorrections;

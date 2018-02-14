@@ -10,7 +10,7 @@ var Test = require('../src/mongoDB').Models.Test;
 var marvin_reaction = require('../src/controller.js');
 
 // Dummy vars for testing
-var projectID = 1;
+var projectID = 985;
 var userID = 22978;
 
 // Recursive call to get all projects and IDs and cycle through pages
@@ -60,6 +60,8 @@ function printUserProjectSpecs (pass) {
         if (obj.cursus_ids[0] === 1 && obj.status === "finished") {
             done.push(obj);
         }
+        else if (obj.cursus_ids[0] === 1 && obj.status === "in_progress")
+            console.log(obj.project.name);
     }
     done.sort(compare);
 
@@ -174,6 +176,17 @@ var projectFunctions = {
             "page[size]": "100"
         }
         ftAPI.query42("/v2/me/projects/", qs)
+        .then(console.log)
+        .catch(console.error);
+    },
+    
+    getProjectsTeams: () => {
+        let qs = {
+            "filter[closed]": "false",
+            "sort": "-created_at",
+            "page[size]": "100"
+        }
+        ftAPI.query42("/v2/projects/" + projectID + "/teams", qs)
         .then(console.log)
         .catch(console.error);
     },

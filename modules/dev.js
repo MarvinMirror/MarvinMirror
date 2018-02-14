@@ -3,6 +3,7 @@ var manageDOM = require('../src/manageDOM');
 var $ = require("jquery");
 var mongoose = require('mongoose');
 var Student = require('../src/mongoDB').Models.Student;
+var CronJob = require('cron').CronJob;
 
 // Recursive call to get all projects and IDs and cycle through pages
 function getAllStudents (n) {
@@ -49,3 +50,8 @@ var getLoginID = () => {
 
     document.body.removeChild(document.getElementById('popup'));
 }
+
+var autoCantina = new CronJob ('00 30 04 * * *', () => {
+	console.log("updating student list");
+	getAllStudents(0);
+} , null, true, 'America/Los_Angeles');

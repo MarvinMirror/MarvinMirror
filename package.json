@@ -25,7 +25,9 @@
   "homepage": "https://github.com/electron/electron-quick-start#readme",
   "devDependencies": {
     "devtron": "*",
+    "electron": "1.7.5",
     "electron-reload": "^1.2.2",
+    "eslint": "^4.17.0",
     "moment-timezone": "^0.5.14"
   },
   "dependencies": {

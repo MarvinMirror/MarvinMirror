@@ -1,6 +1,7 @@
 var info = require('../src/maps_info.js');
 var marvin_reaction = require('../src/controller.js');
 var manageDOM = require('../src/manageDOM');
+var ftAPI = require('../src/ftAPI')
 
 function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_style) {
     //get HTML element to add new elements there
@@ -236,7 +237,7 @@ function zone(num, row, seat, student) {
 function showMap(obj)
 {
     marvin_reaction.delete_gif();
-    marvin_reaction.talk_message();
+    marvin_reaction.marvin_gif();
     manageDOM.buildPopup();
     console.log(obj)
     if (obj != null) {

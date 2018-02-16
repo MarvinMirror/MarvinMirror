@@ -52,3 +52,5 @@ function marvinHelp() {
 	manageDOM.buildPopup();
     document.getElementById("popup").innerHTML = helpHTML;
 }
+
+module.exports = marvinHelp;

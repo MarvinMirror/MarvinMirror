@@ -130,3 +130,5 @@ function getWeatherAtLocation(get_place, get_units) {
 		}
 	});
 }
+
+module.exports = getWeatherAtLocation;

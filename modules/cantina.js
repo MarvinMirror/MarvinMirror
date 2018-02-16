@@ -222,3 +222,4 @@ var autoCantina = new CronJob ('00 30 04 * * *', () => {
   , null, true, 'America/Los_Angeles');
 
 module.exports = menuUpdateMongo;
+module.exports = getMenu;

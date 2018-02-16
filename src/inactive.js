@@ -1,12 +1,16 @@
 /* Back to standby mode from the active phase*/
 var waitingTime = require('../config/config').waitingTime
+var marvin_reaction = require('../src/controller')
 
-var incatvityTime = function(name)
+var inactvityTime = function(name)
 {
     var timer;
 
     if (name !== null) resetTimer()
-    document.onclick = resetTimer;
+    document.onload = marvin_reaction.marvin_gif();
+
+   // document.getElementById('popup').onchange = resetTimer;
+    
     function logout()
     {
         console.log("you are logged out")
@@ -16,7 +20,7 @@ var incatvityTime = function(name)
     function standby()
     {
         logout()
-        window.location.replace("main.html")
+        marvin_reaction.marvin_gif();
     }
 
     function resetTimer() {

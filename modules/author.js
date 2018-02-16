@@ -43,3 +43,5 @@ var authors = () => {
     manageDOM.buildPopup();
     document.getElementById("popup").innerHTML = authorsHTML;
 }
+
+module.exports = authors;

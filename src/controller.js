@@ -1,3 +1,12 @@
+var getWeatherAtLocation = require('../modules/weather');
+var weatherForecast = require('../modules/forecast');
+var localDateTime = require('../modules/clock');
+var getMenu = require('../modules/cantina');
+var marvinHelp = require('../modules/help');
+var authors = require('../modules/author');
+var wordOfADay = require('../modules/word_of_a_day');
+var wikiDefinition = require('../modules/wikiDefinition');
+var Calendar = require('../modules/calendar');
 
 var marvinReacts = {
     command_execution : (event, message) => {
@@ -18,42 +27,64 @@ var marvinReacts = {
         else if (result.intent === 'map') manageDOM.studentPopup('studentOnMap');
         else if (result.intent === 'events') Calendar('month');
         else if (result.intent === 'wikiDefinition') wikiDefinition(result.wikiword);
-
         else send_message('You asked for "' + result.text + '".<br> I don\'t understand you.')
     },
 
     listen_gif : (event, message) => {
-        manageDOM.clearContent("content");
-        manageDOM.clearContent("dialog");
-        document.body.removeChild(document.getElementById('popup'));
-        manageDOM.array2Div(["sound_gif","sound_gif"], "dialog");
+        manageDOM.clearContent('content');
+        if (document.getElementById('popup')) document.body.removeChild(document.getElementById('popup'));
+        manageDOM.array2Div(["sound_gif","sound_gif"], "content");
         var sound_div = document.getElementById('sound_gif');
         var gif = document.createElement("img");
         gif.setAttribute("src", "../img/giphy.gif");
         sound_div.appendChild(gif);
     },
 
-    process_gif: () => {
-        manageDOM.clearContent("dialog");
-        manageDOM.array2Div(["process_gif","process_gif"], "dialog");
+   process_gif: () => {
+        manageDOM.clearContent("content");
+        manageDOM.array2Div(["process_gif","process_gif"], "content");
         var sound_div = document.getElementById('process_gif');
         var gif = document.createElement("img");
         gif.setAttribute("src", "../img/giphy2.gif");
         sound_div.appendChild(gif);
     },
 
-    delete_gif : (event, message) => {
-        manageDOM.clearContent("dialog");
+   delete_gif : (event, message) => {
+        manageDOM.clearContent("content");
     },
 
-    talk_message: () => {
-        manageDOM.array2Div(["dialog-message","dialog-message"], "dialog");
-        document.getElementById('dialog-message').innerHTML = "Hey, there! Talk to me!";
+   marvin_gif: () => {
+        var phrases = [
+            "Start whit Hey Marvin!",
+            "Ask me how is the WEATHER",
+            "What is the Answer of Life?",
+            "I'm feeling very depressed",
+            "Don't talk to me about life",
+            "Here I'm, brain the size of a planet",
+            "hey You, Yes Yes you"];
+        manageDOM.clearContent("content");
+        manageDOM.array2Div(["marvin","marvin_gif", "spot1", "spot2", "spot3", "spot4", "spot5"], "content");
+        var marvin_div = document.getElementById('marvin_gif');
+        var gif = document.createElement("img");
+        gif.setAttribute("src", "../img/marvin.gif");
+        marvin_div.appendChild(gif);
+        var timer;
+        timer = random_phrases(0, phrases);
+
+       function random_phrases(spot_one, phrases) {
+            if (spot_one != '0') document.getElementById('spot'+ spot_one).innerHTML = "";
+            var text = phrases[Math.floor(Math.random() * phrases.length)];
+            var spot_two = Math.floor(Math.random() * 5) + 1;
+            document.getElementById('spot'+ spot_two).innerHTML = text;
+            clearTimeout(timer);
+            timer = setTimeout(random_phrases, 3000, spot_two, phrases)
+        }
     },
 
-    empty_response: () => {
-        manageDOM.clearContent("dialog");
-        setTimeout(talkToMe_dialog, 1000)
+   empty_response: () => {
+        manageDOM.clearContent("content");
+        console.log(document.getElementById('popup'))
+        setTimeout(talkToMe_dialog, 1500)
     },
 }
 function send_message(message)
@@ -66,14 +97,13 @@ function send_message(message)
     }
 
 function talkToMe_dialog() {
-    var dialog = document.getElementById('dialog');
-    if (!dialog.innerHTML.length) marvinReacts.talk_message();
+    var dialog = document.getElementById('content');
+    if (!dialog.innerHTML.length && !document.getElementById('popup')) marvinReacts.marvin_gif();
 }
 
 function gif() {
     manageDOM.clearContent("content");
-    manageDOM.clearContent("dialog");
-    manageDOM.array2Div(["sound_gif","sound_gif"], "dialog");
+    manageDOM.array2Div(["sound_gif","sound_gif"], "content");
     var sound_div = document.getElementById('sound_gif');
     var gif_img = document.createElement("img");
     gif_img.setAttribute("src", "../img/giphy.gif");

@@ -1,7 +1,6 @@
 var getJSON = require('../src/getJSON');
 var config = require('../config/config');
 
-console.log("dictonary word");
 function wordOfADay(flag) {
   manageDOM.clearContent("content");
 
@@ -38,3 +37,5 @@ function wordOfADay(flag) {
       }
     });
 }
+
+module.exports = wordOfADay;

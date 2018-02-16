@@ -1,43 +1,40 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="main.css">
-		<script src="../src/jquery.min.js"></script>
-		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <head>
+        <link rel="stylesheet" type="text/css" href="main.css">
         <link rel="stylesheet" href="../css/marvinGIF.css">
-        <script src="../modules/marvinGIF.js"></script>
-		<script>
-			require('electron').ipcRenderer.on('active', (event, message) => {
-				window.location.href = "active.html"})
-		</script>
-	</head>
+        <link rel="stylesheet" href="../css/fullcalendar.css">
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <!--script src="../src/jquery.min.js"></script-->        
+       
+        <script>
+            var reaction = require('../src/controller.js');
+            require('electron').ipcRenderer.on('sound', reaction.listen_gif);
+            require('electron').ipcRenderer.on('todo', reaction.command_execution);
+            require('electron').ipcRenderer.on('delete_gif', reaction.empty_response);
+        </script>
+    </head>
 
-	<body onload="fb_post(), slack_post(), dateTime(), randText()">
-		<div class="wrapper">
-			<div class="date-time" id="date-time">
-				<!-- <div class="box clock" id="time"></div>
-				<div class="box date" id="date"></div> -->
-			</div>
-			<div class="box marvin" id="content">
-                <div class="a1" id="a1"></div>
-                <div class="a2" id="a2"></div>
-                <div class="a3" id="a3"></div>
-                <div class="a4" id="a4"></div>
-                <div class="a5" id="a5"></div>
-                <div class="a6" id="a6"></div>
-                <div class="a7" id="a7"></div>
-                <div class="a8" id="a8"><img src="../img/marvin.gif"></div>
-			</div>
-			<div class="box announcements">
-				<div class="class posts" id="fb_post"></div>
-				<div class="class posts" id="slack_post"></div>
-			</div>
-		</div>
-		<div class="active-link">
-			<a href="active.html">GO TO ACTIVE</a>
-		</div>
-		<script src="../modules/clock.js"></script>
-		<script src="../modules/fb_post.js"></script>
-		<script src="../modules/slack_post.js"></script>
-	</body>
+    <body onload="fb_post(), slack_post(), dateTime(), inactvityTime(!null), connectDB()" id="body">
+        <div class="wrapper">
+            <div class="date-time" id="date-time"></div>
+            <div class="box content" id="content"></div>
+            <div class="box announcements">
+                <div class="class posts" id="fb_post"></div>
+                <div class="class posts" id="slack_post"></div>
+            </div>
+        </div>
+        <script src="../modules/clock.js"></script>
+        <script src="../modules/fb_post.js"></script>
+        <script src="../modules/slack_post.js"></script>
+		<script src="../modules/maps.js"></script>
+		<script src="../modules/student.js"></script>
+		<script src="../modules/projects.js"></script>
+		<script src="../modules/corrections.js"></script>
+		<script src="../src/inactive.js"></script>
+		<script src="../src/mongoDB.js"></script>
+        <div class="activ-link">
+            <a href="active.html">Go to active</a>
+        </div>
+    </body>
 </html>

@@ -1,39 +1,38 @@
-#content{
+.marvin {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: repeat(9, minmax(70px, auto));
-    grid-gap: 2px;
-    max-width: auto;
-    margin: 0 auto;
-    font-size: 20px;
+    height: 80%;
+    width: 80%;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 15% 15% 70%;
+    font-size: 3rem;
 }
 
-.a8{
-    grid-column: 2/2;
-    grid-row: 2/8;
-}
-.a1, .a4, .a6{
-    transform: matrix(1, 0, 0.5, 1, 120, 3);
-    text-align: right;
+#spot1 {
+    grid-column: 1/2;
+    grid-row: 1/2;
 }
 
-.a3, .a7, .a5{
-    transform: matrix(1, 0, 0.5, 1, -120, 3);
-    text-align: left;   
+#spot2 {
+    grid-column: 2/3;
+    grid-row: 1/2;
 }
 
-.a5{
-   transform: translate(-50px, 10px) rotate(10deg);
+#spot3 {
+    grid-column: 3/4;
+    grid-row: 1/2;
 }
 
-.a4{
-   transform: rotate(-10deg);
+#spot4 {
+    grid-column: 1/2;
+    grid-row: 2/3;
 }
 
-.a7{
-   transform: rotate(-15deg);
+#spot5 {
+    grid-column: 3/4;
+    grid-row: 2/3;
 }
 
-.a6{
-   transform: rotate(15deg);
+#marvin_gif {
+    grid-column: 2/3;
+    grid-row: 2/4;
 }

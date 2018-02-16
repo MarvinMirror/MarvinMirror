@@ -32,3 +32,5 @@ function wikiDefinition(word) {
       }
     });
 }
+
+module.exports = wikiDefinition;

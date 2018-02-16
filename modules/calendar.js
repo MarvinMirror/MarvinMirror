@@ -72,3 +72,5 @@ function Calendar(view, date){
   })
       .then(Calendar_create);
 }
+
+module.exports = Calendar;

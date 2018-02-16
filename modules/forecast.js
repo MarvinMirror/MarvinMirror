@@ -4,10 +4,10 @@ var moment = require('moment');
 var manageDOM = require('../src/manageDOM');
 
 // If user did not specify location the function returns default location from config file.
-function getLocation(place)
+function getLocation(place, wikisearch)
 {
-if (!place) return (config.location)
-return (place)
+if (!place && !wikisearch) return (config.location)
+return ((place) ? place : wikisearch)
 }
 
 // If user did not specify units the function returns default 'imperial' units (fahrenheit) from config file.
@@ -17,18 +17,15 @@ if (!units || units === 'fahrenheit') return (config.units)
 return("metric")
 }
 
-function weatherForecast(get_place, get_units) {
+function weatherForecast(get_place, wikisearch,get_units) {
 
 	// check input
-	var place = getLocation(get_place);
+	var place = getLocation(get_place, wikisearch);
 
 	// check input for units
 	var units = getUnits(get_units);
 	// clear page
 	var deg = units === "metric" ? "C" : "F";
-
-	// clear page
-	manageDOM.clearContent("content");
 
 	// getting data from config
 	var weatherForecast = config.weatherForecast;
@@ -45,7 +42,7 @@ function weatherForecast(get_place, get_units) {
 	// making url for request to weather api
 	var weatherAPI =
 		config.openWeatherMapAPI + 'forecast?q=' +
-		place + '&units=' + units + '&APPID=' + weatherForecast.appKey;
+		place.toUpperCase() + '&units=' + units + '&APPID=' + weatherForecast.appKey;
 
 	// request to the API and filling html
 	getJSON(weatherAPI, function(err, data){
@@ -89,3 +86,5 @@ function weatherForecast(get_place, get_units) {
 		};
 	});
 }
+
+module.exports = weatherForecast

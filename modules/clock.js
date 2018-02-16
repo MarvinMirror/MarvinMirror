@@ -1,10 +1,8 @@
 var moment = require('moment');
 var moment = require('moment-timezone');
-var getJSON = require('../src/getJSON');
 var config = require('../config/config.js');
-// var now = moment();
-
-var request = require('request-promise')
+var request = require('request-promise');
+var manageDOM = require('../src/manageDOM');
 
 /*
 ** With the momentjs module we will be able to easily
@@ -65,8 +63,6 @@ function getTimeZone(place)
     })
 }
 
-
-
 function dateTime() {
 
     var newDay = moment('12:00:01am', 'h:mm:ssa');
@@ -109,7 +105,7 @@ function dateTime() {
 }
 
 function dateLocalTime(timezone, place) {
-    manageDOM.clearContent("content");
+
         var newDay = moment('12:00:01am', 'h:mm:ssa').tz(timezone);
 
         var dateString = now.format("dddd, MMMM D");
@@ -118,7 +114,7 @@ function dateLocalTime(timezone, place) {
 
         var contentdiv = document.getElementById("locale");
         contentdiv.className = "locale center-div"
-        contentdiv.innerHTML = "Now in " + place + ':'
+        contentdiv.innerHTML = "Now in " + place.toUpperCase() + ':'
 
         var localTimediv = document.createElement("div");
         var hourDiv = document.createElement("div");
@@ -154,7 +150,7 @@ function dateLocalTime(timezone, place) {
 
 function localDateTime(place)
 {
-    if (place.length != 0) {
+    if (place) {
         getTimeZone(place)
     }
     else
@@ -172,3 +168,5 @@ function makeSearchQuiry(place, amount)
 {
     return (config.geoNamesAPI.search + place + '&maxRows=' + amount + '&username=' + config.geoNamesAPI.username)
 }
+
+module.exports = localDateTime

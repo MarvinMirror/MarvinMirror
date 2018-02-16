@@ -82,7 +82,7 @@ Recogn.startStreaming = (options, microphone, Recogn) =>
           Recogn.emit('error', data.error)
           stopStream()
         } else if (data.results[0].isFinal) {
-          Recogn.emit('final-result', data.results[0].alternatives[0].transcript, Recogn.nlp.get_object)
+          Recogn.emit('final-result', data.results[0].alternatives[0].transcript.toLowerCase(), Recogn.nlp.get_object)
           stopStream()
         } else {
           Recogn.emit('partial-result', data.results[0].alternatives[0].transcript)

@@ -228,8 +228,6 @@ var projectFunctions = {
     
     // Returns details for every project done or in progress by user
     getProjectsUsersByUser: (id) => {
-        marvin_reaction.delete_gif();
-        marvin_reaction.talk_message();
         let qs = {
             // "range[final_mark]": "null,null",
             sort: "updated_at",

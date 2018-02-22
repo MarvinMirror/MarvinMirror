@@ -1,0 +1,15 @@
+/* HELP WITH COMMANDS */
+.help-wrapper {
+	width: 80rem;
+	font-size: 2rem;
+}
+
+.help-wrapper ul {
+	padding-top: 2rem;
+	list-style: none;
+}
+
+.help h2 {
+	font-size: 4rem;
+	margin: 3rem;
+}

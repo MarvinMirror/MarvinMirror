@@ -1,12 +1,12 @@
 var getWeatherAtLocation = require('../modules/weather');
 var weatherForecast = require('../modules/forecast');
 var localDateTime = require('../modules/clock');
-var getMenu = require('../modules/cantina');
+var getMenu = require('../modules/cantina').getMenu;
 var marvinHelp = require('../modules/help');
 var authors = require('../modules/author');
 var wordOfADay = require('../modules/word_of_a_day');
 var wikiDefinition = require('../modules/wikiDefinition');
-var Calendar = require('../modules/calendar');
+var calendar = require('../modules/calendar');
 
 var marvinReacts = {
     command_execution : (event, message) => {
@@ -22,10 +22,10 @@ var marvinReacts = {
         else if (result.intent === 'word_of_the_day') wordOfADay(1);
         else if (result.intent === 'get_me') manageDOM.studentPopup('v2Users.userInfo');
         else if (result.intent === 'get_student') manageDOM.studentPopup('v2Users.studentInfo');
-        else if (result.intent === 'projects') manageDOM.studentPopup('loadStudentProjects');
+        else if (result.intent === 'projects') manageDOM.studentPopup('projectFunctions.getBestProjects');
         else if (result.intent === 'corrections') manageDOM.studentPopup('loadCorrections');
         else if (result.intent === 'map') manageDOM.studentPopup('studentOnMap');
-        else if (result.intent === 'events') Calendar('month');
+        else if (result.intent === 'events') calendar('month');
         else if (result.intent === 'wikiDefinition') wikiDefinition(result.wikiword);
         else send_message('You asked for "' + result.text + '".<br> I don\'t understand you.')
     },
@@ -55,13 +55,13 @@ var marvinReacts = {
 
    marvin_gif: () => {
         var phrases = [
-            "Start whit Hey Marvin!",
-            "Ask me how is the WEATHER",
-            "What is the Answer of Life?",
-            "I'm feeling very depressed",
-            "Don't talk to me about life",
-            "Here I'm, brain the size of a planet",
-            "hey You, Yes Yes you"];
+        "Start with \"Hey Marvin...\"",
+        "Ask me about the weather",
+        "What is the answer to the Ultimate Question?",
+        "I'm feeling very depressed",
+        "Don't talk to me about life",
+        "Here I am with a brain the size of a planet...",
+        "Hey you, YES YOU"];
         manageDOM.clearContent("content");
         manageDOM.array2Div(["marvin","marvin_gif", "spot1", "spot2", "spot3", "spot4", "spot5"], "content");
         var marvin_div = document.getElementById('marvin_gif');
@@ -73,9 +73,12 @@ var marvinReacts = {
 
        function random_phrases(spot_one, phrases) {
             if (spot_one != '0') document.getElementById('spot'+ spot_one).innerHTML = "";
+            console.log("spot one:" + spot_one);
             var text = phrases[Math.floor(Math.random() * phrases.length)];
             var spot_two = Math.floor(Math.random() * 5) + 1;
             document.getElementById('spot'+ spot_two).innerHTML = text;
+            console.log("spot two:" + spot_two);
+            
             clearTimeout(timer);
             timer = setTimeout(random_phrases, 3000, spot_two, phrases)
         }
@@ -84,7 +87,7 @@ var marvinReacts = {
    empty_response: () => {
         manageDOM.clearContent("content");
         console.log(document.getElementById('popup'))
-        setTimeout(talkToMe_dialog, 1500)
+        // setTimeout(talkToMe_dialog, 1500)
     },
 }
 function send_message(message)
@@ -96,6 +99,7 @@ function send_message(message)
         message_div.innerHTML = message;
     }
 
+    
 function talkToMe_dialog() {
     var dialog = document.getElementById('content');
     if (!dialog.innerHTML.length && !document.getElementById('popup')) marvinReacts.marvin_gif();

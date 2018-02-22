@@ -1,0 +1,33 @@
+/* ANNOUNCEMENTS */
+
+.posts {
+    display: grid;
+    grid-template-columns: 15% 1fr;
+    grid-template-rows: 1fr;
+    grid-gap: 1rem;
+}
+
+.posts > div {
+    display: flex;
+    align-items: center;
+}
+
+.posts > div:first-child {
+    justify-content: center;
+}
+
+.posts img{
+    height: 8rem;
+}
+
+.posts .post_text {
+    justify-content: left;
+    grid-column: 2/3;
+    font-size: 2rem;
+    text-align: left;
+
+    /* overflow: hidden; */
+    /* display: -webkit-box; */
+    /* -webkit-line-clamp: 1; */
+    /* -webkit-box-orient: vertical; */
+}

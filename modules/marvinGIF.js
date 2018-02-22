@@ -1,12 +1,12 @@
 var randText = () => {
     var word = [
-        "Start whit Hey Marvin!",
-        "Ask me how is the WEATHER",
-        "What is the Answer of Life?",
+        "Start with \"Hey Marvin...\"",
+        "Ask me about the weather",
+        "What is the answer to the Ultimate Question?",
         "I'm feeling very depressed",
         "Don't talk to me about life",
-        "Here I'm, brain the size of a planet",
-        "hey You, Yes Yes you"];
+        "Here I am with a brain the size of a planet...",
+        "Hey you, YES YOU"];
 
     var position = Math.floor(Math.random() * 7)+1;
     var position1 = Math.floor(Math.random() * 7)+1;

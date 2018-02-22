@@ -1,0 +1,58 @@
+/* PROJECTS */
+
+.best-projects {
+	max-width: 60rem;
+}
+
+/* .best-projects .best-projects__header,
+.best-projects .best-projects__person {
+	font-size: 1.5rem;
+	animation: zoomTowards 1s cubic-bezier(0.19, 1, 0.22, 1);
+} */
+
+.best-projects .best-projects__header {
+	font-size: 3rem;
+	text-transform: uppercase;
+}
+
+.best-projects .best-projects__person {
+	font-size: 3rem;
+	padding: 2.5rem 0;
+	/* text-transform: capitalize; */
+}
+
+.best-projects .best-projects__item{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 3rem;
+	height: 6rem;
+	padding: 3.45rem 5rem;
+}
+
+.best-projects .best-projects__item > div {
+	padding: 1rem;
+}
+.best-projects .best-projects__item > div:first-child {
+	width: 70%;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#best-projects--0,
+#best-projects--2,
+#best-projects--4 {
+	animation: moveInRight 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+#best-projects--1,
+#best-projects--3 {
+	animation: moveInLeft 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.best-projects .best-projects__item > div:last-child {
+	width: 25%;
+	text-align: right;
+}

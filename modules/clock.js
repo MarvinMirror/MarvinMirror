@@ -1,4 +1,3 @@
-var moment = require('moment');
 var moment = require('moment-timezone');
 var config = require('../config/config.js');
 var request = require('request-promise');

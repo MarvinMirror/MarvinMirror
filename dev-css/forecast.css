@@ -1,0 +1,81 @@
+/* FORECAST */
+
+.forecast-wrapper {
+	display: grid;
+	grid-template-rows: 10% repeat(5, 1fr);
+	grid-template-columns: 1fr 50rem 1fr;
+	grid-gap: 1rem;
+	transition: all .4s;
+	text-align: center;
+}
+
+.forecast-wrapper > div {
+	grid-column: 2/3;
+}
+
+#fore_location {
+	font-size: 3rem;
+	grid-row: 1/2;
+	text-align: center;
+}
+
+.forecast-wrapper .daycast {
+	width: 50rem;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 100%;
+	margin: 2rem 0;
+}
+
+.forecast-wrapper .daycast > div {
+	padding: 0 1rem;
+}
+
+.forecast-wrapper .daycast--0 {
+	grid-row: 2/3;
+}
+
+.forecast-wrapper .daycast--1 {
+	grid-row: 3/4;
+}
+
+.forecast-wrapper .daycast--2 {
+	grid-row: 4/5;
+}
+
+.forecast-wrapper .daycast--3 {
+	grid-row: 5/6;
+}
+
+.forecast-wrapper .daycast--4 {
+	grid-row: 6/6;
+}
+
+.forecast-wrapper .daycast .fore_day,
+.forecast-wrapper .daycast .fore_temp {
+	position: relative;
+	font-size: 4rem;
+}
+
+.forecast-wrapper .daycast .fore_day > p,
+.forecast-wrapper .daycast .fore_temp > p{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.forecast-wrapper .daycast .fore_img img {
+	height: 10rem;
+}
+
+.daycast--0,
+.daycast--2,
+.daycast--4 {
+	animation: moveInRight 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.daycast--1,
+.daycast--3 {
+	animation: moveInLeft 1s cubic-bezier(0.19, 1, 0.22, 1);
+}

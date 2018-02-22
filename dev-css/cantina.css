@@ -1,0 +1,29 @@
+/* CANTINA */
+
+.cantina-wrapper {
+	font-size: 1.8rem;
+}
+
+.cantina-wrapper .spacing {
+	height: 2.5rem;
+}
+
+.cantina-wrapper .meal {
+	text-transform: uppercase;
+
+}
+
+.cantina-wrapper .cantina-hours {
+	font-style: italic;
+}
+
+.cantina-wrapper .cafe {
+	text-transform: capitalize;
+	text-decoration: underline;
+}
+
+#cantina-greet {
+	font-size: 2.8rem;
+	text-decoration: underline;
+	text-transform: uppercase;
+}

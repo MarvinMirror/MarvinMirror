@@ -1,0 +1,56 @@
+/* DATE-TIME */
+
+.clock {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: middle;
+    font-size: 10rem;
+}
+
+.date {
+    font-size: 5rem;
+}
+
+.hour {
+    grid-column: 1/2;
+    text-align: right;
+}
+
+.colon {
+    grid-column: 2/3;
+    animation: blink 2s steps(3, start) infinite;
+}
+
+.minutes {
+    text-align: left;
+}
+
+/* LOCAL TIME */
+
+.locale {
+	font-size: 4rem;
+	line-height: 1;
+	min-width: 50rem;
+}
+
+.locale .clock {
+	font-size: 12rem;
+	line-height: .95;
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	margin: 3rem 0;
+}
+
+.locale .clock .hour {
+	grid-column: 1/2;
+	text-align: right;
+}
+
+.locale .clock .colon {
+	grid-column: 2/3;
+	animation: blink 2s steps(3, start) infinite;
+}
+
+.locale .clock .minutes {
+	text-align: left;
+}

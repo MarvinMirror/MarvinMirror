@@ -53,11 +53,6 @@ body {
     position: relative;
 }
 
-.wrapper > div,
-.announcements > div,
-.posts > div {
-    /* border: 3px solid grey; */
-}
 .content {
     grid-column: 2/3;
     grid-row: 2/3;
@@ -93,6 +88,98 @@ body {
 
 .active-link {
     opacity: 0;
+}
+
+/* POPUP */
+
+.popup {
+	height: 100vh;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.9);
+	z-index: 1000;
+	position: fixed;
+	transition: all .3s;
+	justify-content: center;
+}
+
+.popup > div {
+	width: 80rem;
+}
+
+
+/* STUDENT SEARCH */
+
+.popup .student-form button {
+	visibility: hidden;
+}
+
+.popup .student-form {
+	width: 80rem;
+	height: 20rem;
+	/* background-color: white; */
+	color: white;
+	text-align: center;
+	border-radius: 3px;
+	border: 2px inset white;
+	box-shadow: 0px 0px 2rem 9px rgba(255, 255, 255, 0.31)
+}
+
+.popup .student-form .student-form--header {
+	text-transform: uppercase;
+	font-size: 2rem;
+	letter-spacing: 1.5;
+}
+
+.popup .student-form .popup__form--entry-input {
+	background: none;
+	border: none;
+	text-align: center;
+	cursor: none;
+	color: white;
+	text-transform: lowercase;
+	transition: 0.4s width 0.2s, 0.1s height;
+	font-size: 4rem;
+}
+
+.popup .student-form .popup__close:link,
+.popup .student-form .popup__close:visited{
+	text-decoration: none;
+	color: white;
+}
+.popup .student-form .popup__close--wrapper {
+	height: 4rem;
+	font-size: 3rem;
+}
+
+/* DEVELOPER BUTTONS */
+body .developer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100px;
+}
+
+.actions input {
+	color: black;
+}
+
+.developer button,
+.actions button {
+	width: 100%;
+	display: block;
+	color: white;
+}
+
+/* ACTION BUTTONS */
+body .actions {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: block;
+	width: 100px;
 }
 
 /* DATE-TIME */
@@ -471,12 +558,6 @@ body {
 	max-width: 60rem;
 }
 
-/* .best-projects .best-projects__header,
-.best-projects .best-projects__person {
-	font-size: 1.5rem;
-	animation: zoomTowards 1s cubic-bezier(0.19, 1, 0.22, 1);
-} */
-
 .best-projects .best-projects__header {
 	font-size: 3rem;
 	text-transform: uppercase;
@@ -533,35 +614,7 @@ body {
 	font-size: 2rem;
 }
 
-/* ANNOUNCEMENTS */
-
-.posts {
-	display: grid;
-	grid-template-columns: 15% 1fr;
-	grid-template-rows: 1fr;
-	grid-gap: 1rem;
-}
-
-.posts > div {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.posts img{
-	grid-column: 1/2;
-	height: 7rem;
-}
-
-.post_text {
-	display: block;
-	grid-column: 2/3;
-	font-size: 2rem;
-	text-align: left;
-}
-
 /* 42 MAP */
-
 
 .zone {
     display: grid;
@@ -658,98 +711,6 @@ body {
 	grid-row: 1/2;
 	max-width: 20%;
 	max-height: 20%;
-}
-
-
-/* POPUP */
-
-.popup {
-	height: 100vh;
-	width: 100%;
-	top: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0.9);
-	z-index: 1000;
-	position: fixed;
-	transition: all .3s;
-	justify-content: center;
-}
-
-.popup > div {
-	width: 80rem;
-}
-
-/* STUDENT SEARCH */
-
-.popup .student-form button {
-	visibility: hidden;
-}
-
-.popup .student-form {
-	width: 80rem;
-	height: 20rem;
-	/* background-color: white; */
-	color: white;
-	text-align: center;
-	border-radius: 3px;
-	border: 2px inset white;
-	box-shadow: 0px 0px 2rem 9px rgba(255, 255, 255, 0.31)
-}
-
-.popup .student-form .student-form--header {
-	text-transform: uppercase;
-	font-size: 2rem;
-	letter-spacing: 1.5;
-}
-
-.popup .student-form .popup__form--entry-input {
-	background: none;
-	border: none;
-	text-align: center;
-	cursor: none;
-	color: white;
-	text-transform: lowercase;
-	transition: 0.4s width 0.2s, 0.1s height;
-	font-size: 4rem;
-}
-
-.popup .student-form .popup__close:link,
-.popup .student-form .popup__close:visited{
-	text-decoration: none;
-	color: white;
-}
-.popup .student-form .popup__close--wrapper {
-	height: 4rem;
-	font-size: 3rem;
-}
-
-/* DEVELOPER BUTTONS */
-body .developer {
-	position: absolute;
-	top: 0;
-	left: 0;
-	display: block;
-	width: 100px;
-}
-
-.actions input {
-	color: black;
-}
-
-.developer button,
-.actions button {
-	width: 100%;
-	display: block;
-	color: white;
-}
-
-/* ACTION BUTTONS */
-body .actions {
-	position: absolute;
-	top: 0;
-	right: 0;
-	display: block;
-	width: 100px;
 }
 
 /* ANIMATIONS */

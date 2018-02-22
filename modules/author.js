@@ -2,6 +2,10 @@ var manageDOM = require('../src/manageDOM');
 
 'use strict';
 
+/*  For a simple, static page like this, it is best to 
+    build html instead of calling the builder functions
+    to create the page content */
+
 var authorsHTML = '\
     <div class="author-wrapper center-div" id="authors">\
         <div class="authors-row">\
@@ -39,7 +43,9 @@ var authorsHTML = '\
     </div>\
 ';
 
-var authors = () => {  
+/*  Creating the overlay element and then filling the html
+    with simple js*/
+var authors = () => {
     manageDOM.buildPopup();
     document.getElementById("popup").innerHTML = authorsHTML;
 }

@@ -1,0 +1,324 @@
+/* BASE CSS */
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-size: 62.5%;
+	--size: 1fr;
+}
+
+body {
+	box-sizing: border-box;
+	padding: 0rem;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+/* TYPOGRAPHY */
+
+body {
+	font-family: 'Lato', sans-serif;
+	letter-spacing: 1.4;
+	word-spacing: 2.5;
+	line-height: 1.7;
+	text-align: center;
+	color: white;
+	background-color: black;
+}
+
+.center-div {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* SECTIONS */
+
+.wrapper {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 10rem 1fr 10rem;
+    grid-template-rows: 15% auto 20%;
+    grid-gap: 1rem;
+    padding: 3rem 0;
+    position: relative;
+}
+
+.content {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    font-size: 5rem;
+    display: flex;
+  align-items: center;
+  justify-content: center 
+}
+
+.content p {
+    margin: 0;
+}
+
+.date-time {
+    grid-column: 2/3;
+    grid-row: 1/2;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.marvin {
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+
+.announcements {
+    grid-column: 2/3;
+    grid-row: 3/3;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    padding: 1rem;
+}
+
+.active-link {
+    opacity: 0;
+}
+
+/* STUDENT SEARCH */
+
+.popup .student-form button {
+	visibility: hidden;
+}
+
+.popup .student-form {
+	width: 80rem;
+	height: 20rem;
+	/* background-color: white; */
+	color: white;
+	text-align: center;
+	border-radius: 3px;
+	border: 2px inset white;
+	box-shadow: 0px 0px 2rem 9px rgba(255, 255, 255, 0.31)
+}
+
+.popup .student-form .student-form--header {
+	text-transform: uppercase;
+	font-size: 2rem;
+	letter-spacing: 1.5;
+}
+
+.popup .student-form .popup__form--entry-input {
+	background: none;
+	border: none;
+	text-align: center;
+	cursor: none;
+	color: white;
+	text-transform: lowercase;
+	transition: 0.4s width 0.2s, 0.1s height;
+	font-size: 4rem;
+}
+
+.popup .student-form .popup__close:link,
+.popup .student-form .popup__close:visited{
+	text-decoration: none;
+	color: white;
+}
+.popup .student-form .popup__close--wrapper {
+	height: 4rem;
+	font-size: 3rem;
+}
+
+
+/* DEVELOPER BUTTONS */
+body .developer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100px;
+}
+
+.actions input {
+	color: black;
+}
+
+.developer button,
+.actions button {
+	width: 100%;
+	display: block;
+	color: white;
+}
+
+/* ACTION BUTTONS */
+body .actions {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: block;
+	width: 100px;
+}
+
+/* ANIMATIONS */
+
+@keyframes blink {
+    to { visibility: hidden; }
+  }
+
+  /* ANIMATIONS */
+
+.remove-shrink {
+	animation: removeShrink 1s;
+}
+
+@keyframes blink {
+	to { visibility: hidden; }
+}
+
+@keyframes moveInDownRight {
+    0% {
+        opacity: 0;
+        transform: translate(-5rem, -5rem);
+    }
+
+    80% {
+        transform: translate(1rem, 1rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInDownLeft {
+    0% {
+        opacity: 0;
+        transform: translate(5rem, -5rem);
+    }
+
+    80% {
+        transform: translate(-1rem, 1rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInUpLeft {
+    0% {
+        opacity: 0;
+        transform: translate(5rem, 5rem);
+    }
+
+    80% {
+        transform: translate(-1rem, -1rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInUpRight {
+	0% {
+		opacity: 0;
+        transform: translate(-5rem, 5rem);
+    }
+
+    80% {
+		transform: translate(1rem, -1rem);
+    }
+
+    100% {
+		opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInRight {
+	0% {
+		opacity: 0;
+        transform: translateX(-10rem);
+    }
+
+    80% {
+		transform: translateX(2rem) scale(1.5);
+    }
+
+    100% {
+		opacity: 1;
+        transform: translate(0) scale(1);
+    }
+}
+
+@keyframes moveInLeft {
+	0% {
+		opacity: 0;
+        transform: translateX(10rem);
+    }
+
+    80% {
+		transform: translateX(-2rem) scale(1.5);
+    }
+
+    100% {
+		opacity: 1;
+        transform: translate(0) scale(1);
+    }
+}
+
+@keyframes shrinkAway {
+	100% {
+		opacity: 0;
+		transform: scale(0);
+	}
+}
+
+@keyframes zoomTowards {
+	0% {
+		opacity: 0;
+		transform: scale(0);
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+
+@keyframes blinkChair {
+	to { background-color: black; }
+}
+
+@keyframes ticker {
+	0% {
+	  transform: translate3d(0, 0, 0);
+	  visibility: visible;
+	}
+	100% {
+	  transform: translate3d(-100%, 0, 0);
+	}
+  }
+
+/* STANDARDS */
+
+/*
+
+-- CENTERING --
+
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+
+*/

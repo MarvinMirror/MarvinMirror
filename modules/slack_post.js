@@ -3,6 +3,8 @@ var config = require('../config/config');
 
 console.log("slack_post");
 
+var substringLen = 228;
+
 function slack_post() {
   var slackdiv = document.getElementById("slack_post");
   var slack_app = config.slack_app
@@ -50,7 +52,7 @@ console.log(dt);
         }
 
       // if message is longer then 500 characters then cut it and add "..."
-      slack_text.innerHTML = dt +'<br>' +text.substring(0, 500) + dots;
+      slack_text.innerHTML = dt +'<br>' +text.substring(0, substringLen) + dots;
       slackdiv.append(slack_img, slack_text);
       }
   });

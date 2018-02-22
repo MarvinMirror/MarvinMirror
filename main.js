@@ -1,19 +1,15 @@
 
 // Modules
-// Enable Electron-Reload
-require('electron-reload')(__dirname)
-// const {app} = require('electron')
-// const mainWindow = require('./mainWindow')
 const {spawn, exec} = require('child_process')
 const electron = require('electron')
-// Module to control application life.
 const app = electron.app
-// Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
+
 // Config data
 var windowSize = require('./config/config').window
 
-
+// Enable Electron-Reload
+require('electron-reload')(__dirname)
 
 let mainWindow;
 
@@ -31,10 +27,7 @@ function createWindow () {
 	})
 
 	// and load the index.html of the app.
-	mainWindow.loadURL('file://' + __dirname + '/renderer/main.html')
-  
-	// Open the DevTools.
-	// mainWindow.webContents.openDevTools()
+	mainWindow.loadURL('file://' + __dirname + '/renderer/index.html')
   
 	// Emitted when the window is closed.
 	mainWindow.on('closed', function () {

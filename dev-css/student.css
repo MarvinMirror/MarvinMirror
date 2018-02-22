@@ -1,0 +1,10 @@
+/* SHOW STUDENT */
+.student {
+	font-size: 3rem;
+	width: 50rem;
+}
+
+.student > div img {
+	max-height: 28rem;
+	margin: 3rem;
+}

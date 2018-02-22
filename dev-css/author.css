@@ -1,0 +1,108 @@
+/* AUTHORS */
+
+.authors-row {
+	margin: 0 auto;
+	position: relative;
+}
+
+.authors-row:first-child {
+	margin-bottom: 4rem;
+}
+
+.authors-row::after {
+	/* creating an pseudo element that is empty */
+	content: "";
+	/* table */
+	display: table;
+	/* clears any float elements around it may have */
+	clear: both;
+}
+
+.authors-row .col-1-of-2 {
+	display: inline-block;
+	font-size: 1.75rem;
+}
+
+.authors-row .col-1-of-2:first-child {
+	margin-right: 6rem;
+}
+
+.authors-row .col-1-of-2 .pic{
+	height: 28rem;
+	width: 20rem;
+	border: .5rem inset white;
+	box-shadow: 0px 0rem 4rem 3px white;
+}
+
+.authors-row .col-1-of-2 .label {
+	padding-top: 1.5rem;
+    line-height: 1.4;
+}
+
+.authors-row .col-1-of-2 .shape {
+	height: 4.5rem;
+	width: 4.5rem;
+	float: left;
+	clip-path: circle(50% at 50% 50%);
+	transform: translate(1.5rem, 1.5rem);
+}
+
+.authors-row .col-1-of-2 .shape .flag {
+	height: 100%;
+}
+
+.nastya-z .pic {
+	background-image: url(../img/author/nastya_z.jpg);
+	background-size: cover;
+}
+
+.nastya-z .shape  .flag {
+	transform: translate(-1rem, 0) scale(1.1);
+}
+
+.eugeniu .pic {
+	background-image: url(../img/author/eugeniu.jpg);
+	background-size: cover;
+}
+
+.eugeniu .shape {
+	background-color: #ffd200;
+}
+
+.eugeniu .shape .flag {
+	transform: translate(-2.23rem, 0rem) scale(0.9);
+}
+
+.kyle .pic {
+	background-image: url(../img/author/kyle.jpg);
+	background-size: cover;
+}
+
+.kyle .shape  .flag {
+	transform: translate(-1rem, 0);
+}
+
+.nastya-d .pic {
+	background-image: url(../img/author/nastya_d.jpg);
+	background-size: cover;
+}
+
+.nastya-d .shape  .flag {
+	transform: scale(1.1);
+}
+/*
+.authors-row .nastya-z {
+	animation: moveInDownRight 1s ease-in-out;
+}
+
+.authors-row .eugeniu {
+	animation: moveInDownLeft 1s ease-in-out;
+}
+
+.authors-row .kyle {
+	animation: moveInUpRight 1s ease-in-out;
+}
+
+.authors-row .nastya-d {
+	animation: moveInUpLeft 1s ease-in-out;
+}*/

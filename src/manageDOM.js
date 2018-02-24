@@ -2,7 +2,7 @@ var timer = require("../config/config").waitingTime;
 
 var manageDOM = {
 
-    /*  Creates a popup div of 100vh to use all of the monitor space on 
+    /*  Creates a popup div of 100vh to use all of the monitor space on
         the mirror */
 	buildPopup: () => {
 		let checkPopup = document.getElementById("popup");
@@ -11,10 +11,10 @@ var manageDOM = {
 			manageDOM.delPopup();
 		}
 
-		let body;
+		let body = document.body;
 		let popup = document.createElement("div");
 		body.appendChild(popup);
-    
+
 		popup.setAttribute("id", "popup");
 		popup.setAttribute("class", "popup");
 
@@ -32,28 +32,28 @@ var manageDOM = {
     /*  Specifically removes the popup element from the DOM */
 	delPopup: () => {
 		var popup = document.getElementById("popup");
-    
+
 		if (popup !== null) {
 			document.body.removeChild(popup);
 		}
 	},
 
-    /*  This function was created to bridge the issue with searching 
-        for students within the 42 API. There are logistical issues to 
-        searching by word fragments and names so for time's sake, this function 
+    /*  This function was created to bridge the issue with searching
+        for students within the 42 API. There are logistical issues to
+        searching by word fragments and names so for time's sake, this function
         is created to manually enter info for a student searched. */
 	studentPopup: (call_function) => {
 
 		// var checkPopup = document.getElementById('popup');
 		// if (checkPopup) {
-		//     document.body.removeChild(document.getElementById('popup'));        
-		// }    
+		//     document.body.removeChild(document.getElementById('popup'));
+		// }
 		// body.appendChild(popup);
 		manageDOM.buildPopup();
 		var popup = document.getElementById("popup");
 		popup.setAttribute("class", "popup");
 		popup.setAttribute("id", "popup");
-		popup.innerHTML = 
+		popup.innerHTML =
             "<div class=\"student-form center-div\">\
                 <span class=\"student-form--header\"> Please enter the login of the student you are looking for:</span>\
                 <form action=\"#\" class=\"popup__form center-div\">\
@@ -68,9 +68,9 @@ var manageDOM = {
 		document.getElementById("popup__form").focus();
 	},
 
-    /*  This function assists a developer who is creating a new module that needs to 
-        create an unknown number or, in general, many repeating divs for the mirror. 
-        For the array submitted as argument, array2Div will take the first element and 
+    /*  This function assists a developer who is creating a new module that needs to
+        create an unknown number or, in general, many repeating divs for the mirror.
+        For the array submitted as argument, array2Div will take the first element and
         create a wrapper of same name, and then subsequently append to the wrapper
         a div for each further element in the array */
 	array2Div: (arr, parent) => {

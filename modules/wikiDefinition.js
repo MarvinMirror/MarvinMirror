@@ -7,7 +7,7 @@ function wikiDefinition(word) {
   manageDOM.clearContent("content");
 
   var elements = [
-    'WOD', 'word', 'word_definition', 'word_example'
+    'WOD', 'word', 'word_definition'
   ];
 
   manageDOM.array2Div(elements, "popup");
@@ -20,8 +20,8 @@ function wikiDefinition(word) {
       console.log(data);
       console.log(data.query.pages[Object.keys(data.query.pages)]);
 
-      //needed data is returned in data, but the property name is a wikipedia pageID
-      // to get this property name we need to do 'Object.keys(data.query.pages'
+      //needed info is returned in variable 'data', but the property name is a wikipedia pageID
+      // to get this property name we need to do 'Object.keys(data.query.pages)'
 
       data = data.query.pages[Object.keys(data.query.pages)];
       document.getElementById('word').setAttribute("class", "word");

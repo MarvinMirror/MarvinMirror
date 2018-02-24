@@ -25,7 +25,7 @@ var marvinReacts = {
         else if (result.intent === 'projects') manageDOM.studentPopup('projectFunctions.getBestProjects');
         else if (result.intent === 'corrections') manageDOM.studentPopup('loadCorrections');
         else if (result.intent === 'map') manageDOM.studentPopup('studentOnMap');
-        else if (result.intent === 'events') calendar('month');
+        else if (result.intent === 'events') calendar(result.period, result.date);
         else if (result.intent === 'wikiDefinition') wikiDefinition(result.wikiword);
         else send_message('You asked for "' + result.text + '".<br> I don\'t understand you.')
     },
@@ -78,7 +78,7 @@ var marvinReacts = {
             var spot_two = Math.floor(Math.random() * 5) + 1;
             document.getElementById('spot'+ spot_two).innerHTML = text;
             console.log("spot two:" + spot_two);
-            
+
             clearTimeout(timer);
             timer = setTimeout(random_phrases, 3000, spot_two, phrases)
         }
@@ -99,7 +99,7 @@ function send_message(message)
         message_div.innerHTML = message;
     }
 
-    
+
 function talkToMe_dialog() {
     var dialog = document.getElementById('content');
     if (!dialog.innerHTML.length && !document.getElementById('popup')) marvinReacts.marvin_gif();

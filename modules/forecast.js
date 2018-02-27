@@ -27,7 +27,7 @@ function weatherForecast(get_place, wikisearch, get_units) {
 	var deg = units === "metric" ? "C" : "F";
 
 	// getting data from config
-	var weatherForecast = config.weatherForecast;
+	var weatherForecast = config.weather;
 
 	// array of elements for builing new html
 	var elements = [

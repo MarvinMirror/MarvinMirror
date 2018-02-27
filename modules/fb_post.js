@@ -9,6 +9,9 @@ var Post = require("../src/mongoDB").Models.Post;
 //curl used to test:
 //curl 'https://graph.facebook.com/v2.11/42SiliconValley?fields=posts&access_token=196637397563632|6e5049a9b266fff6438ff0b9d1bf5ff7'
 
+console.log(process.env);
+console.log(process.env.MARVIN_WEATHER);
+
 var updateFBDB = (data) => {
 	let endpoint = "message" in data.posts.data[0] ? "message" : "story";
 

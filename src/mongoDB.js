@@ -8,7 +8,6 @@ var Schema = mongoose.Schema;
 var connectDB = function () {
 	mongoose.Promise = global.Promise;
 	mongoose.connect(mongoDB.link);
-
 };
 
 // Clears errors for multiple definition of models/Schemas

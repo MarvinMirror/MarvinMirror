@@ -10,7 +10,7 @@
 //Requirements for listening 
 const record = require('node-record-lpcm16');
 const stream = require('stream');
-var path = require("path");;
+var path = require("path");
 
 //Reqirements for wake-up-word detection
 const { Detector, Models } = require('snowboy');

@@ -6,6 +6,8 @@ var moment = require("moment");
 var ftAPI = require("../src/ftAPI");
 var manageDOM = require("../src/manageDOM");
 var Student = require("../src/mongoDB").Models.Student;
+var sendMessage = require("../src/controller").message;
+var showMap = require("../modules/maps").showMap;
 
 /* Helper function for setting the time/date to specific format */
 function dateFormat(dateTime, format) {
@@ -14,6 +16,19 @@ function dateFormat(dateTime, format) {
 
 /* Obj to help developers pick out the best endpoint for the 42 API */
 var correctionFunctions = {
+
+	
+	/* NO ACCESS TO SLOTS */
+	getUserSlots: () => {
+		let qs = {
+			sort: "-begin_at"
+		};
+		// Student.findOne({"login": "kvandenb"}).exec((err, data) => {
+		ftAPI.query42("/v2/projects/1/slots", qs)
+			.then(console.log)
+			.catch(console.error);
+		// });
+	},
 
 	/* Returns correction pairs but is not filterable by campus */
 	getScaleTeams: () => {
@@ -40,7 +55,7 @@ var correctionFunctions = {
 	    Look for projectID under "teams" object */
 	getUserScaleTeams: (id) => {
 		let qs = {
-			sort: "-final_mark"
+			sort: "-begin_at"
 		};
 		return ftAPI.query42("/v2/users/" + id + 
         "/scale_teams/as_corrector", qs);
@@ -55,23 +70,27 @@ var showCorrections = function (data) {
             
 		/*  Builds all the elements for the next correction. The intent of the
             array2Div method is to build out many divs with specific labels at once */
-		var elements = [
-			"corrections", "title", "begin_at", "corrector", "corrected", "project",
-			"final_mark", "comments"
-		];
-		manageDOM.array2Div(elements, "popup");
 
-		document.getElementById("corrections").className = "corrections center-div";
-    
-		let obj = data[0];
+		let arr = [];
 
-		document.getElementById("title").innerHTML = "Last correction:";
-		document.getElementById("begin_at").innerHTML = dateFormat(obj.begin_at, "MMMM D, YYYY @ HH:mm");
-		document.getElementById("corrected").innerHTML = obj.correcteds[0].login;
-		document.getElementById("corrector").innerHTML = "Corrected by: " + obj.corrector.login;
-		document.getElementById("project").innerHTML = "Project ID: " + obj.team.project_id;
-		document.getElementById("final_mark").innerHTML = "Final mark: " + obj.final_mark;
-		document.getElementById("comments").innerHTML = "Corrector comments: " + obj.comment;
+		for (let i = 0 ; i < data.length && arr.length < 4 ; i++) {
+			if (data[i].final_mark == null) {
+				arr.push(data[i]);
+			}
+		}
+		
+		console.log(arr);
+
+		if (arr.length > 0) {
+			var obj = arr[0];
+			var sid = obj.correcteds[0].id;
+			var slogin = obj.correcteds[0].login;
+			console.log(sid);
+			console.log(slogin);
+		}
+
+		ftAPI.query42("/v2/users/" + sid)
+			.then(showMap);
 	}
 };
 
@@ -81,13 +100,36 @@ var loadCorrections = () => {
 	var login = document.getElementById("popup__form").value;
 	if (login !== null) {
 		Student.findOne({"login": login}).exec((err, data) => {
-			correctionFunctions.getUserScaleTeams(data.studentID)
-				.then(showCorrections)
-				.catch(console.error);
+			if (data) {
+				correctionFunctions.getUserScaleTeams(data.studentID)
+					.then(showCorrections)
+					.catch(console.error);
+			}
+			else {
+				sendMessage("We cannot locate a user with the login \"" + login + "\" in our database.");
+			}
 		});
 	}
+	manageDOM.delPopup();
+};
 
-	document.body.removeChild(document.getElementById("popup"));
+var devLoadCorrections = () => {
+	
+	console.log("devloadcorrections");
+	var login = "kvandenb";
+	if (login !== null) {
+		Student.findOne({"login": login}).exec((err, data) => {
+			if (data) {
+				correctionFunctions.getUserScaleTeams(data.studentID)
+					.then(showCorrections)
+					.catch(console.error);
+			}
+			else {
+				sendMessage("We cannot locate a user with the login \"" + login + "\" in our database.");
+			}
+		});
+	}
+	manageDOM.delPopup();
 };
 
 module.exports.corrector = loadCorrections;

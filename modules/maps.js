@@ -234,14 +234,13 @@ function zone(num, row, seat, student) {
     add_zone_name(num, zone_style);
 }
 
-function showMap(obj)
-{
+var showMap = (obj) => {
     marvin_reaction.delete_gif();
-    marvin_reaction.marvin_gif();
     manageDOM.buildPopup();
     console.log(obj)
     if (obj != null) {
         var location = obj.location;
+        console.log(location);
         if (location != null)
         {
             var res = location.split(/[^1-9]/);
@@ -302,8 +301,7 @@ var studentOnMap = () => {
             .then(showMap)
             .catch(console.error);
     }
-
-    document.body.removeChild(document.getElementById('popup'));
+	manageDOM.delPopup();
 }
 
-//module.exports = loadStudent;
+module.exports.showMap = showMap;

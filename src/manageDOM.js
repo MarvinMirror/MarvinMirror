@@ -1,5 +1,12 @@
 var timer = require("../config/config").waitingTime;
 
+/*	We use this variable to track the time left before the
+	popup window is deleted after user action. If the popup 
+	window is removed early from a subsequent user action, 
+	"timeout" is cleared to prevent the setTimeout timer from 
+	being carried over to a new function */
+var timeout;
+
 var manageDOM = {
 
     /*  Creates a popup div of 100vh to use all of the monitor space on 
@@ -7,18 +14,16 @@ var manageDOM = {
 	buildPopup: () => {
 		let checkPopup = document.getElementById("popup");
 
-		if (checkPopup) {
-			manageDOM.delPopup();
-		}
+		manageDOM.delPopup();
 
-		let body;
+		let body = document.body;
 		let popup = document.createElement("div");
 		body.appendChild(popup);
     
 		popup.setAttribute("id", "popup");
 		popup.setAttribute("class", "popup");
 
-		setTimeout(manageDOM.delPopup, timer / 2);
+		timeout = setTimeout(manageDOM.delPopup, timer / 2);
 		// setTimeout(manageDOM.delPopup, 10000);
 	},
 
@@ -35,6 +40,9 @@ var manageDOM = {
     
 		if (popup !== null) {
 			document.body.removeChild(popup);
+			clearTimeout(timeout);
+			console.log("timeout cleared");
+			console.log(timeout);
 		}
 	},
 
@@ -61,11 +69,12 @@ var manageDOM = {
                         <input type=\"text\" class=\"popup__form--entry-input\" id=\"popup__form\">\
                     </div>\
                     <div class=\"popup__button\">\
-                        <button type=\"submit\" class=\"btn-hidden\" onclick=\"" + call_function + "()\"></button>\
+                        <button type=\"submit\" class=\"btn-hidden\" id=\"student-submit\"></button>\
                     </div>\
                 </form>\
-            </div>";
+			</div>";
 		document.getElementById("popup__form").focus();
+		document.getElementById("student-submit").onclick = call_function;
 	},
 
     /*  This function assists a developer who is creating a new module that needs to 

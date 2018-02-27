@@ -20,11 +20,11 @@ var marvinReacts = {
         else if (result.intent === 'help') marvinHelp();
         else if (result.intent === 'authors') authors();
         else if (result.intent === 'word_of_the_day') wordOfADay(1);
-        else if (result.intent === 'get_me') manageDOM.studentPopup('v2Users.userInfo');
-        else if (result.intent === 'get_student') manageDOM.studentPopup('v2Users.studentInfo');
-        else if (result.intent === 'projects') manageDOM.studentPopup('projectFunctions.getBestProjects');
-        else if (result.intent === 'corrections') manageDOM.studentPopup('loadCorrections');
-        else if (result.intent === 'map') manageDOM.studentPopup('studentOnMap');
+        else if (result.intent === 'get_me') manageDOM.studentPopup(v2Users.userInfo);
+        else if (result.intent === 'get_student') manageDOM.studentPopup(v2Users.studentInfo);
+        else if (result.intent === 'projects') manageDOM.studentPopup(projectFunctions.getBestProjects);
+        else if (result.intent === 'corrections') manageDOM.studentPopup(loadCorrections);
+        else if (result.intent === 'map') manageDOM.studentPopup(studentOnMap);
         else if (result.intent === 'events') calendar('month');
         else if (result.intent === 'wikiDefinition') wikiDefinition(result.wikiword);
         else send_message('You asked for "' + result.text + '".<br> I don\'t understand you.')
@@ -32,7 +32,8 @@ var marvinReacts = {
 
     listen_gif : (event, message) => {
         manageDOM.clearContent('content');
-        if (document.getElementById('popup')) document.body.removeChild(document.getElementById('popup'));
+        // if (document.getElementById('popup')) document.body.removeChild(document.getElementById('popup'));
+        manageDOM.delPopup();
         manageDOM.array2Div(["sound_gif","sound_gif"], "content");
         var sound_div = document.getElementById('sound_gif');
         var gif = document.createElement("img");
@@ -90,9 +91,9 @@ var marvinReacts = {
         // setTimeout(talkToMe_dialog, 1500)
     },
 }
-function send_message(message)
-    {
+var send_message = (message) => {
         manageDOM.clearContent("content");
+        manageDOM.delPopup();
         manageDOM.array2Div(["message"], "popup");
         var message_div = document.getElementById('message');
         message_div.className += ' center-div';
@@ -115,3 +116,4 @@ function gif() {
 }
 
 module.exports = marvinReacts;
+module.exports.message = send_message;

@@ -1,6 +1,13 @@
+// Data about 42LAB clusters needed to build the HTML with the map.
 var info = require('../src/maps_info.js');
+
+// Adding Controller.js in order to get access to methods showing and deleting processing gifs
 var marvin_reaction = require('../src/controller.js');
+
+// Adding ManageDOM.js in order to update HTML using MarvinMirror methods
 var manageDOM = require('../src/manageDOM');
+
+// Adding ftAPI.js to this 
 var ftAPI = require('../src/ftAPI')
 
 function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_style) {

@@ -9,7 +9,10 @@ function wordOfADay(flag) {
   ];
 
   manageDOM.array2Div(elements, "popup");
-  document.getElementById("WOD").className = "WOD center-div"
+  document.getElementById("WOD").className = "WOD center-div";
+
+  //if the flag == 1 then it means that student is logged in and we query UrbanDictionary
+  //if the flag = 0 then it means that a gueat is asking the word and we query wordnik
   if (flag)
   {  var wordAPI = config.urbanDictionaryAPI;
     console.log(wordAPI);}

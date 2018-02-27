@@ -79,7 +79,7 @@ var marvinReacts = {
             var spot_two = Math.floor(Math.random() * 5) + 1;
             document.getElementById('spot'+ spot_two).innerHTML = text;
             console.log("spot two:" + spot_two);
-            
+
             clearTimeout(timer);
             timer = setTimeout(random_phrases, 3000, spot_two, phrases)
         }
@@ -100,7 +100,7 @@ var send_message = (message) => {
         message_div.innerHTML = message;
     }
 
-    
+
 function talkToMe_dialog() {
     var dialog = document.getElementById('content');
     if (!dialog.innerHTML.length && !document.getElementById('popup')) marvinReacts.marvin_gif();

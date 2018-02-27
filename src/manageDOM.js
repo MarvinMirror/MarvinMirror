@@ -11,7 +11,7 @@ var manageDOM = {
 			manageDOM.delPopup();
 		}
 
-		let body;
+		let body = document.body;
 		let popup = document.createElement("div");
 		body.appendChild(popup);
     

@@ -1,6 +1,6 @@
 var getWeatherAtLocation = require('../modules/weather');
 var weatherForecast = require('../modules/forecast');
-var localDateTime = require('../modules/clock');
+var clock = require('../modules/clock');
 var getMenu = require('../modules/cantina').getMenu;
 var marvinHelp = require('../modules/help');
 var authors = require('../modules/author');
@@ -12,9 +12,9 @@ var marvinReacts = {
     command_execution : (event, message) => {
         var result = JSON.parse(message)
         console.log(result)
-        if (result.intent === 'get_weather') getWeatherAtLocation(result.location, result.units);
+        if (result.intent === 'get_weather') getWeatherAtLocation(result.location, result.wikiword, result.units);
         else if (result.intent === 'forecast') weatherForecast(result.location, result.units);
-        else if (result.intent === 'local_time') localDateTime(result.location);
+        else if (result.intent === 'local_time') clock.localDateTime(result.location);
         else if (result.intent === 'cantina_tomorrow') getMenu('tomorrow');
         else if (result.intent === 'cantina_today') getMenu('today');
         else if (result.intent === 'help') marvinHelp();

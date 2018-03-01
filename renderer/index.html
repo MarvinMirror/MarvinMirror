@@ -33,7 +33,7 @@
         </script>
     </head>
 
-    <body onload="fb_post(), slack_post(), dateTime(), connectDB()" id="body">
+    <body onload="fb_post(), slack_post(), clock.dateTime(), connectDB()" id="body">
         <div class="wrapper">
             <div class="date-time" id="date-time"></div>
             <div class="box content" id="content"></div>
@@ -44,6 +44,7 @@
         </div>
         <script src="../modules/clock.js"></script>
         <script src="../modules/fb_post.js"></script>
+        <script src="../modules/forecast.js"></script><!--/////////////////////-->
         <script src="../modules/slack_post.js"></script>
 		<script src="../modules/maps.js"></script>
 		<script src="../modules/student.js"></script>
@@ -52,6 +53,6 @@
 		<script src="../src/auto_update.js"></script>
 		<script src="../src/inactive.js"></script>
         <script src="../src/mongoDB.js"></script>
-        <button onclick="devLoadCorrections()">Scale Teams</button>
+        <!-- <button onclick="clock.localDateTime('Phoenix')">Scale Teams</button> -->
     </body>
 </html>

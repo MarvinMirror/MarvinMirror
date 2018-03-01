@@ -87,10 +87,13 @@ var showCorrections = function (data) {
 			var slogin = obj.correcteds[0].login;
 			console.log(sid);
 			console.log(slogin);
+			ftAPI.query42("/v2/users/" + sid)
+				.then(showMap);
+		}
+		else {
+			console.log(data);
 		}
 
-		ftAPI.query42("/v2/users/" + sid)
-			.then(showMap);
 	}
 };
 
@@ -98,25 +101,6 @@ var showCorrections = function (data) {
 var loadCorrections = () => {
     
 	var login = document.getElementById("popup__form").value;
-	if (login !== null) {
-		Student.findOne({"login": login}).exec((err, data) => {
-			if (data) {
-				correctionFunctions.getUserScaleTeams(data.studentID)
-					.then(showCorrections)
-					.catch(console.error);
-			}
-			else {
-				sendMessage("We cannot locate a user with the login \"" + login + "\" in our database.");
-			}
-		});
-	}
-	manageDOM.delPopup();
-};
-
-var devLoadCorrections = () => {
-	
-	console.log("devloadcorrections");
-	var login = "kvandenb";
 	if (login !== null) {
 		Student.findOne({"login": login}).exec((err, data) => {
 			if (data) {

@@ -7,6 +7,8 @@ var authors = require('../modules/author');
 var wordOfADay = require('../modules/word_of_a_day');
 var wikiDefinition = require('../modules/wikiDefinition');
 var calendar = require('../modules/calendar');
+var news = require('../modules/news');
+
 
 var marvinReacts = {
     command_execution : (event, message) => {
@@ -27,6 +29,7 @@ var marvinReacts = {
         else if (result.intent === 'map') manageDOM.studentPopup(studentOnMap);
         else if (result.intent === 'events') calendar('month');
         else if (result.intent === 'wikiDefinition') wikiDefinition(result.wikiword);
+        else if (result.intent === 'news') news();
         else send_message('You asked for "' + result.text + '".<br> I don\'t understand you.')
     },
 

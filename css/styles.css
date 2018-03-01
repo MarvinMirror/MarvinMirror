@@ -59,7 +59,7 @@ body {
     font-size: 5rem;
     display: flex;
   align-items: center;
-  justify-content: center 
+  justify-content: center
 }
 
 .content p {
@@ -522,7 +522,7 @@ body .actions {
 	margin: 3rem;
 }
 
-/* word of a day css */
+/* word of a day, wiki, calendar css */
 .WOD {
 	font-size: 1.5rem;
 	text-align: left;
@@ -540,6 +540,7 @@ body .actions {
 .WOD .word_example {
 	font-style: italic;
 }
+
 
 /* SHOW STUDENT */
 .student {

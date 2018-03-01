@@ -9,55 +9,38 @@ var manageDOM = require('../src/manageDOM');
 ** voice command.
 */
 
+async function promiseJSON(url) {
+    const options = {
+        method: 'GET',
+        uri: url,
+        json: true
+    };
+    try {
+        const response = await request(options);
+        return Promise.resolve(response);
+    }
+    catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+function getTimeZone(data) {
+    var geoLocation = {
+        lat: data.geonames[0].lat,
+        lng: data.geonames[0].lng,
+        name: data.geonames[0].toponymName
+    }
+    var new_url = makeTimeZoneQuiry(geoLocation);
+    return promiseJSON(new_url);
+}
+
 function getTimeZone(place)
 {
-    var geoLocation = {
-        lat: "",
-        lng: "",
-        name: ""
-    };
-
+   
     var url = makeSearchQuiry(place, 1);
-
-    async function getLocation(url) {
-        const options = {
-            method: 'GET',
-            uri: url,
-            json: true
-        };
-        try {
-            const response = await request(options);
-            return Promise.resolve(response);
-        }
-        catch (error) {
-            return Promise.reject(error);
-        }
-    }
-
-    async function getTimeZone(data) {
-        var GeoLocation;
-        geoLocation.lat = data.geonames[0].lat;
-        geoLocation.lng = data.geonames[0].lng;
-        geoLocation.name = data.geonames[0].toponymName;
-
-        var new_url = makeTimeZoneQuiry(geoLocation);
-
-        const options = {
-            method: 'GET',
-            uri: new_url,
-            json: true
-        };
-
-        try {
-            const response = await request(options);
-            return Promise.resolve(response);
-        }
-        catch (error) {
-        return Promise.reject(error);
-        }
-    }
-
-    getLocation(url).then(getTimeZone).then(function (data) {
+    
+    promiseJSON(url).then(getTimeZone).then(function (data) {
+        console.log(data)
         dateLocalTime(data['timezoneId'], place)
     })
 }
@@ -163,9 +146,9 @@ function makeTimeZoneQuiry(geoLocation)
     return (config.geoNamesAPI.timezone + 'lat=' + geoLocation.lat + '&lng=' + geoLocation.lng + '&username=' + config.geoNamesAPI.username)
 }
 
-function makeSearchQuiry(place, amount)
+function makeSearchQuiry(place, numberOfPlases)
 {
-    return (config.geoNamesAPI.search + place + '&maxRows=' + amount + '&username=' + config.geoNamesAPI.username)
+    return (config.geoNamesAPI.search + place + '&maxRows=' + numberOfPlases + '&username=' + config.geoNamesAPI.username)
 }
 
 module.exports = localDateTime

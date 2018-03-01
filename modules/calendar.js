@@ -40,7 +40,7 @@ function Date_calendar (data){
     events = 'No events, sorry.';
   }
 
-  document.getElementById('cal_date').setAttribute("class", "word_center");
+  document.getElementById('cal_date').setAttribute("class", "word");
   document.getElementById('cal_events').setAttribute("class", "word_definition");
 
    document.getElementById('cal_date').innerHTML = header;

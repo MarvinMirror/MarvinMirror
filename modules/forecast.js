@@ -1,4 +1,4 @@
-var moment = require("moment");
+var moment = require("moment-timezone");
 
 var getJSON = require("../src/getJSON");
 var config = require("../config/config");
@@ -27,7 +27,7 @@ function weatherForecast(get_place, wikisearch, get_units) {
 	var deg = units === "metric" ? "C" : "F";
 
 	// getting data from config
-	var weatherForecast = config.weatherForecast;
+	var weatherForecast = config.weather;
 
 	// array of elements for builing new html
 	var elements = [
@@ -46,6 +46,7 @@ function weatherForecast(get_place, wikisearch, get_units) {
 	// request to the API and filling html
 	getJSON(weatherAPI, function(err, data){
 		if (err) throw err;
+		console.log(data);
 		document.getElementById("fore_location").innerHTML = "<p>" + data.city.name + " 5-Day Forecast</p>";
 		var j = 2;
 

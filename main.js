@@ -9,7 +9,9 @@ const BrowserWindow = electron.BrowserWindow
 var windowSize = require('./config/config').window
 
 // Enable Electron-Reload
-require('electron-reload')(__dirname)
+require('electron-reload')(__dirname);
+// Access node env variables
+require('dotenv').load();
 
 let mainWindow;
 

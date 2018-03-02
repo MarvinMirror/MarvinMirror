@@ -14,15 +14,15 @@ var updateFBDB = (data) => {
 	let endpoint = "message" in data.posts.data[0] ? "message" : "story";
 
 	let dots = "";
-  if (data.posts.data[0][endpoint].length > 200)
-    dots = "...";
+	if (data.posts.data[0][endpoint].length > 200)
+		dots = "...";
 
 	// create variables with data you'll store in db
 	let find_query = { "type": "FB" };
 	let update = {
 		"type" : "FB",
 		"timestamp" : moment(data.posts.data[0].created_time).format("ddd, MMMM D, HH:mm"),
-		'message' : data.posts.data[0][endpoint].substring(0, 200) + dots
+		"message" : data.posts.data[0][endpoint].substring(0, 200) + dots
 	};
 	let options = { upsert: true, new: true };
 
@@ -42,7 +42,6 @@ function fb_post() {
 	var fbAPI = fb_app.fbAPI+"?fields=posts&access_token=" + fb_app.client_id +"|"+fb_app.app_secret;
 
 	getJSON(fbAPI, function(err, data){
-		console.log(data);
 		if (err) throw err;
 		else {
 			//depending on how they create fb posts,..

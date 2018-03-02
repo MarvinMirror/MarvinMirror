@@ -1,6 +1,6 @@
 var getWeatherAtLocation = require('../modules/weather');
 var weatherForecast = require('../modules/forecast');
-var localDateTime = require('../modules/clock');
+var clock = require('../modules/clock');
 var getMenu = require('../modules/cantina').getMenu;
 var marvinHelp = require('../modules/help');
 var authors = require('../modules/author');
@@ -14,20 +14,20 @@ var marvinReacts = {
     command_execution : (event, message) => {
         var result = JSON.parse(message)
         console.log(result)
-        if (result.intent === 'get_weather') getWeatherAtLocation(result.location, result.units);
+        if (result.intent === 'get_weather') getWeatherAtLocation(result.location, result.wikiword, result.units);
         else if (result.intent === 'forecast') weatherForecast(result.location, result.units);
-        else if (result.intent === 'local_time') localDateTime(result.location);
+        else if (result.intent === 'local_time') clock.localDateTime(result.location);
         else if (result.intent === 'cantina_tomorrow') getMenu('tomorrow');
         else if (result.intent === 'cantina_today') getMenu('today');
         else if (result.intent === 'help') marvinHelp();
         else if (result.intent === 'authors') authors();
         else if (result.intent === 'word_of_the_day') wordOfADay(1);
-        else if (result.intent === 'get_me') manageDOM.studentPopup('v2Users.userInfo');
-        else if (result.intent === 'get_student') manageDOM.studentPopup('v2Users.studentInfo');
-        else if (result.intent === 'projects') manageDOM.studentPopup('projectFunctions.getBestProjects');
-        else if (result.intent === 'corrections') manageDOM.studentPopup('loadCorrections');
-        else if (result.intent === 'map') manageDOM.studentPopup('studentOnMap');
-        else if (result.intent === 'events') calendar(result.period, result.date);
+        else if (result.intent === 'get_me') manageDOM.studentPopup(v2Users.userInfo);
+        else if (result.intent === 'get_student') manageDOM.studentPopup(v2Users.studentInfo);
+        else if (result.intent === 'projects') manageDOM.studentPopup(projectFunctions.getBestProjects);
+        else if (result.intent === 'corrections') manageDOM.studentPopup(loadCorrections);
+        else if (result.intent === 'map') manageDOM.studentPopup(studentOnMap);
+        else if (result.intent === 'events') calendar('month');
         else if (result.intent === 'wikiDefinition') wikiDefinition(result.wikiword);
         else if (result.intent === 'news') news();
         else send_message('You asked for "' + result.text + '".<br> I don\'t understand you.')
@@ -35,7 +35,8 @@ var marvinReacts = {
 
     listen_gif : (event, message) => {
         manageDOM.clearContent('content');
-        if (document.getElementById('popup')) document.body.removeChild(document.getElementById('popup'));
+        // if (document.getElementById('popup')) document.body.removeChild(document.getElementById('popup'));
+        manageDOM.delPopup();
         manageDOM.array2Div(["sound_gif","sound_gif"], "content");
         var sound_div = document.getElementById('sound_gif');
         var gif = document.createElement("img");
@@ -93,9 +94,9 @@ var marvinReacts = {
         // setTimeout(talkToMe_dialog, 1500)
     },
 }
-function send_message(message)
-    {
+var send_message = (message) => {
         manageDOM.clearContent("content");
+        manageDOM.delPopup();
         manageDOM.array2Div(["message"], "popup");
         var message_div = document.getElementById('message');
         message_div.className += ' center-div';
@@ -118,3 +119,4 @@ function gif() {
 }
 
 module.exports = marvinReacts;
+module.exports.message = send_message;

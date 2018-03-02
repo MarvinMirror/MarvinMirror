@@ -167,9 +167,7 @@ var v2Users = {
 				}
 			});
 		}
-
-		// THIS CODE WILL STAND UNTIL WE GET RID OF THE KEYBOARD
-		document.body.removeChild(document.getElementById("popup"));
+		manageDOM.delPopup();
 	},
 
 	/*  Displays current user information. This function is unused and will be 
@@ -190,11 +188,7 @@ var v2Users = {
 					.catch(console.error);
 			});
 		}
-    
-		// THIS CODE WILL STAND UNTIL WE GET CARD READER
-		let popup = document.getElementById("popup");
-		if (popup)
-			document.body.removeChild(popup);
+    	manageDOM.delPopup();
 	}
 
 };

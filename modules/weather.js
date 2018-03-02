@@ -16,10 +16,12 @@ function getUnits(units)
 	return("metric");
 }
 
-/*	Marvin function that grabs weather-by-location information from 
-	the openweathermap.org API, parses and displays in the app window */
-function getWeatherAtLocation(get_place, get_units) {
 
+/*	Marvin function that grabs weather-by-location information from 
+the openweathermap.org API, parses and displays in the app window */
+function getWeatherAtLocation(get_place, get_units) {
+	
+	console.log(process.env.MARVIN_WEATHER);
 	// check input
 	var place = getLocation(get_place);
 
@@ -29,7 +31,7 @@ function getWeatherAtLocation(get_place, get_units) {
 	manageDOM.clearContent("content");
 
 	// getting data from config
-	var currentWeather = config.currentWeather;
+	var currentWeather = config.weather;
 
 	// array of elements for builing new html
 	var elements = [

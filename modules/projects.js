@@ -243,12 +243,19 @@ var projectFunctions = {
 		marvinReacts.process_gif();
 		console.log(login);
 		if (login !== null) {
+			manageDOM.clearContent("content");
 			Student.findOne({"login": login}).exec((err, data) => {
 				ftProjectCalls.getProjectsUsersByUser(data);
 			});
 		}
-            
-		document.body.removeChild(document.getElementById("popup"));
+		else {
+			manageDOM.clearContent("content");
+			manageDOM.array2Div(["message"], "popup");
+			var message_div = document.getElementById('message');
+			message_div.className += ' center-div';
+			message_div.innerHTML = "Please ask marvin again and provide a student login with the input provided";
+		}
+		manageDOM.delPopup();
 	}
 };
     

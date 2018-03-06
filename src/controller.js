@@ -22,7 +22,6 @@ var marvinReacts = {
         else if (result.intent === 'help') marvinHelp();
         else if (result.intent === 'authors') authors();
         else if (result.intent === 'word_of_the_day') wordOfADay(1);
-        else if (result.intent === 'get_me') manageDOM.studentPopup(v2Users.userInfo);
         else if (result.intent === 'get_student') manageDOM.studentPopup(v2Users.studentInfo);
         else if (result.intent === 'projects') manageDOM.studentPopup(projectFunctions.getBestProjects);
         else if (result.intent === 'corrections') manageDOM.studentPopup(loadCorrections);

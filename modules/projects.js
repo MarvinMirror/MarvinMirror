@@ -1,12 +1,9 @@
 var ftAPI = require("../src/ftAPI");
 var manageDOM = require("../src/manageDOM");
 var marvinReacts = require("../src/controller");
+var sendMessage = require("../src/controller").message;
 var ProjectID = require("../src/mongoDB").Models.ProjectID;
 var Student = require("../src/mongoDB").Models.Student;
-
-// Dummy vars for testing
-var projectID = 985;
-var userID = 22978;
 
 /*  Helper function for sorting finished arrays by top marks */
 function compareFinalMark(a,b) {
@@ -226,6 +223,9 @@ var ftProjectCalls = {
 			.catch(console.error); 
 	}
 };
+
+let noLogin = "Please ask marvin again and provide a student login with the input provided.";
+let badLogin = "No user with that login was found in our database. Please ask me again and provide a valid login.";
     
 var projectFunctions = {
         
@@ -236,26 +236,19 @@ var projectFunctions = {
 			.then(() => {projectFunctions.getAllProjects(n + 1);})
 			.catch(console.error);
 	},
+
         
 	/*  Marvin function that display's a user's top 5 projects on screen */
 	getBestProjects: () => {
 		var login = document.getElementById("popup__form").value;
 		marvinReacts.process_gif();
-		console.log(login);
-		if (login !== null) {
-			manageDOM.clearContent("content");
-			Student.findOne({"login": login}).exec((err, data) => {
-				ftProjectCalls.getProjectsUsersByUser(data);
-			});
-		}
-		else {
-			manageDOM.clearContent("content");
-			manageDOM.array2Div(["message"], "popup");
-			var message_div = document.getElementById('message');
-			message_div.className += ' center-div';
-			message_div.innerHTML = "Please ask marvin again and provide a student login with the input provided";
-		}
-		manageDOM.delPopup();
+		Student.findOne({"login": login}).exec((err, data) => {
+			if (data) ftProjectCalls.getProjectsUsersByUser(data);
+			else {
+				let msg = login === "" ? noLogin : badLogin;
+				sendMessage(msg);
+			}
+		});
 	}
 };
     

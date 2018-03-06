@@ -37,7 +37,6 @@ var timezone = {
 		return promiseJSON(url)
 			.then(getTimeZoneObj)
 			.then( (data) => {
-				console.log(data);
 				return data.timezoneId;
 			});
             

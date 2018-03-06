@@ -6,6 +6,7 @@ var moment = require("moment");
 var ftAPI = require("../src/ftAPI");
 var manageDOM = require("../src/manageDOM");
 var Student = require("../src/mongoDB").Models.Student;
+var marvinReacts = require("../src/controller");
 var sendMessage = require("../src/controller").message;
 var showMap = require("../modules/maps").showMap;
 
@@ -79,7 +80,7 @@ var showCorrections = function (data) {
 			}
 		}
 		
-		console.log(arr);
+		// console.log(arr);
 
 		if (arr.length > 0) {
 			var obj = arr[0];
@@ -91,25 +92,26 @@ var showCorrections = function (data) {
 				.then(showMap);
 		}
 		else {
-			console.log(data);
+			sendMessage("You do not have any<br>current unfinished corrections!<br><br> \
+			Upcoming corrections may be viewed<br>on your intra.<br><br> \
+			Ask me again if you're late for a correction to locate your destination on a cluster map!");
 		}
 
 	}
 };
 
-/*	Finds all upcoming corrections for a given user as the corrector */
+
+/*	Finds all past-due corrections for a given user as the corrector */
 var loadCorrections = () => {
-    
+	
 	var login = document.getElementById("popup__form").value;
+	marvinReacts.process_gif();	
 	if (login !== null) {
 		Student.findOne({"login": login}).exec((err, data) => {
 			if (data) {
 				correctionFunctions.getUserScaleTeams(data.studentID)
 					.then(showCorrections)
 					.catch(console.error);
-			}
-			else {
-				sendMessage("We cannot locate a user with the login \"" + login + "\" in our database.");
 			}
 		});
 	}

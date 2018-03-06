@@ -1,6 +1,7 @@
 var ftAPI = require("../src/ftAPI");
 var manageDOM = require("../src/manageDOM");
 var Student = require("../src/mongoDB").Models.Student;
+var sendMessage = require("../src/controller").message;
 var marvinReacts = require("../src/controller.js");
 
 "use strict";
@@ -147,6 +148,7 @@ var v2Users = {
 	studentInfo: () => {
         
 		let login = document.getElementById("popup__form").value.toLowerCase();
+		marvinReacts.process_gif();			
 		manageDOM.buildPopup();
 		if (login !== null && login !== "") {
 			// query = Student.findOne({'login': login});
@@ -159,11 +161,7 @@ var v2Users = {
 						.catch(console.error);
 				}
 				else {
-					manageDOM.clearContent("content");
-					manageDOM.array2Div(["message"], "popup");
-					var messageDiv = document.getElementById("message");
-					messageDiv.className += " center-div";
-					messageDiv.innerHTML = "I cannot find any user with this login in our database";
+					sendMessage("I cannot find any user with this login in our database.");
 				}
 			});
 		}

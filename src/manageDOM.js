@@ -41,8 +41,6 @@ var manageDOM = {
 		if (popup !== null) {
 			document.body.removeChild(popup);
 			clearTimeout(timeout);
-			console.log("timeout cleared");
-			console.log(timeout);
 		}
 	},
 

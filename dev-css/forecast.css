@@ -69,7 +69,9 @@
 	height: 10rem;
 }
 
-.daycast--0,
+/* ANIMATIONS */
+
+/* .daycast--0,
 .daycast--2,
 .daycast--4 {
 	animation: moveInRight 1s cubic-bezier(0.19, 1, 0.22, 1);
@@ -78,4 +80,4 @@
 .daycast--1,
 .daycast--3 {
 	animation: moveInLeft 1s cubic-bezier(0.19, 1, 0.22, 1);
-}
+} */

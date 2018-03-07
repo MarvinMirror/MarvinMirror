@@ -1,18 +1,25 @@
 
 /* news css */
 .NEWS {
-	font-size: 1.5rem;
+	font-size: 2rem;
 	text-align: left;
 	hyphens: auto;
   padding-bottom: 4rem;
+
 }
 
-.NEWS .title {
-	font-size: 1.75rem;
-  font-weight: bold;
-  padding-bottom: 0.8rem
-}
 .NEWS .source {
 	font-style: italic;
-  font-size: 1.5rem
+  font-size: 2.5rem;
+	color: #aab5f3;
+}
+.NEWS .title {
+	font-size: 2.5rem;
+  font-weight: bold;
+  padding-bottom: 0.8rem;
+	/* padding-left: 2rem; */
+}
+
+.NEWS .description {
+	padding-left: 2rem;
 }

@@ -3,12 +3,14 @@ var info = require('../src/maps_info.js');
 
 // Adding Controller.js in order to get access to methods showing and deleting processing gifs
 var marvin_reaction = require('../src/controller.js');
-
+console.log(marvin_reaction)
 // Adding ManageDOM.js in order to update HTML using MarvinMirror methods
 var manageDOM = require('../src/manageDOM');
 
 // Adding ftAPI.js to this 
-var ftAPI = require('../src/ftAPI')
+var ftAPI = require('../src/ftAPI');
+
+var send_message = require('../src/controller.js').message;
 
 function create_floor_1(zone_name, get_row, get_seat, zone_obj, zone_42, zone_style) {
     //get HTML element to add new elements there
@@ -296,19 +298,15 @@ var send_no_student_message = function (student) {
 }
 
 // The first step is to get the user/:id by using the login from this endpoint
-var studentOnMap = () => {
-   // removes from "content" div of app any div with id "wrapper"
-    manageDOM.clearContent("content");
-    
+function studentOnMap(data) {
+    manageDOM.delPopup();
+    console.log(data);
+    var login = data.toLowerCase();
     marvin_reaction.process_gif();
-    var login = document.getElementById('popup__form').value;
-    if (login !== null) {
-        ftAPI.query42("/v2/users/?filter[login]=" + login)
-            .then(getStudentID)
-            .then(showMap)
-            .catch(console.error);
-    }
-	manageDOM.delPopup();
+    ftAPI.query42("/v2/users/?filter[login]=" + login)
+    .then(getStudentID)
+    .then(showMap)
+    .catch(console.error);
 }
 
-module.exports.showMap = showMap;
+module.exports = studentOnMap;

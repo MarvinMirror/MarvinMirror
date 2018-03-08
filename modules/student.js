@@ -128,7 +128,7 @@ var getStudentPages = (n) => {
 					if (err) throw err;
 				});
 			}
-			if (array.length === 0) throw ("no more pages");
+			if (array.length === 0) throw ("no more student pages");
 			return Promise.resolve();
 		})
 		.catch(e => {throw e;});

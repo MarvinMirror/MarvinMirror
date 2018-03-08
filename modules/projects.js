@@ -84,11 +84,10 @@ var ftProjectCalls = {
 					let find_query = {"projectID": array[i].id};
 					let options = { upsert: true, new: true };
 					ProjectID.findOneAndUpdate(find_query, update, options, () => {
-						console.log(array[i].name + ":" + array[i].id);
 						console.log("updated");
 					});
 				}
-				if (array.length === 0) throw ("no more pages");
+				if (array.length === 0) throw ("no more project pages");
 				return Promise.resolve();
 			})
 			.catch(e => {throw e;});

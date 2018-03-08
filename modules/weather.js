@@ -21,7 +21,6 @@ function getUnits(units)
 the openweathermap.org API, parses and displays in the app window */
 function getWeatherAtLocation(get_place, get_units) {
 	
-	console.log(process.env.MARVIN_WEATHER);
 	// check input
 	var place = getLocation(get_place);
 
@@ -57,7 +56,6 @@ function getWeatherAtLocation(get_place, get_units) {
 	getJSON(weatherAPI, function(err, data){
 		if (err) throw err;
 		else {
-			console.log(data);
 			var weather = data.weather[0];
 			var icon = weather.icon;
 			wl_icon.setAttribute("src", "../img/weather/" + icon + ".png");

@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "./node_modules/.bin/electron .",
-    "compile:sass": "node-sass --watch sass/main.scss css/style.css"
+    "compile:sass": "node-sass sass/main.scss css/style.css --output-style compressed"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,8 @@
     "electron": "1.7.5",
     "electron-reload": "^1.2.2",
     "eslint": "^4.17.0",
-    "moment-timezone": "^0.5.14"
+    "moment-timezone": "^0.5.14",
+    "node-sass": "^4.7.2"
   },
   "dependencies": {
     "@google-cloud/speech": "^1.0.0",

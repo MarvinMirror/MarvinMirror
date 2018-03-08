@@ -10,7 +10,7 @@ function news() {
 
   document.getElementById("news_div").className = "center-div";
 
-  news_api = config.News_api;
+  news_api = config.news_api;
   console.log(news_api.sources.length);
   for (var j = 0; j < news_api.sources.length; j++){
     // creating url
@@ -26,7 +26,7 @@ function news() {
         var el = ['news' + i,'source' + i, 'title' + i, 'description' + i];
         manageDOM.array2Div(el, "news_div");
 
-        document.getElementById('news' + i).className = 'NEWS';
+        document.getElementById('news' + i).className = 'news';
         document.getElementById('source' + i).className = "source";
         document.getElementById('title' + i).className = "title";
         document.getElementById('description' + i).className = "description";

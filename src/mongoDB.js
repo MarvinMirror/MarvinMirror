@@ -57,6 +57,11 @@ var testSchema = new Schema ({
 	testName: String
 });
 
+var inputData = new Schema ({
+	source: String,
+	message: String
+});
+
 var marvinMongo = {
 	/*  For every new module that is added that requires saving or caching of 
       information to our database, a Schema must be defined above and
@@ -64,6 +69,7 @@ var marvinMongo = {
 	Models: {
 
 		Menu: mongoose.model("Menu", cantinaSchema),
+		Input: mongoose.model("Input", inputData),
 		Post: mongoose.model("Post", postSchema),
 		ProjectID: mongoose.model("ProjectID", projectIDSchema),
 		Student: mongoose.model("Student", studentSchema),

@@ -18,3 +18,12 @@ var autoUpdate = new CronJob ("00 30 04 * * *", () => {
 	getAllProjects(0);
 
 } , null, true, config.timeZone);
+
+var updateNow = () => {
+	console.log("updating database");
+	console.log(moment());
+
+	menuUpdateMongo();
+	getAllStudents(0);
+	getAllProjects(0);
+};

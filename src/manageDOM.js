@@ -44,6 +44,15 @@ var manageDOM = {
 		}
 	},
 
+	inputPopup: () => {
+		manageDOM.clearContent("content");
+		manageDOM.buildPopup();
+		var popup = document.getElementById("popup");
+		var popup = document.getElementById("popup");
+		popup.innerHTML = "<br><br><br><img src='../img/qr.png'>\
+		<p style='font-size: 5rem'>Use this QR code with your phone or go to http://bit.ly/marvinmirror"
+	},
+
     /*  This function was created to bridge the issue with searching
         for students within the 42 API. There are logistical issues to
         searching by word fragments and names so for time's sake, this function

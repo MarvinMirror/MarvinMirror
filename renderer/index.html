@@ -8,10 +8,11 @@
         <!--script src="/src/jquery.min.js"></script-->
 
         <script>
-            var reaction = require('../src/controller.js');
-            require('electron').ipcRenderer.on('sound', reaction.listen_gif);
-            require('electron').ipcRenderer.on('todo', reaction.command_execution);
-            require('electron').ipcRenderer.on('delete_gif', reaction.empty_response);
+            var command_execution = require('../src/command_execution.js');
+            var marvin_reaction = require('../src/controller.js')
+            require('electron').ipcRenderer.on('sound', marvin_reaction.listen_gif);
+            require('electron').ipcRenderer.on('todo', command_execution);
+            require('electron').ipcRenderer.on('delete_gif', marvin_reaction.empty_response);
         </script>
     </head>
 
@@ -27,7 +28,6 @@
         <script src="../modules/clock.js"></script>
         <script src="../modules/fb_post.js"></script>
         <script src="../modules/slack_post.js"></script>
-		<script src="../modules/maps.js"></script>
 		<script src="../modules/student.js"></script>
 		<script src="../modules/projects.js"></script>
 		<script src="../modules/corrections.js"></script>

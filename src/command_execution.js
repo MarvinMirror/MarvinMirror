@@ -14,7 +14,7 @@ var studentOnMap = require('../modules/maps.js');
 function command_execution (event, message) {
     var result = JSON.parse(message)
     console.log(result)
-    if (result.intent === 'get_weather') getWeatherAtLocation(result.location, result.wikiword, result.units);
+    if (result.intent === 'get_weather') getWeatherAtLocation(result.location, result.units);
     else if (result.intent === 'forecast') weatherForecast(result.location, result.units);
     else if (result.intent === 'local_time') clock.localDateTime(result.location);
     else if (result.intent === 'cantina_tomorrow') getMenu('tomorrow');

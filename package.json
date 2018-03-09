@@ -42,11 +42,13 @@
     "jquery": "^3.2.1",
     "moment": "^2.20.1",
     "mongoose": "^4.13.8",
+    "node-raspistill": "0.0.14",
     "node-record-lpcm16": "^0.3.0",
     "node-wit": "^4.3.0",
     "promise": "^8.0.1",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "snowboy": "^1.2.0"
+    "snowboy": "^1.2.0",
+    "watermarkjs": "^2.0.0"
   }
 }

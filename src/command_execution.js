@@ -10,6 +10,7 @@ var calendar = require('../modules/calendar');
 var news = require('../modules/news');
 var read_input = require('../src/get_input');
 var studentOnMap = require('../modules/maps.js');
+var photo = require('../modules/photoBooth.js');
 
 function command_execution (event, message) {
     var result = JSON.parse(message)
@@ -19,6 +20,7 @@ function command_execution (event, message) {
     else if (result.intent === 'local_time') clock.localDateTime(result.location);
     else if (result.intent === 'cantina_tomorrow') getMenu('tomorrow');
     else if (result.intent === 'cantina_today') getMenu('today');
+    else if (result.intent === 'photo') photo();
     else if (result.intent === 'help') marvinHelp();
     else if (result.intent === 'authors') authors();
     else if (result.intent === 'word_of_the_day') wordOfADay(1);
@@ -33,4 +35,3 @@ function command_execution (event, message) {
 }
 
 module.exports = command_execution;
-

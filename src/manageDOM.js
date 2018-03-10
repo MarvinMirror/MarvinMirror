@@ -24,7 +24,6 @@ var manageDOM = {
 		popup.setAttribute("class", "popup");
 
 		timeout = setTimeout(manageDOM.delPopup, timer / 2);
-		// setTimeout(manageDOM.delPopup, 10000);
 	},
 
     /*  Removes all DOM objects within a parent object */

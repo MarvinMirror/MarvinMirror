@@ -48,8 +48,10 @@ var manageDOM = {
 		manageDOM.clearContent("content");
 		manageDOM.buildPopup();
 		var popup = document.getElementById("popup");
-		var popup = document.getElementById("popup");
-		popup.innerHTML = "<br><br><br><img src='../img/qr.png'>\
+		var qrDiv = document.createElement("div");
+		qrDiv.className = "qr center-div";
+		popup.appendChild(qrDiv);
+		qrDiv.innerHTML = "<img src='../img/qr.png'>\
 		<p style='font-size: 5rem'>Use this QR code with your phone or go to http://bit.ly/marvinmirror"
 	},
 

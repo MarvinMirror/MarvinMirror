@@ -6,7 +6,13 @@ var options = {
 	outputDir: "/home/pi/Pictures/Photo",
 	encoding: "jpg",
 	width: 1024,
-	height: 768
+	height: 768,
+//  time:undefined,	
+//  iso: 200,	
+//  shutterspeed: undefined,	
+//  contrast: 10,	
+//  brightness: 30,	
+//  saturation: 10
 };
 
 function showIMG(name){

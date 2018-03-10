@@ -39,10 +39,10 @@ function photo(){
 			setTimeout( () => {
 				var sound = new Audio("../img/photo_sound.mp3");
 				sound.play();
-			}, 3000);
+			}, 500);
 			setTimeout( () => {
 				showIMG(options.fileName);
-			}, 4000);
+			}, 1000);
 		})
 		.catch(console.error);
 }

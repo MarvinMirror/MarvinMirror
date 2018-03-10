@@ -62,12 +62,23 @@ var inputData = new Schema ({
 	message: String
 });
 
+var analyticsData = new Schema ({
+	source: String,
+	year: Number,
+	month: Number,
+	date: Number,
+	function: String,
+	calls: Number,
+	phrase: String
+});
+
 var marvinMongo = {
 	/*  For every new module that is added that requires saving or caching of 
       information to our database, a Schema must be defined above and
       a model must be set below */
 	Models: {
 
+		Analytics: mongoose.model("Analytics", analyticsData),
 		Menu: mongoose.model("Menu", cantinaSchema),
 		Input: mongoose.model("Input", inputData),
 		Post: mongoose.model("Post", postSchema),

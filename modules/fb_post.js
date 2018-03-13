@@ -4,12 +4,9 @@ var getJSON = require("../src/getJSON");
 var config = require("../config/config");
 var Post = require("../src/mongoDB").Models.Post;
 
-// console.log("FB_post");
-
 //curl used to test:
 //curl 'https://graph.facebook.com/v2.11/42SiliconValley?fields=posts&access_token=196637397563632|6e5049a9b266fff6438ff0b9d1bf5ff7'
 
-//saving the latest fb_post into database
 var updateFBDB = (data) => {
 	let endpoint = "message" in data.posts.data[0] ? "message" : "story";
 
@@ -35,37 +32,47 @@ var updateFBDB = (data) => {
 
 };
 
-function fb_post() {
-	var fbdiv = document.getElementById("fb_post");
-	var fb_app = config.fb_app;
-
-	var fbAPI = fb_app.fbAPI+"?fields=posts&access_token=" + fb_app.client_id +"|"+fb_app.app_secret;
-
+function get_post_text(fbAPI, fb_text){
 	getJSON(fbAPI, function(err, data){
 		if (err) throw err;
 		else {
 			//depending on how they create fb posts,..
 			//..the actual message may be stored either in property 'message' or 'story'
 			if ( "message" || "story" in data.posts.data[0]){
+				//saving the latest fb_post into database
 				updateFBDB(data);
 			}
 
 			//retrieving saved post from database
 			let newData = Post.findOne({ "type": "FB" });
 			newData.exec( (err, x) => {
-				var fb_img = document.createElement("div");
-				var fb_text = document.createElement("div");
-
-				var fb_icon = document.createElement("img");
-				fb_icon.setAttribute("src", "../img/fb_icon.png");
-
-				fb_img.append(fb_icon);
-				fb_text.setAttribute("class", "post_text");
-
+				//updating div
 				fb_text.innerHTML = x.timestamp + "<br>" + x.message;
-				fbdiv.append(fb_img, fb_text);
-			});
-
+			})
 		}
-	});
+	})
+}
+
+//this is a function that is being called from index.html
+function fb_post() {
+	var fbdiv = document.getElementById("fb_post");
+	var fb_app = config.fb_app;
+
+	var fbAPI = fb_app.fbAPI+"?fields=posts&access_token=" + fb_app.client_id +"|"+fb_app.app_secret;
+
+	//creating divs and adding fb icon
+	var fb_img = document.createElement("div");
+	var fb_text = document.createElement("div");
+	var fb_icon = document.createElement("img");
+	fb_icon.setAttribute("src", "../img/fb_icon.png");
+	fb_img.append(fb_icon);
+	fb_text.setAttribute("class", "post_text");
+	fbdiv.append(fb_img, fb_text);
+
+	//getting FB post text and adding it to the div 'fb_text' for the first time
+ 	get_post_text(fbAPI, fb_text);
+
+	//calling get_post_text every 10min
+	//this is executed after 10min
+ 	setInterval(()=>{get_post_text(fbAPI, fb_text)}, 600000);
 }

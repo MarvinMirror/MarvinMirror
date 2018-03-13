@@ -72,7 +72,7 @@ function fb_post() {
 	//getting FB post text and adding it to the div 'fb_text' for the first time
  	get_post_text(fbAPI, fb_text);
 
-	//calling get_post_text every 10min
-	//this is executed after 10min
- 	setInterval(()=>{get_post_text(fbAPI, fb_text)}, 600000);
+	//calling get_post_text every hour(360000sec)
+	//this is executed after 1 hour
+ 	setInterval(()=>{get_post_text(fbAPI, fb_text)}, 3600000);
 }

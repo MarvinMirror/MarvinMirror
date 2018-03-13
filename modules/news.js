@@ -11,7 +11,7 @@ function news() {
   document.getElementById("news_div").className = "center-div";
 
   news_api = config.news_api;
-  console.log(news_api.sources.length);
+
   for (var j = 0; j < news_api.sources.length; j++){
     // creating url
     var newsAPI = news_api.newsAPI2 + news_api.sources[j] + '&language=en&apiKey=' + news_api.Key;

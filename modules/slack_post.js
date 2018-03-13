@@ -6,9 +6,6 @@ var mongoose = require('mongoose');
 var Post = require('../src/mongoDB').Models.Post
 
 var slack_app = config.slack_app
-
-console.log("slack_post");
-
 var update_slackDB = (text, data) => {
     // if they post a picture, insert "/img here/" instead of empty space
     if(data.subtype == 'file_share')
@@ -37,7 +34,7 @@ var update_slackDB = (text, data) => {
       'message' : text
      }
     let options = { upsert: true, new: true };
-    
+
     //updateing DB
     var update_slack = Post.findOneAndUpdate(find_query, update, options);
 
@@ -63,7 +60,6 @@ function getSlackName(text){
   //check if there is a user ID that should be substituted by username
   var start_index = text.indexOf("<@U");
   if (start_index > -1){
-
     var user_id = text.substring(start_index + 2, text.indexOf(">", start_index));
     //user.profile endpoint returns only one user_name at a time
     var name_API = slack_app.slackAPI + 'users.profile.get?token='+ slack_app.token +
@@ -83,11 +79,8 @@ function getSlackName(text){
   }
 }
 
-function slack_post() {
-  var slackAPI = slack_app.slackAPI+'channels.history?token=' + slack_app.token +
-                  '&channel=' + slack_app.channel_announcements + '&count=100';
+function get_slack_post_text(slackAPI, slack_text){
   getJSON(slackAPI, function(err, data){
-
     console.log(data);
     if (err) throw err;
     else {
@@ -97,27 +90,43 @@ function slack_post() {
         if (data.messages[i].subtype != 'channel_join'  && !("parent_user_id" in data.messages[i]))
         break ;
       }
-
       text = data.messages[i].text;
       //replaceing the code of the user by the username
       ReplaceNames(text)
-
+      //updateing latest slack_post in MongoDB
         .then(text => {update_slackDB(text, data.messages[i])})
-        .then(()=>{
-          let newData = Post.findOne({ 'type': 'slack' });
-          newData.exec( (err, x) => {
-            if(err) throw err;
-            let slackdiv = document.getElementById("slack_post");
-            let slack_img = document.createElement("div");
-            let slack_icon = document.createElement("img");
-            slack_icon.setAttribute("src", "../img/slack_icon.png")
-            slack_img.appendChild(slack_icon);
-
-            let slack_text = document.createElement("div");
-            slack_text.setAttribute("class", "post_text");
-            slack_text.innerHTML = x.timestamp + '<br>' + x.message;
-            slackdiv.append(slack_img, slack_text);
+        // retrieving data from MongoDB and putting it into div
+          .then(()=>{
+            let newData = Post.findOne({ 'type': 'slack' });
+              newData.exec( (err, x) => {
+                if(err) throw err;
+                slack_text.innerHTML = x.timestamp + '<br>' + x.message;
+              })
           })
-       })
-      ;
-      }})}
+      }
+    })
+}
+
+function slack_post() {
+  var slackAPI = slack_app.slackAPI+'channels.history?token=' + slack_app.token +
+                  '&channel=' + slack_app.channel_announcements + '&count=100';
+  //creating divs
+  var slackdiv = document.getElementById("slack_post");
+  var slack_img = document.createElement("div");
+  var slack_icon = document.createElement("img");
+  slack_icon.setAttribute("src", "../img/slack_icon.png")
+  slack_img.appendChild(slack_icon);
+
+  var slack_text = document.createElement("div");
+  slack_text.setAttribute("class", "post_text");
+  slackdiv.append(slack_img, slack_text);
+
+  //getting FB post text and adding it to the div 'fb_text' for the first time
+  get_slack_post_text(slackAPI, slack_text);
+
+  //run function every 120000sec(2min)
+  //first time this code will be execured after 2 min delay
+  setInterval(() => {
+    get_slack_post_text(slackAPI, slack_text)
+  }, 900000);
+}

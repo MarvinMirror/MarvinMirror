@@ -11,7 +11,8 @@ function accessDB(n, callback) {
         {
             Input.deleteOne({source: 'Heroku_app'}, function(err, obj) {console.log("deleted")});
             n = waitingTime;
-            callback(data.message)
+            if (data.message != "") callback(data.message)
+            else send_message("You sent me an empty string! <br>Do you think I'm stupid?")
         }
         else {
             console.log("nothing there")

@@ -238,8 +238,10 @@ var projectFunctions = {
 
         
 	/*  Marvin function that display's a user's top 5 projects on screen */
-	getBestProjects: () => {
-		var login = document.getElementById("popup__form").value;
+	getBestProjects: (data) => {
+		manageDOM.delPopup();
+		console.log(data);
+		var login = data.toLowerCase();
 		marvinReacts.process_gif();
 		Student.findOne({"login": login}).exec((err, data) => {
 			if (data) ftProjectCalls.getProjectsUsersByUser(data);

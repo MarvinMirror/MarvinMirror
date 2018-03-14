@@ -27,9 +27,9 @@ function command_execution (event, message) {
     else if (result.intent === 'photo') photo();
     else if (result.intent === 'authors') authors();
     else if (result.intent === 'word_of_the_day') wordOfADay(result.dictionary);
-    else if (result.intent === 'get_student') manageDOM.studentPopup(v2Users.studentInfo);
-    else if (result.intent === 'projects') manageDOM.studentPopup(projectFunctions.getBestProjects);
-    else if (result.intent === 'corrections') manageDOM.studentPopup(loadCorrections);
+    else if (result.intent === 'get_student') read_input(v2Users.studentInfo);
+    else if (result.intent === 'projects') read_input(projectFunctions.getBestProjects);
+    else if (result.intent === 'corrections') read_input(loadCorrections);
     else if (result.intent === 'map') read_input(studentOnMap);
     else if (result.intent === 'events') calendar(result.period, result.date);
     else if (result.intent === 'wikiDefinition') wikiDefinition(result.wikiword);
@@ -43,7 +43,6 @@ function add_analytics_data(result) {
 
     var d = new Date();
     var knownFunction = existingFunctions.includes(result.intent);
-    console.log(knownFunction)
     var find_query = {
         'source': 'mirror',
         'year': d.getFullYear(),

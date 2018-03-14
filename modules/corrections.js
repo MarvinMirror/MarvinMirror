@@ -8,7 +8,7 @@ var manageDOM = require("../src/manageDOM");
 var Student = require("../src/mongoDB").Models.Student;
 var marvinReacts = require("../src/controller");
 var sendMessage = require("../src/controller").message;
-var showMap = require("../modules/maps").showMap;
+var showMap = require("../modules/maps");
 
 /* Helper function for setting the time/date to specific format */
 function dateFormat(dateTime, format) {
@@ -89,7 +89,7 @@ var showCorrections = function (data) {
 			console.log(sid);
 			console.log(slogin);
 			ftAPI.query42("/v2/users/" + sid)
-				.then(showMap);
+				.then(showMap(slogin));
 		}
 		else {
 			sendMessage("You do not have any<br>current unfinished corrections!<br><br> \
@@ -102,20 +102,19 @@ var showCorrections = function (data) {
 
 
 /*	Finds all past-due corrections for a given user as the corrector */
-var loadCorrections = () => {
-	
-	var login = document.getElementById("popup__form").value;
-	marvinReacts.process_gif();	
-	if (login !== null) {
-		Student.findOne({"login": login}).exec((err, data) => {
-			if (data) {
-				correctionFunctions.getUserScaleTeams(data.studentID)
-					.then(showCorrections)
-					.catch(console.error);
-			}
-		});
-	}
+var loadCorrections = (data) => {
 	manageDOM.delPopup();
+	console.log("login is " + data);
+    var login = data.toLowerCase();
+	marvinReacts.process_gif();
+	Student.findOne({"login": login}).exec((err, data) => {
+	if (data) {
+		correctionFunctions.getUserScaleTeams(data.studentID)
+		.then(showCorrections)
+		.catch(console.error);
+	}
+	else sendMessage('No user with that login was found in our database. Please ask me again and provide a valid login.')
+	});
 };
 
 module.exports.corrector = loadCorrections;

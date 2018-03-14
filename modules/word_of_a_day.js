@@ -8,7 +8,7 @@ function wordOfADay(flag) {
     'WOD', 'word', 'word_definition', 'word_example'
   ];
 
-  manageDOM.array2Div(elements, "popup");
+  manageDOM.array2Div(elements);
   document.getElementById("WOD").className = "WOD center-div";
 
   //if the flag == 1 then it means that student is logged in and we query UrbanDictionary

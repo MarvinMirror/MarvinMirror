@@ -4,7 +4,7 @@ var marvinReacts = {
         manageDOM.clearContent('content');
         // if (document.getElementById('popup')) document.body.removeChild(document.getElementById('popup'));
         manageDOM.delPopup();
-        manageDOM.array2Div(["sound_gif","sound_gif"], "content");
+        manageDOM.array2Div(["sound_gif","sound_gif"]);
         var sound_div = document.getElementById('sound_gif');
         var gif = document.createElement("img");
         gif.setAttribute("src", "../img/giphy.gif");
@@ -13,7 +13,7 @@ var marvinReacts = {
 
    process_gif: () => {
         manageDOM.clearContent("content");
-        manageDOM.array2Div(["process_gif","process_gif"], "content");
+        manageDOM.array2Div(["process_gif","process_gif"]);
         var sound_div = document.getElementById('process_gif');
         var gif = document.createElement("img");
         gif.setAttribute("src", "../img/giphy2.gif");
@@ -34,7 +34,7 @@ var marvinReacts = {
         "Here I am with a brain the size of a planet...",
         "Hey you, YES YOU"];
         manageDOM.clearContent("content");
-        manageDOM.array2Div(["marvin","marvin_gif", "spot1", "spot2", "spot3", "spot4", "spot5"], "content");
+        manageDOM.array2Div(["marvin","marvin_gif", "spot1", "spot2", "spot3", "spot4", "spot5"]);
         var marvin_div = document.getElementById('marvin_gif');
         var gif = document.createElement("img");
         gif.setAttribute("src", "../img/marvin.gif");
@@ -64,7 +64,7 @@ var marvinReacts = {
 var send_message = (message) => {
         manageDOM.clearContent("content");
         manageDOM.delPopup();
-        manageDOM.array2Div(["message"], "popup");
+        manageDOM.array2Div(["message"]);
         var message_div = document.getElementById('message');
         message_div.className += ' center-div';
         message_div.innerHTML = message;
@@ -78,7 +78,7 @@ function talkToMe_dialog() {
 
 function gif() {
     manageDOM.clearContent("content");
-    manageDOM.array2Div(["sound_gif","sound_gif"], "content");
+    manageDOM.array2Div(["sound_gif","sound_gif"]);
     var sound_div = document.getElementById('sound_gif');
     var gif_img = document.createElement("img");
     gif_img.setAttribute("src", "../img/giphy.gif");

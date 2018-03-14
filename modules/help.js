@@ -20,30 +20,6 @@ var helpHTML = "\
     </div>\
 ";
 
-// DECIDE WHETHER OR NOT TO ADD A WAIT AND THEN HELPER FILE
-
-// function promptHelp() {
-    
-// 	let prompt = document.createElement("div");
-// 	let prompt__text = document.createElement("div");
-    
-// 	prompt.setAttribute("class", "prompt");
-// 	prompt__text.setAttribute("class", "prompt__text");
-    
-// 	dialog = document.getElementById("dialog");
-// 	dialog.appendChild(prompt);
-// 	prompt.appendChild(prompt__text);
-    
-// 	prompt__text.innerHTML = "Not sure what to ask? Try:<br><br>\"Hey Marvin, could you help me out?\"";
-    
-// 	function clearDialog() {
-// 		dialog.removeChild(prompt);
-// 	}
-
-// 	// setTimeout(clearDialog, 20000);
-
-// }
-
 function marvinHelp() {
 
 	//clear content div

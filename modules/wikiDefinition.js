@@ -10,7 +10,7 @@ function wikiDefinition(word) {
     'WOD', 'word', 'word_definition'
   ];
 
-  manageDOM.array2Div(elements, "popup");
+  manageDOM.array2Div(elements);
   document.getElementById("WOD").className = "WOD center-div"
   var wordAPI = config.wikipediaAPI + '?action=query&format=json&prop=extracts&titles=' + word + '&exsentences=3&exintro=1&explaintext=1';
 

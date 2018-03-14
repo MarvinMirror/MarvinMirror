@@ -6,7 +6,7 @@ console.log("news");
 
 function news() {
   manageDOM.clearContent("content");
-  manageDOM.array2Div(["news_div"], "popup");
+  manageDOM.array2Div(["news_div"]);
 
   document.getElementById("news_div").className = "center-div";
 
@@ -24,7 +24,7 @@ function news() {
 
           //creating a div for one news and fill it with data
         var el = ['news' + i,'source' + i, 'title' + i, 'description' + i];
-        manageDOM.array2Div(el, "news_div");
+        manageDOM.array2Div(el);
 
         document.getElementById('news' + i).className = 'news';
         document.getElementById('source' + i).className = "source";

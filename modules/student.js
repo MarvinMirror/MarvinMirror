@@ -82,7 +82,7 @@ let showStudentToScreen = (obj) => {
 		];
         
 		// BUILDS DIVS IN HTML
-		manageDOM.array2Div(elements, "popup");
+		manageDOM.array2Div(elements);
 		document.getElementById("student").className = "student center-div";
         
 		let student = {};

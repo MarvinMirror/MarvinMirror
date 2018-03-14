@@ -14,7 +14,7 @@ function news() {
 
   for (var j = 0; j < news_api.sources.length; j++){
     // creating url
-    var newsAPI = news_api.newsAPI2 + news_api.sources[j] + '&language=en&apiKey=' + news_api.Key;
+    var newsAPI = news_api.newsAPI + news_api.sources[j] + '&language=en&apiKey=' + news_api.Key;
     getJSON(newsAPI, function(err, data){
       if (err) throw err;
       else {

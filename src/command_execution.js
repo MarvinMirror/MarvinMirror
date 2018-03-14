@@ -26,12 +26,12 @@ function command_execution (event, message) {
     else if (result.intent === 'help') marvinHelp();
     else if (result.intent === 'photo') photo();
     else if (result.intent === 'authors') authors();
-    else if (result.intent === 'word_of_the_day') wordOfADay(1);
+    else if (result.intent === 'word_of_the_day') wordOfADay(result.dictionary);
     else if (result.intent === 'get_student') manageDOM.studentPopup(v2Users.studentInfo);
     else if (result.intent === 'projects') manageDOM.studentPopup(projectFunctions.getBestProjects);
     else if (result.intent === 'corrections') manageDOM.studentPopup(loadCorrections);
     else if (result.intent === 'map') read_input(studentOnMap);
-    else if (result.intent === 'events') calendar('month');
+    else if (result.intent === 'events') calendar(result.period, result.date);
     else if (result.intent === 'wikiDefinition') wikiDefinition(result.wikiword);
     else if (result.intent === 'news') news();
     else send_message('You asked for "' + result.text + '".<br> I don\'t understand you.')
@@ -53,7 +53,7 @@ function add_analytics_data(result) {
         'phrase': !knownFunction ? result.text : null
     }
     var update = { $inc: {calls: 1} }
-    
+
     var options =  { upsert: true, new: true };
 
     Analytics.findOneAndUpdate(find_query, update, options, function(err, data) {
@@ -62,4 +62,3 @@ function add_analytics_data(result) {
 }
 
 module.exports = command_execution;
-

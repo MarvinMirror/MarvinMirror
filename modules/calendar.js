@@ -4,6 +4,7 @@ var config = require('../config/config.js');
 var now = moment();
 var $ = require("jquery");
 var ftAPI = require('../src/ftAPI');
+var marvin_reaction = require('../src/controller.js');
 
 require('../node_modules/fullcalendar/dist/fullcalendar.js');
 
@@ -95,7 +96,7 @@ function Calendar_create(data, view){
 //creating json of events for calendar
 function Calendar(view, date){
   console.log("calendar");
-
+  marvin_reaction.process_gif();
   //querying 42API to get list of events
   var res = ftAPI.query42("/v2/campus/7/events")
     .then(function(data)

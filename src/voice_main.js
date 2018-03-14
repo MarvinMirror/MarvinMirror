@@ -36,6 +36,7 @@ var nlp = {
             info.location = (result.entities.location !== undefined) ? result.entities.location[0].value : null;
             info.units = (result.entities.degrees !== undefined) ? result.entities.degrees[0].value : null;
             info.wikiword = (result.entities.wikipedia_search_query !== undefined) ? result.entities.wikipedia_search_query[0].value : null;
+            info.dictionary = (result.entities.dictionary !== undefined) ? result.entities.dictionary[0].value : null;
             console.log(JSON.stringify(info))
             return (info)
         })

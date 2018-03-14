@@ -17,7 +17,7 @@ var options = {
 
 function showIMG(name){
 	manageDOM.buildPopup();
-	manageDOM.array2Div(["photobooth"], "popup");
+	manageDOM.array2Div(["photobooth"]);
 	let popup = document.getElementById("popup");
 	let photobooth = document.getElementById("photobooth");
 	popup.appendChild(photobooth);

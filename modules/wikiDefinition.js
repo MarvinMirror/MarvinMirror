@@ -10,7 +10,8 @@ function show_on_screen(data){
   var elements = [
     'WOD', 'word', 'word_definition'
   ];
-  manageDOM.array2Div(elements, "popup");
+
+  manageDOM.array2Div(elements);
   document.getElementById("WOD").className = "WOD center-div"
   data = data.query.pages[Object.keys(data.query.pages)];
   document.getElementById('word').setAttribute("class", "word");

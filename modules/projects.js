@@ -40,7 +40,7 @@ function showBestProjects(studentProjectsArray) {
 		innerScore.push(obj.final_mark);
 	}
         
-	manageDOM.array2Div(divs, "popup");
+	manageDOM.array2Div(divs);
 	document.getElementById("best-projects").className = "best-projects center-div";
         
 	let header = document.getElementById("best-projects__header");

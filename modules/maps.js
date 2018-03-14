@@ -219,7 +219,7 @@ function add_user_position(zone_name, width, height) {
 
 function zone(num, row, seat, student) {
 
-    manageDOM.array2Div(["zone","userPosition","zone_name", "studentPosition"], "popup");
+    manageDOM.array2Div(["zone","userPosition","zone_name", "studentPosition"]);
     document.getElementById("zone").className = "zone";
     var zone_obj = info["zone" + num].map
     var zone_42 = info["zone" + num]['42']
@@ -291,7 +291,7 @@ var student_info = function(student)
 
 var send_no_student_message = function (student) {
     manageDOM.clearContent("content");
-    manageDOM.array2Div(["message"], "popup");
+    manageDOM.array2Div(["message"]);
     var message_div = document.getElementById('message');
     message_div.className += ' center-div';
     message_div.innerHTML = absent_student(student);

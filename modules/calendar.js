@@ -14,7 +14,7 @@ function Date_calendar (data){
   var elements = [
     'WOD', 'cal_date', 'cal_events'
   ];
-  manageDOM.array2Div(elements, "popup");
+  manageDOM.array2Div(elements);
 
   //using .WOD css
   document.getElementById("WOD").className = "WOD center-div";
@@ -54,7 +54,7 @@ function Calendar_create(data, view){
   var caldiv = document.createElement("div");
   caldiv.id = 'customCalendar';
 
-  manageDOM.array2Div(['calendar-wrapper'], "popup");
+  manageDOM.array2Div(['calendar-wrapper']);
 
   var contentdiv = document.getElementById("calendar-wrapper");
   contentdiv.className = "calendar-wrapper center-div";

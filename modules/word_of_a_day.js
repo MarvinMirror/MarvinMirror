@@ -9,7 +9,7 @@ function show_on_screen(data, flag){
     'WOD', 'word', 'word_definition', 'word_example'
   ];
 
-  manageDOM.array2Div(elements, "popup");
+  manageDOM.array2Div(elements);
   document.getElementById("WOD").className = "WOD center-div";
   document.getElementById('word').setAttribute("class", "word");
   document.getElementById('word_definition').setAttribute("class", "word_definition");

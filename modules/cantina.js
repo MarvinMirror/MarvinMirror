@@ -179,7 +179,7 @@ function getMenu(str) {
 				meal_list.push("cafe");
 			}
 
-			manageDOM.array2Div(meal_list, "popup");
+			manageDOM.array2Div(meal_list);
             
 			document.getElementById("cantina-greet").innerHTML = "the 42 cantina menu for " + str + " is";
             

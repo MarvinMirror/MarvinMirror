@@ -145,38 +145,33 @@ var v2Users = {
 	},
 
 	/*  Displays information about a searched student on the screen */
-	studentInfo: () => {
-        
-		let login = document.getElementById("popup__form").value.toLowerCase();
-		marvinReacts.process_gif();			
-		manageDOM.buildPopup();
-		if (login !== null && login !== "") {
-			// query = Student.findOne({'login': login});
-            
-			Student.findOne({"login": login}).exec((err, data) => {
-				if (data !== null)
-				{
-					ftAPI.query42("/v2/users/" + data.studentID)
-						.then(showStudentToScreen)
-						.catch(console.error);
-				}
-				else {
-					sendMessage("I cannot find any user with this login in our database.");
-				}
-			});
-		}
+	studentInfo: (data) => {
 		manageDOM.delPopup();
+		console.log(data);
+		var login = data.toLowerCase();
+		marvinReacts.process_gif();
+
+		Student.findOne({"login": login}).exec((err, data) => {
+		if (data !== null)
+		{
+			ftAPI.query42("/v2/users/" + data.studentID)
+			.then(showStudentToScreen)
+			.catch(console.error);
+		}
+		else {
+			sendMessage("I cannot find any user with this login in our database.");
+		}
+		});
 	},
 
 	/*  Displays current user information. This function is unused and will be 
         fully deprecated if student ID cards are not implemented */
-	userInfo: () => {
-		let login = null;
-		let form = document.getElementById("popup__form");
-    
-		if (form)
-			login = form.value.toLowerCase();
-        
+	userInfo: (data) => {
+		manageDOM.delPopup();
+		console.log(data);
+		var login = data.toLowerCase();
+		marvinReacts.process_gif();
+		
 		if (!login || login === "")
 			getUser(null);
 		else {
@@ -186,7 +181,6 @@ var v2Users = {
 					.catch(console.error);
 			});
 		}
-    	manageDOM.delPopup();
 	}
 
 };

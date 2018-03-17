@@ -4,12 +4,12 @@ var send_message = require('../src/controller.js').message;
 
 var Input = require("../src/mongoDB").Models.Input;
 
-function accessDB(n, callback, Model, source) {
-    Model.findOne({source: source})
+function accessDB(n, callback, source) {
+    Input.findOne({source: source})
     .then(data => {
         if (data != null) 
         {
-            Model.deleteOne({source: source}, function(err, obj) {console.log("deleted")});
+            Input.deleteOne({source: source}, function(err, obj) {console.log("deleted")});
             n = waitingTime;
             if (data.message != "") callback(data.message)
             else send_message("You sent me an empty string! <br>Do you think I'm stupid?")
@@ -30,13 +30,13 @@ function accessDB(n, callback, Model, source) {
 }
 
 function get_Input(callback) {
-    manageDOM.inputPopup();
-    accessDB(0, callback, Input, 'Heroku_app');
+    manageDOM.inputPopup('form', "http://bit.ly/marvinmirror");
+    accessDB(0, callback, 'Heroku_app');
 }
 
 function get_Email(callback) {
-    manageDOM.inputPopup();
-    accessDB(0, callback, Input, 'Heroku_app_email');
+    manageDOM.inputPopup('email', "http://bit.ly/marvinmirrorEmail");
+    accessDB(0, callback, 'Heroku_app_email');
 }
 module.exports = get_Input
 

@@ -4,12 +4,12 @@ var send_message = require('../src/controller.js').message;
 
 var Input = require("../src/mongoDB").Models.Input;
 
-function accessDB(n, callback) {
-    Input.findOne({source: 'Heroku_app'})
+function accessDB(n, callback, Model, source) {
+    Model.findOne({source: source})
     .then(data => {
         if (data != null) 
         {
-            Input.deleteOne({source: 'Heroku_app'}, function(err, obj) {console.log("deleted")});
+            Model.deleteOne({source: source}, function(err, obj) {console.log("deleted")});
             n = waitingTime;
             callback(data.message)
         }
@@ -28,9 +28,15 @@ function accessDB(n, callback) {
     })
 }
 
-function getInput(callback) {
+function get_Input(callback) {
     manageDOM.inputPopup();
-    accessDB(0, callback);
+    accessDB(0, callback, Input, 'Heroku_app');
 }
 
-module.exports = getInput
+function get_Email(callback) {
+    manageDOM.inputPopup();
+    accessDB(0, callback, Input, 'Heroku_app_email');
+}
+module.exports = get_Input
+
+module.exports.get_Email = get_Email

@@ -1,6 +1,7 @@
 var getJSON = require("../src/getJSON");
 var config = require("../config/config.js");
 var manageDOM = require("../src/manageDOM");
+var waitingTime = config.waitingTime;
 
 // If user did not specify location the function returns default location from config file.
 function getLocation(place)
@@ -38,7 +39,7 @@ function getWeatherAtLocation(get_place, get_units) {
 	];
 
 	// creating new html
-	manageDOM.array2Div(elements, "popup");
+	manageDOM.array2Div(elements);
 
 	var wl_icon = document.createElement("img");
 	wl_icon.id = "wlicon";

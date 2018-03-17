@@ -37,7 +37,7 @@ function weatherForecast(get_place, get_units) {
 	];
 
 	// creating new html
-	manageDOM.array2Div(elements, "popup");
+	manageDOM.array2Div(elements);
 
 	// making url for request to weather api
 	var weatherAPI =

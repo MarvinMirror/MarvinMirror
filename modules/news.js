@@ -6,7 +6,7 @@ console.log("news");
 
 function news() {
   manageDOM.clearContent("content");
-  manageDOM.array2Div(["news_div"], "popup");
+  manageDOM.array2Div(["news_div"]);
 
   document.getElementById("news_div").className = "center-div";
 
@@ -14,7 +14,7 @@ function news() {
 
   for (var j = 0; j < news_api.sources.length; j++){
     // creating url
-    var newsAPI = news_api.newsAPI2 + news_api.sources[j] + '&language=en&apiKey=' + news_api.Key;
+    var newsAPI = news_api.newsAPI + news_api.sources[j] + '&language=en&apiKey=' + news_api.Key;
     getJSON(newsAPI, function(err, data){
       if (err) throw err;
       else {
@@ -24,7 +24,7 @@ function news() {
 
           //creating a div for one news and fill it with data
         var el = ['news' + i,'source' + i, 'title' + i, 'description' + i];
-        manageDOM.array2Div(el, "news_div");
+        manageDOM.array2Div(el);
 
         document.getElementById('news' + i).className = 'news';
         document.getElementById('source' + i).className = "source";

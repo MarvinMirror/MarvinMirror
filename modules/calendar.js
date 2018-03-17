@@ -4,6 +4,7 @@ var config = require('../config/config.js');
 var now = moment();
 var $ = require("jquery");
 var ftAPI = require('../src/ftAPI');
+var marvin_reaction = require('../src/controller.js');
 
 require('../node_modules/fullcalendar/dist/fullcalendar.js');
 
@@ -13,7 +14,7 @@ function Date_calendar (data){
   var elements = [
     'WOD', 'cal_date', 'cal_events'
   ];
-  manageDOM.array2Div(elements, "popup");
+  manageDOM.array2Div(elements);
 
   //using .WOD css
   document.getElementById("WOD").className = "WOD center-div";
@@ -53,7 +54,7 @@ function Calendar_create(data, view){
   var caldiv = document.createElement("div");
   caldiv.id = 'customCalendar';
 
-  manageDOM.array2Div(['calendar-wrapper'], "popup");
+  manageDOM.array2Div(['calendar-wrapper']);
 
   var contentdiv = document.getElementById("calendar-wrapper");
   contentdiv.className = "calendar-wrapper center-div";
@@ -95,7 +96,7 @@ function Calendar_create(data, view){
 //creating json of events for calendar
 function Calendar(view, date){
   console.log("calendar");
-
+  marvin_reaction.process_gif();
   //querying 42API to get list of events
   var res = ftAPI.query42("/v2/campus/7/events")
     .then(function(data)

@@ -1,4 +1,4 @@
-var timer = require("../config/config").waitingTime;
+var waitingTime = require("../config/config").waitingTime;
 
 /*	We use this variable to track the time left before the
 	popup window is deleted after user action. If the popup 
@@ -11,7 +11,7 @@ var manageDOM = {
 
     /*  Creates a popup div of 100vh to use all of the monitor space on
         the mirror */
-	buildPopup: () => {
+	buildPopup: (delay) => {
 		let checkPopup = document.getElementById("popup");
 
 		manageDOM.delPopup();
@@ -23,7 +23,11 @@ var manageDOM = {
 		popup.setAttribute("id", "popup");
 		popup.setAttribute("class", "popup");
 
-		timeout = setTimeout(manageDOM.delPopup, timer / 2);
+		let timer = delay ? delay : waitingTime;
+
+		console.log("delay = ");
+		console.log(delay);
+		timeout = setTimeout(manageDOM.delPopup, timer);
 	},
 
     /*  Removes all DOM objects within a parent object */
@@ -90,12 +94,11 @@ var manageDOM = {
         For the array submitted as argument, array2Div will take the first element and
         create a wrapper of same name, and then subsequently append to the wrapper
         a div for each further element in the array */
-	array2Div: (arr, parent) => {
+	array2Div: (arr, msecs) => {
 
-		if (parent === "popup")
-			manageDOM.buildPopup();
+		manageDOM.buildPopup(msecs);
 
-		var c = document.getElementById(parent);
+		var c = document.getElementById("popup");
 		let wrapper = document.createElement("div");
 		wrapper.id = arr[0];
 		wrapper.className = arr[0];

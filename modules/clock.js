@@ -6,7 +6,7 @@ var getTimeZone = require("../src/timezone").getTimeZone;
 
 function dateLocalTime(timezone, place) {
 
-	manageDOM.array2Div(["locale", "dateDiv"], "popup");
+	manageDOM.array2Div(["locale", "dateDiv"]);
         
 	var contentdiv = document.getElementById("locale");
 	contentdiv.className = "locale center-div";

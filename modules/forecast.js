@@ -52,7 +52,9 @@ function weatherForecast(get_place, get_units) {
 		/*	Get the promise return of an integer for the gmt offset for the desired location 
 			and pass that to a function to isolate the weather objects that occur between 13:00 and 
 			16:00 in the desired location's timezone */
-		tz.getTimeOffset(get_place).then( (offset) => {
+		tz.getTimeOffset(place).then( (offset) => {
+
+			console.log(offset);
 			// Loop through all 40 objects in the list and get attributes for 5 days at 1:00 pm PST
 			for (let i = 1; i < data.list.length; i++){
 				let weather = data.list[i];
@@ -61,6 +63,7 @@ function weatherForecast(get_place, get_units) {
 				
 				// This only gets an afternoon temperature for US/Pacific time
 				if ("13:00" <= timestamp && timestamp < "16:00") {
+					console.log(timestamp);
 					var wrap = document.createDocumentFragment();
 
 					var d = document.getElementById(elements[j]);

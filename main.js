@@ -5,9 +5,6 @@ const electron = require("electron");
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
-// Config data
-var windowSize = require("./config/config").window;
-
 // Enable Electron-Reload
 require("electron-reload")(__dirname);
 // Access node env variables
@@ -18,8 +15,8 @@ let mainWindow;
 function createWindow () {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
-		frame: false,
-		fullscreen: true,
+		// frame: false,
+		// fullscreen: true,
 		backgroundColor: "#000"
 	});
 

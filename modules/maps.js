@@ -3,7 +3,6 @@ var info = require('../src/maps_info.js');
 
 // Adding Controller.js in order to get access to methods showing and deleting processing gifs
 var marvin_reaction = require('../src/controller.js');
-console.log(marvin_reaction)
 // Adding ManageDOM.js in order to update HTML using MarvinMirror methods
 var manageDOM = require('../src/manageDOM');
 
@@ -246,10 +245,8 @@ function zone(num, row, seat, student) {
 var showMap = (obj) => {
     marvin_reaction.delete_gif();
     manageDOM.buildPopup();
-    console.log(obj)
     if (obj != null) {
         var location = obj.location;
-        console.log(location);
         if (location != null)
         {
             var res = location.split(/[^1-9]/);
@@ -300,7 +297,6 @@ var send_no_student_message = function (student) {
 // The first step is to get the user/:id by using the login from this endpoint
 function studentOnMap(data) {
     manageDOM.delPopup();
-    console.log(data);
     var login = data.toLowerCase();
     marvin_reaction.process_gif();
     ftAPI.query42("/v2/users/?filter[login]=" + login)

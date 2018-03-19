@@ -3,8 +3,6 @@ var promiseJSON = require('../src/getJSON').promiseJSON;
 var config = require('../config/config');
 var marvin_reaction = require('../src/controller.js');
 
-console.log("wikipedia definition");
-
 function show_on_screen(data){
   manageDOM.clearContent("content");
   var elements = [

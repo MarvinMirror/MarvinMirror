@@ -46,6 +46,7 @@
     "node-raspistill": "0.0.14",
     "node-record-lpcm16": "^0.3.0",
     "node-wit": "^4.3.0",
+    "nodemailer": "^4.6.3",
     "promise": "^8.0.1",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",

@@ -1,5 +1,7 @@
 /* ANNOUNCEMENTS */
 
+
+/* SOCIAL MEDIA */
 .posts {
     display: grid;
     grid-template-columns: 15% 1fr;
@@ -30,4 +32,13 @@
     /* display: -webkit-box; */
     /* -webkit-line-clamp: 1; */
     /* -webkit-box-orient: vertical; */
+}
+
+/* PROMPT */
+.announcements .prompt {
+    font-size: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }

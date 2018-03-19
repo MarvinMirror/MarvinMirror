@@ -7,6 +7,9 @@ var Post = require("../src/mongoDB").Models.Post;
 //curl used to test:
 //curl 'https://graph.facebook.com/v2.11/42SiliconValley?fields=posts&access_token=196637397563632|6e5049a9b266fff6438ff0b9d1bf5ff7'
 
+var fb_app = config.fb_app;
+var fbAPI = fb_app.fbAPI+"?fields=posts&access_token=" + fb_app.client_id +"|"+fb_app.app_secret;
+
 var updateFBDB = (data) => {
 	let endpoint = "message" in data.posts.data[0] ? "message" : "story";
 
@@ -32,7 +35,7 @@ var updateFBDB = (data) => {
 
 };
 
-function get_post_text(fbAPI, fb_text){
+function get_post_text(){
 	getJSON(fbAPI, function(err, data){
 		if (err) throw err;
 		else {
@@ -43,22 +46,17 @@ function get_post_text(fbAPI, fb_text){
 				updateFBDB(data);
 			}
 
-			//retrieving saved post from database
-			let newData = Post.findOne({ "type": "FB" });
-			newData.exec( (err, x) => {
-				//updating div
-				fb_text.innerHTML = x.timestamp + "<br>" + x.message;
-			})
+			
 		}
 	})
+	//calling get_post_text every hour(360000sec)
+	//this is executed after 1 hour
+	setInterval(()=>{get_post_text()}, 3600000);
 }
 
 //this is a function that is being called from index.html
-function fb_post() {
+var fb_post = () => {
 	var fbdiv = document.getElementById("fb_post");
-	var fb_app = config.fb_app;
-
-	var fbAPI = fb_app.fbAPI+"?fields=posts&access_token=" + fb_app.client_id +"|"+fb_app.app_secret;
 
 	//creating divs and adding fb icon
 	var fb_img = document.createElement("div");
@@ -70,9 +68,16 @@ function fb_post() {
 	fbdiv.append(fb_img, fb_text);
 
 	//getting FB post text and adding it to the div 'fb_text' for the first time
- 	get_post_text(fbAPI, fb_text);
+	//  get_post_text(fbAPI, fb_text);
+	 
+	 //retrieving saved post from database
+	 let newData = Post.findOne({ "type": "FB" });
+	 newData.exec( (err, x) => {
+		 //updating div
+		 fb_text.innerHTML = x.timestamp + "<br>" + x.message;
+	 })
 
-	//calling get_post_text every hour(360000sec)
-	//this is executed after 1 hour
- 	setInterval(()=>{get_post_text(fbAPI, fb_text)}, 3600000);
+	
 }
+
+module.exports = fb_post;

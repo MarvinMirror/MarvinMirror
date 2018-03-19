@@ -1,15 +1,39 @@
 /* HELP WITH COMMANDS */
 .help-wrapper {
-	width: 80rem;
-	font-size: 2rem;
+	width: 100%;
 }
 
-.help-wrapper ul {
-	padding-top: 2rem;
-	list-style: none;
+.help-wrapper .help-content {
+		height: 14rem;
+		font-size: 2rem;
+		display: grid;
+		grid-template-columns: 25% 1fr;
+		grid-template-rows: 1fr;
+		grid-gap: 1rem;
+		background-color: black;
+		border: 2px solid grey;
 }
 
-.help h2 {
-	font-size: 4rem;
-	margin: 3rem;
+.help-wrapper .help-content:not(:last-child){
+	margin-bottom: 2rem;
+}
+
+.help-wrapper .help-content > div {
+    display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem; 
+}
+
+#help-header {
+	// border: 2px solid grey;
+	height: 4rem;
+	font-size: 3rem;
+	width: 100%;
+	text-transform: uppercase;
+	margin-bottom: 2rem;
+}
+
+.help-wrapper .help-content .help-intent {
+	text-transform: uppercase;
 }

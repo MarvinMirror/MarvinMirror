@@ -5,39 +5,31 @@
         <link rel="stylesheet" type="text/css" href="../css/style.css">
 
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-        <!--script src="/src/jquery.min.js"></script-->
 
         <script>
             var command_execution = require('../src/command_execution.js');
-            var marvin_reaction = require('../src/controller.js')
+            var marvin_reaction = require('../src/controller.js');
             require('electron').ipcRenderer.on('sound', marvin_reaction.listen_gif);
             require('electron').ipcRenderer.on('todo', command_execution);
             require('electron').ipcRenderer.on('delete_gif', marvin_reaction.empty_response);
         </script>
     </head>
 
-    <body onload="fb_post(), slack_post(), clock.dateTime(), connectDB()" id="body">
+    <body onload="socialMedia(), get_post_text(), get_slack_post_text(), clock.dateTime(), connectDB()" id="body">
         <div class="wrapper">
             <div class="date-time" id="date-time"></div>
             <div class="box content" id="content"></div>
-            <div class="box announcements">
-                <div class="class posts" id="fb_post"></div>
-                <div class="class posts" id="slack_post"></div>
+            <div class="box announcements" id="announcements">
+                <!-- <div class="posts" id="fb_post"></div>
+                <div class="posts" id="slack_post"></div> -->
             </div>
         </div>
         <script src="../modules/clock.js"></script>
-<!--        <script src="../modules/photoBooth.js"></script>-->
-<!--        <script src="../modules/deletePhotos.js"></script>-->
-<!--        <script src="../modules/sensor.js"></script>-->
-<!--        <script src="../modules/sensorStart.js"></script>-->
         <script src="../modules/fb_post.js"></script>
         <script src="../modules/slack_post.js"></script>
-        <script src="../modules/student.js"></script>
-		<script src="../modules/projects.js"></script>
-		<script src="../modules/corrections.js"></script>
+		<script src="../src/announcements.js"></script>
 		<script src="../src/auto_update.js"></script>
 		<script src="../src/inactive.js"></script>
         <script src="../src/mongoDB.js"></script>
-        <!-- <button onclick="getWeatherAtLocation()">Scale Teams</button> -->
     </body>
 </html>

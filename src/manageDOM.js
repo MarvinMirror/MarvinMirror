@@ -25,8 +25,6 @@ var manageDOM = {
 
 		let timer = delay ? delay : waitingTime;
 
-		console.log("delay = ");
-		console.log(delay);
 		timeout = setTimeout(manageDOM.delPopup, timer);
 	},
 

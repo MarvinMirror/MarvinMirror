@@ -3,8 +3,6 @@ var promiseJSON = require('../src/getJSON').promiseJSON;
 
 var config = require('../config/config');
 
-console.log("news");
-
 function My_array2Div (arr, parent) {
 
     var c = document.getElementById(parent);

@@ -4,7 +4,8 @@ var marvinReacts = {
    
     /********* THIS AND PROCESS ARE ESSENTIALLY THE SAME, CAN MAKE mgDOM FUNCTION ********************/
 	listen_gif : () => {
-		manageDOM.clearContent("content");  
+		manageDOM.clearContent("content");
+		manageDOM.delPopup();
         
 		let content = document.getElementById("content");
 		let listen_gif = document.createElement("div");

@@ -2,8 +2,6 @@
 var getJSON = require('../src/getJSON');
 var config = require('../config/config');
 
-console.log("news");
-
 function news() {
   manageDOM.clearContent("content");
   manageDOM.array2Div(["news_div"]);
@@ -18,7 +16,6 @@ function news() {
     getJSON(newsAPI, function(err, data){
       if (err) throw err;
       else {
-        console.log(data);
         var curr_news = data.articles[0];
         var i = curr_news.source.name;
 

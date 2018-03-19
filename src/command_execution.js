@@ -12,7 +12,7 @@ var read_input = require('../src/get_input');
 var studentOnMap = require('../modules/maps.js');
 var Analytics = require("../src/mongoDB").Models.Analytics;
 var send_message = require('../src/controller').message;
-// var photo = require('../modules/photoBooth.js');
+var photo = require('../modules/photoBooth.js');
 
 function command_execution (event, message) {
     var result = JSON.parse(message)
@@ -23,7 +23,7 @@ function command_execution (event, message) {
     else if (result.intent === 'cantina_tomorrow') getMenu('tomorrow');
     else if (result.intent === 'cantina_today') getMenu('today');
     else if (result.intent === 'help') marvinHelp();
-    // else if (result.intent === 'photo') photo();
+    else if (result.intent === 'photo') photo();
     else if (result.intent === 'authors') authors();
     else if (result.intent === 'word_of_the_day') wordOfADay(result.dictionary);
     else if (result.intent === 'get_student') read_input(v2Users.studentInfo);

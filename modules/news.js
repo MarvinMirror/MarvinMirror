@@ -43,7 +43,7 @@ function news() {
 
   news_api = config.news_api;
 
-  for (var j = 0; j < news_api.sources.length; j++){
+  for (var j = 0; j < news_api.sources.length - 1; j++){
     // creating url for sources[j]
     var newsAPI = news_api.newsAPI + news_api.sources[j] + '&language=en&apiKey=' + news_api.Key;
     //requesting info

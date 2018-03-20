@@ -18,7 +18,8 @@ trigger.digitalWrite(0);
                         endTick = tick;
                         diff = (endTick >> 0) - (startTick >> 0);
                         distance = (diff / 2 / MICROSECONDS_PER_CM);
-                        if(distance >= 40 && distance <= 150){
+			console.log(distance);
+                        if(distance >= 30 && distance <= 250){
                                 relay.trigger(10, 1);
                         }else{
                                 relay.trigger(10, 0);
@@ -28,4 +29,5 @@ trigger.digitalWrite(0);
 }());
 setInterval(function sensor() {
         trigger.trigger(10, 1);
-}, 15000);
+}, 4000);
+

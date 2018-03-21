@@ -17,8 +17,7 @@ For help, wake up Marvin and then ask, "What can you do?"
     1. Say 'Hey Marvin' (in whatever manner you would say it were you to use the mirror)
 1. Click '_Test the model_'
 1. Adjust the model settings to reflect attributes that best match you.
-1. Click '_Run the test_' and speak aloud "Hey Marvin".
-        * Snowboy will alert you if the wake-up word was registered.
+1. Click '_Run the test_' and speak aloud "Hey Marvin". Snowboy will alert you if the wake-up word was registered.
 1. When Snowboy recognizes your voice, click '_Save_' and you're done!
 
 ### THANK YOU!

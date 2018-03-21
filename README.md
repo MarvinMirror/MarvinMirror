@@ -24,6 +24,24 @@ For help, wake up Marvin and then ask, "What can you do?"
 
 ## Setting up Marvin on your Mac for development
 
+#### Install Node.js and npm if not already installed
+```
+curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+#### Clone Mirror repo
+```
+git clone https://github.com/MarvinMirror/MarvinMirror.git
+cd MarvinMirror
+```
+* Create and copy .gitignore files config/config.js and config/google_key.json
+
+#### Update npm packages
+```
+sudo npm install --unsafe-perm=true
+```
+
 ## Adding Marvin's Mirror to your Raspberry Pi 3
 #### Rotate Screen
 ```
@@ -43,6 +61,7 @@ sudo apt-get install -y nodejs
 #### Clone Mirror repo
 ```
 git clone https://github.com/MarvinMirror/MarvinMirror.git
+cd MarvinMirror
 ```
 * Create and copy .gitignore files config/config.js and config/google_key.json
 

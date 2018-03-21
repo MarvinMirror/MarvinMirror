@@ -24,10 +24,11 @@ For help, wake up Marvin and then ask, "What can you do?"
 
 ## Setting up Marvin on your Mac for development
 
-#### Install Node.js and npm if not already installed
+#### Install Node.js and npm with Homebrew
 ```
-curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
-sudo apt-get install -y nodejs
+brew install node
+brew update
+brew upgrade node
 ```
 
 #### Clone Mirror repo

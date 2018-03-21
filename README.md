@@ -26,3 +26,65 @@ For help, wake up Marvin and then ask, "What can you do?"
 ### Setting up Marvin on your Mac for development
 
 ### Adding Marvin's Mirror to your Raspberry Pi 3
+#### Rotate Screen
+```
+sudo nano /boot/config.txt
+```
+* Add “display_rotate=1” to bottom and Ctrl-X
+```
+sudo reboot
+```
+
+#### Install Node.js and npm
+```
+curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+#### Clone Mirror repo
+```
+git clone https://github.com/MarvinMirror/MarvinMirror.git
+```
+* Create and copy .gitignore files config/config.js and config/google_key.json
+
+#### Prepare python audio for snowboy
+```
+sudo apt-get update
+```
+* See snowboy github readme: https://github.com/Kitt-AI/snowboy
+```
+sudo apt-get install -y swig3.0 python-pyaudio python3-pyaudio sox
+sudo git clone http://people.csail.mit.edu/hubert/git/pyaudio.git
+sudo apt-get install -y libportaudio0 libportaudio2 libportaudiocpp0 portaudio19-dev
+cd pyaudio
+sudo python setup.py install
+sudo apt-get install -y libatlas-base-dev
+```
+#### Check microphone is working
+```
+rec t.wav
+```
+* Record a test
+```
+aplay t.wav
+```
+
+#### Update npm packages
+```
+sudo npm install
+```
+
+#### Microphone:
+```
+touch ~/.asoundrc && echo -n 'pcm.!default {
+  type asym
+   playback.pcm {
+     type plug
+     slave.pcm "hw:0,0"
+   }
+   capture.pcm {
+     type plug
+     slave.pcm "hw:1,0"
+   }
+}' >> ~/.asoundrc
+```

@@ -22,10 +22,9 @@ For help, wake up Marvin and then ask, "What can you do?"
 
 ### THANK YOU!
 
-## Developers
-### Setting up Marvin on your Mac for development
+## Setting up Marvin on your Mac for development
 
-### Adding Marvin's Mirror to your Raspberry Pi 3
+## Adding Marvin's Mirror to your Raspberry Pi 3
 #### Rotate Screen
 ```
 sudo nano /boot/config.txt

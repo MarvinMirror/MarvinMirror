@@ -23,6 +23,7 @@ let smtpConfig = {
         expires: 1484314697598
     }
 }
+//if time is not set it'll be 5sec.
 
 var options = {
 	noPreview: false,
@@ -30,7 +31,7 @@ var options = {
 	encoding: "jpg",
 	width: photoConfig.width,
 	height: photoConfig.height,
-//  time:undefined,	
+//  time:undefined, 	
 //  iso: 200,	
 //  shutterspeed: undefined,	
 //  contrast: 10,	
@@ -41,10 +42,9 @@ var options = {
 var transporter = nodemailer.createTransport(smtpConfig)
 
 function showIMG(name){
-	manageDOM.buildPopup();
-	manageDOM.array2Div(["photobooth"]);
 	let popup = document.getElementById("popup");
-	let photobooth = document.getElementById("photobooth");
+	let photobooth = document.createElement("photobooth");
+	photobooth.id = 'photobooth';
 	popup.appendChild(photobooth);
 	var showPhoto = document.createElement("img");
 	photobooth.className = "photobooth center-div";
@@ -75,8 +75,8 @@ function send_to_mail(email, path, filename)
     }); 
 }
 
-
 function send_by(email) {
+	showIMG(options.fileName)
    var pics = [path.join(__dirname, '..', '/img/42_Logo.png'), photoConfig.outputDir + options.fileName + ".jpg"]
    var jimps = [];
    for (var i = 0; i < 2; i++) {jimps.push(jimp.read(pics[i]))}
@@ -101,14 +101,9 @@ function photo(){
 				var sound = new Audio("../img/photo_sound.mp3");
 				sound.play();
 			}, 500);
-			setTimeout( () => {
-				showIMG(options.fileName);
-			}, 1000);
 		})
 		.then(() => {
-			setTimeout( () => {
-				get_input(send_by);
-			}, 1000);
+			get_input(send_by);
 		})
 			.catch(console.error);
 }

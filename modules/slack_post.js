@@ -10,12 +10,13 @@ var slackAPI = slack_app.slackAPI+"channels.history?token=" + slack_app.token + 
 
 var update_slackDB = (text, data) => {
 	// if they post a picture, insert "/img here/" instead of empty space
-	if(data.subtype == "file_share")
-		text = text.replace("uploaded a file:", "uploaded a file: /img here/.");
+	if(data.subtype == "file_share"){
+		//remove everything after "uploaded a file"
+		text = text.replace(new RegExp("uploaded a file:.+$","g"),"uploaded a file.");
+	}
 	// if the title is not empty print it, because most likely the 'message' property is empty
-	if ("file" in data &&  "title" in data.file)
-		text = text + data.file.title;
-
+	if ("file" in data  &&  "title" in data.file)
+		text = text + "<br>" +data.file.title;
 	// if the post is "simple pole"
 	if ("attachments" in data && "fallback" in data.attachments[0]){
 		text = text + data.attachments[0].fallback;
@@ -85,6 +86,7 @@ function get_slack_post_text(){
 	getJSON(slackAPI, function(err, data){
 		if (err) throw err;
 		else {
+			console.log(data);
 			//going through all messages in the channel and stop if it's not 'channel_join'
 			//and not a comment to other massage
 			for (var i = 0; i < 100; i++) {
@@ -100,7 +102,7 @@ function get_slack_post_text(){
 				});
 		}
 	});
-	
+
 	setInterval(() => {
 	  get_slack_post_text();
 	}, 600000);
@@ -124,7 +126,7 @@ function slack_post() {
 		if(err) throw err;
 		slack_text.innerHTML = x.timestamp + "<br>" + x.message;
 	});
-	
+
 }
 
 module.exports = slack_post;

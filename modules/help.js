@@ -70,7 +70,7 @@ function marvinHelp() {
 		},
 		{   
 			intent: "News",
-			example: "What's in the news?"
+			example: "Show me the news for today."
 		},
 		{   
 			intent: "Wikipedia",

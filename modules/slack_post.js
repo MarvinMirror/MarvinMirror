@@ -8,6 +8,16 @@ var Post = require("../src/mongoDB").Models.Post;
 var slack_app = config.slack_app;
 var slackAPI = slack_app.slackAPI+"channels.history?token=" + slack_app.token + "&channel=" + slack_app.channel_announcements + "&count=100";
 
+
+/*	Runs at mirror start, and updates slack message in DB every 10 minutes */
+var slackInterval = () => {
+	get_slack_post_text();
+	
+	setInterval(() => {
+		get_slack_post_text();
+	}, 600000);
+};
+
 var update_slackDB = (text, data) => {
 	// if they post a picture, insert "/img here/" instead of empty space
 	if(data.subtype == "file_share"){
@@ -86,7 +96,6 @@ function get_slack_post_text(){
 	getJSON(slackAPI, function(err, data){
 		if (err) throw err;
 		else {
-			console.log(data);
 			//going through all messages in the channel and stop if it's not 'channel_join'
 			//and not a comment to other massage
 			for (var i = 0; i < 100; i++) {
@@ -102,10 +111,6 @@ function get_slack_post_text(){
 				});
 		}
 	});
-
-	setInterval(() => {
-	  get_slack_post_text();
-	}, 600000);
 }
 
 function slack_post() {

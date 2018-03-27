@@ -10,6 +10,15 @@ var Post = require("../src/mongoDB").Models.Post;
 var fb_app = config.fb_app;
 var fbAPI = fb_app.fbAPI+"?fields=posts&access_token=" + fb_app.client_id +"|"+fb_app.app_secret;
 
+/*	Runs at start and continues to update FB message in DB every hour */
+var fbInterval = () => {
+	get_post_text();
+
+	setInterval(() => {
+		get_post_text();
+	}, 3600000);
+};
+
 var updateFBDB = (data) => {
 	let endpoint = "message" in data.posts.data[0] ? "message" : "story";
 
@@ -45,13 +54,8 @@ function get_post_text(){
 				//saving the latest fb_post into database
 				updateFBDB(data);
 			}
-
-			
 		}
-	})
-	//calling get_post_text every hour(360000sec)
-	//this is executed after 1 hour
-	setInterval(()=>{get_post_text()}, 3600000);
+	});
 }
 
 //this is a function that is being called from index.html

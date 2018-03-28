@@ -1,15 +1,10 @@
 var moment = require("moment-timezone");
-
 var getJSON = require("../src/getJSON");
+var promiseJSON = getJSON.promiseJSON;
 var config = require("../config/config");
 var manageDOM = require("../src/manageDOM");
 var tz = require("../src/timezone");
-
-// If user did not specify location the function returns default location from config file.
-function getLocation(place, wikisearch) {
-	if (!place && !wikisearch) return (config.location);
-	return ((place) ? place : wikisearch);
-}
+var sendMessage = require("../src/controller").message;
 
 // If user did not specify units the function returns default 'imperial' units (fahrenheit) from config file.
 function getUnits(units) {
@@ -20,15 +15,12 @@ function getUnits(units) {
 function weatherForecast(get_place, get_units) {
 
 	// check input
-	var place = getLocation(get_place);
+	var place = (get_place) ? get_place : config.location;
 	
 	// check input for units
 	var units = getUnits(get_units);
 	// clear page
 	var deg = units === "metric" ? "C" : "F";
-
-	// getting data from config
-	var weatherKey = config.weather;
 
 	// array of elements for builing new html
 	var elements = [
@@ -39,62 +31,70 @@ function weatherForecast(get_place, get_units) {
 	// creating new html
 	manageDOM.array2Div(elements);
 
-	// making url for request to weather api
-	var weatherAPI =
-		config.openWeatherMapAPI + "forecast?q=" +
-		place.toUpperCase() + "&units=" + units + "&APPID=" + weatherKey.appKey;
-
-	// request to the API and filling html
-	getJSON(weatherAPI, function(err, data){
-		if (err) throw err;
-		let j = 2;
-
-		/*	Get the promise return of an integer for the gmt offset for the desired location 
-			and pass that to a function to isolate the weather objects that occur between 13:00 and 
-			16:00 in the desired location's timezone */
-		tz.getTimeOffset(place).then( (offset) => {
-
-			console.log(offset);
-			// Loop through all 40 objects in the list and get attributes for 5 days at 1:00 pm PST
-			for (let i = 1; i < data.list.length; i++){
-				let weather = data.list[i];
-				let timestamp = moment(weather.dt * 1000 + (7 + offset) * 1000 * 60 * 60).format("HH:mm");
-				
-				
-				// This only gets an afternoon temperature for US/Pacific time
-				if ("13:00" <= timestamp && timestamp < "16:00") {
-					console.log(timestamp);
-					var wrap = document.createDocumentFragment();
-
-					var d = document.getElementById(elements[j]);
-					d.setAttribute("class", "daycast daycast--" + (j - 2));
-
-					var day = document.createElement("div");
-					day.setAttribute("class", "fore_day");
-					day.innerHTML = "<p>" + moment(weather.dt * 1000).format("ddd") + "</p>";
-
-					var temp = document.createElement("div");
-					temp.setAttribute("class", "fore_temp");
-					temp.innerHTML = "<p>" + Math.floor(weather.main.temp) + "&deg" + deg + "</p>";
-
-					var img = document.createElement("div");
-					img.setAttribute("class", "fore_img");
-
-					var w_icon = document.createElement("img");
-					var icon = weather.weather[0].icon;
-					w_icon.setAttribute("src", "../img/weather/" + icon + ".png")
-
-					img.appendChild(w_icon);
-					wrap.appendChild(day);
-					wrap.appendChild(temp);
-					wrap.appendChild(img);
-					d.appendChild(wrap);
-					j++;
-				}
+	/*	A series of promises to get city latitude and longitude for accuracy,
+		query weather API for forecast data, get timezone offset so get daytime
+		forecasts, and then fill html */
+	tz.getTimeOffset(place).then( tzData => {
+			var latLonAPI = config.openWeatherMapAPI +
+				"forecast?lat=" + tzData.lat + "&lon=" + tzData.lng +
+				"&units=" + units + "&APPID=" + process.env.MARVIN_WEATHER;
+			return latLonAPI;
+			})
+		.then(promiseJSON)
+		.then( (data) => {
+			if (data.statusCode === 401) {
+				sendMessage("Marvin was unable to find weather information for \"" + place.toUpperCase() + "\"");
 			}
-			document.getElementById("fore_location").innerHTML = "<p>" + data.city.name + " 5-Day Forecast</p>";
+			else {
+				let j = 2;
+	
+				/*	Get the promise return of an integer for the gmt offset for the desired location 
+					and pass that to a function to isolate the weather objects that occur between 13:00 and 
+					16:00 in the desired location's timezone */
+				tz.getTimeOffset(place).then( (tzData) => {	
+					let offset = tzData.gmtOffset;
+					let count = 0;
+					// Loop through all 40 objects in the list and get attributes for 5 days at 1:00 pm PST
+					for (let i = 1; i < data.list.length; i++){
+						let weather = data.list[i];
+						let timestamp = moment(weather.dt * 1000 + (7 + offset) * 1000 * 60 * 60).format("HH:mm");
+						
+						
+						// This only gets an afternoon temperature for US/Pacific time
+						if ("13:00" <= timestamp && timestamp < "16:00") {
+							count++;
+							var wrap = document.createDocumentFragment();
+	
+							var d = document.getElementById(elements[j]);
+							d.setAttribute("class", "daycast daycast--" + (j - 2));
+	
+							var day = document.createElement("div");
+							day.setAttribute("class", "fore_day");
+							day.innerHTML = "<p>" + moment(weather.dt * 1000).format("ddd") + "</p>";
+	
+							var temp = document.createElement("div");
+							temp.setAttribute("class", "fore_temp");
+							temp.innerHTML = "<p>" + Math.floor(weather.main.temp) + "&deg" + deg + "</p>";
+	
+							var img = document.createElement("div");
+							img.setAttribute("class", "fore_img");
+	
+							var w_icon = document.createElement("img");
+							var icon = weather.weather[0].icon;
+							w_icon.setAttribute("src", "../img/weather/" + icon + ".png")
+	
+							img.appendChild(w_icon);
+							wrap.appendChild(day);
+							wrap.appendChild(temp);
+							wrap.appendChild(img);
+							d.appendChild(wrap);
+							j++;
+						}
+					}
+					document.getElementById("fore_location").innerHTML = "<p>" + data.city.name + " " + count +"-Day Forecast</p>";
+				});
+			}
 		});
-	});
 }
 
 module.exports = weatherForecast;

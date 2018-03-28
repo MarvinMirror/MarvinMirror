@@ -6,7 +6,7 @@ var mongoose = require("mongoose");
 var Post = require("../src/mongoDB").Models.Post;
 
 var slack_app = config.slack_app;
-var slackAPI = slack_app.slackAPI+"channels.history?token=" + slack_app.token + "&channel=" + slack_app.channel_announcements + "&count=100";
+var slackAPI = slack_app.slackAPI+"channels.history?token=" + process.env.MARVIN_SLACK_TOKEN + "&channel=" + slack_app.channel_announcements + "&count=100";
 
 
 /*	Runs at mirror start, and updates slack message in DB every 10 minutes */
@@ -75,7 +75,7 @@ function getSlackName(text){
 	if (start_index > -1){
 		var user_id = text.substring(start_index + 2, text.indexOf(">", start_index));
 		//user.profile endpoint returns only one user_name at a time
-		var name_API = slack_app.slackAPI + "users.profile.get?token="+ slack_app.token +
+		var name_API = slack_app.slackAPI + "users.profile.get?token="+ process.env.MARVIN_SLACK_TOKEN +
                   "&user=" + user_id;
 		return (new Promise(function(resolve, reject) {
 			getJSON(name_API, function(err, data){

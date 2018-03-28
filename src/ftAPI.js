@@ -64,8 +64,8 @@ function ftNewToken(data) {
 		method: "POST",
 		form: {
 			"refresh_token": data.refreshToken,
-			"client_id": ftOauth.client_id,
-			"client_secret": ftOauth.client_secret,
+			"client_id": process.env.MARVIN_42_CLIENT_ID,
+			"client_secret": process.env.MARVIN_42_CLIENT_SECRET,
 			"grant_type": "refresh_token"
 		}
 	};
@@ -99,8 +99,8 @@ var ftAPI = {
 			method: "POST",
 			form: {
 				"grant_type": "authorization_code",
-				"client_id": ftOauth.client_id,
-				"client_secret": ftOauth.client_secret,
+				"client_id": process.env.MARVIN_42_CLIENT_ID,
+				"client_secret": process.env.MARVIN_42_CLIENT_SECRET,
 				"code": "55516c3ec955d58c1ffcb51e79f679851a7a7996d1c3176c7a8f982d83964ef6",
 				"redirect_uri": ftOauth.redirectUri
 			}

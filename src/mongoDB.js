@@ -1,4 +1,3 @@
-var mongoDB = require("../config/config").mongoDB;
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
@@ -7,7 +6,7 @@ var Schema = mongoose.Schema;
     running */
 var connectDB = function () {
 	mongoose.Promise = global.Promise;
-	mongoose.connect(mongoDB.link);
+	mongoose.connect(process.env.MARVIN_DB_LINK);
 };
 
 // Clears errors for multiple definition of models/Schemas

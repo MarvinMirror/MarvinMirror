@@ -45,7 +45,7 @@ function news() {
 
   for (var j = 0; j < news_api.sources.length - 1; j++){
     // creating url for sources[j]
-    var newsAPI = news_api.newsAPI + news_api.sources[j] + '&language=en&apiKey=' + news_api.Key;
+    var newsAPI = news_api.newsAPI + news_api.sources[j] + '&language=en&apiKey=' + process.env.MARVIN_NEWS_API_TOKEN;
     //requesting info
     promiseJSON(newsAPI)
     //creating div and filling it with returned data

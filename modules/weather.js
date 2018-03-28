@@ -1,14 +1,9 @@
 var getJSON = require("../src/getJSON");
+var promiseJSON = getJSON.promiseJSON;
 var config = require("../config/config.js");
 var manageDOM = require("../src/manageDOM");
-var waitingTime = config.waitingTime;
-
-// If user did not specify location the function returns default location from config file.
-function getLocation(place)
-{
-	if (!place) return (config.location);
-	return (place);
-}
+var tz = require("../src/timezone");
+var sendMessage = require("../src/controller").message;
 
 // If user did not specify units the function returns default 'imperial' units (fahrenheit) from config file.
 function getUnits(units)
@@ -23,15 +18,12 @@ the openweathermap.org API, parses and displays in the app window */
 function getWeatherAtLocation(get_place, get_units) {
 	
 	// check input
-	var place = getLocation(get_place);
+	var place = (get_place) ? get_place : config.location;
 
 	// check input for units
 	var units = getUnits(get_units);
 	// clear page
 	manageDOM.clearContent("content");
-
-	// getting data from config
-	var currentWeather = config.weather;
 
 	// array of elements for builing new html
 	var elements = [
@@ -48,14 +40,17 @@ function getWeatherAtLocation(get_place, get_units) {
 
 	document.getElementById("wl_img_wrap").appendChild(wl_icon);
 
-	// making url for request to weather api
-	var weatherAPI =
-	config.openWeatherMapAPI + "weather?q=" +
-	place + "&units=" + units + "&APPID=" + currentWeather.appKey;
-
-	// request to the API and filling html
-	getJSON(weatherAPI, function(err, data){
-		if (err) throw err;
+	tz.getTimeOffset(place).then( tzData => {
+		var latLonAPI = config.openWeatherMapAPI +
+			"weather?lat=" + tzData.lat + "&lon=" + tzData.lng +
+			"&units=" + units + "&APPID=" + process.env.MARVIN_WEATHER;
+		return latLonAPI;
+		})
+	.then(promiseJSON)
+	.then( (data) => {
+		if (data.statusCode === 401) {
+			sendMessage("Marvin was unable to find weather information for \"" + place.toUpperCase() + "\"");
+		}
 		else {
 			var weather = data.weather[0];
 			var icon = weather.icon;

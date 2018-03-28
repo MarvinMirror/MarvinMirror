@@ -8,7 +8,7 @@ const {Wit, log} = require('node-wit');
 
 //Google API credencials
 const google_cred = {
-    projectId: my_config.speech_API.projectId,
+    projectId: process.env.MARVIN_SPEECH_PROJECT_ID,
     keyFilename: my_config.speech_API.key_path
 }
 
@@ -17,7 +17,7 @@ const recognizer = new speech.SpeechClient(google_cred);
 
 //NLP client
 const nlp_client = new Wit({
-    accessToken: my_config.nlp_API.token,
+    accessToken: process.env.MARVIN_NLP_API_TOKEN,
   });
 
 var info = {}

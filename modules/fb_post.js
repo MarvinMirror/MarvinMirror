@@ -1,14 +1,13 @@
 var moment = require("moment");
 
 var getJSON = require("../src/getJSON");
-var config = require("../config/config");
+var fbEndpoint = require("../config/config").fb_app.endpoint;
 var Post = require("../src/mongoDB").Models.Post;
 
 //curl used to test:
 //curl 'https://graph.facebook.com/v2.11/42SiliconValley?fields=posts&access_token=196637397563632|6e5049a9b266fff6438ff0b9d1bf5ff7'
 
-var fb_app = config.fb_app;
-var fbAPI = fb_app.fbAPI+"?fields=posts&access_token=" + fb_app.client_id +"|"+fb_app.app_secret;
+var fbAPI = fbEndpoint + "?fields=posts&access_token=" + process.env.MARVIN_FB_CLIENT_ID +"|"+process.env.MARVIN_FB_APP_SECRET;
 
 /*	Runs at start and continues to update FB message in DB every hour */
 var fbInterval = () => {

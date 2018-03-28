@@ -6,7 +6,6 @@ var jimp = require('jimp');
 var photoConfig = require('../config/config.js').Photo_booth
 var Raspistill = require("node-raspistill").Raspistill;
 var get_input = require('../src/get_input').get_Email;
-var emailConfig = require('../config/config.js').Email;
 var send_message = require('../src/controller.js').message;
 
 let smtpConfig = {
@@ -14,12 +13,12 @@ let smtpConfig = {
     port: 465,
     secure: true,
     auth: {
-        type: emailConfig.type,
-        user: emailConfig.user,
-        clientId: emailConfig.clientId,
-        clientSecret: emailConfig.clientSecret,
-        refreshToken: emailConfig.refreshToken,
-        accessToken: emailConfig.accessToken,
+        type: "OAuth2",
+        user: process.env.MARVIN_GMAIL_USER,
+        clientId: process.env.MARVIN_GMAIL_CLIENT_ID,
+        clientSecret: process.env.MARVIN_GMAIL_CLIENT_SECRET,
+        refreshToken: process.env.MARVIN_GMAIL_REFRESH_TOKEN,
+        accessToken: process.env.MARVIN_GMAIL_ACCESS_TOKEN,
         expires: 1484314697598
     }
 }
@@ -55,7 +54,7 @@ function showIMG(name){
 function send_to_mail(email, path, filename)
 {
     var mailOptions = {
-        from: emailConfig.user, 
+        from: process.env.MARVIN_GMAIL_USER, 
         to: email,
         subject: 'Picture from Marvin Mirror', 
         text: 'Hello!',

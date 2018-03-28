@@ -1,7 +1,4 @@
 var moment = require('moment');
-var getJSON = require('../src/getJSON');
-var config = require('../config/config.js');
-var now = moment();
 var $ = require("jquery");
 var ftAPI = require('../src/ftAPI');
 var marvin_reaction = require('../src/controller.js');

@@ -30,7 +30,7 @@ function marvinHelp() {
 		},
 		{   
 			intent: "forecast",
-			example: "What is the forecast for London?"
+			example: "Show me the forecast for London."
 		},
 		{   
 			intent: "cantina",

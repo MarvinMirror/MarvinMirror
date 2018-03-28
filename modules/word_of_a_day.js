@@ -36,7 +36,7 @@ function wordOfADay(flag) {
   {  var wordAPI = config.urbanDictionaryAPI;
     console.log(wordAPI);}
   else
-    var wordAPI = config.wordnikAPI;
+    var wordAPI = "http://api.wordnik.com/v4/words.json/wordOfTheDay?api_key=" + process.env.MARVIN_WORDNIK_API_KEY;
 
     promiseJSON(wordAPI)
     .then(data => { show_on_screen(data, flag) });

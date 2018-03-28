@@ -50,7 +50,7 @@ var timezone = {
 		return promiseJSON(url)
 			.then(getTimeZoneObj)
 			.then( (data) => {
-				return data.gmtOffset;
+				return data;
 			});
 	}
 };

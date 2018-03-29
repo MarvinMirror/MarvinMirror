@@ -36,12 +36,17 @@ brew upgrade node
 git clone https://github.com/MarvinMirror/MarvinMirror.git
 cd MarvinMirror
 ```
-* Create and copy .gitignore files config/config.js and config/google_key.json
+* Create and sensitive info files .env and config/google_key.json
 
 #### Update npm packages
 ```
 sudo npm install --unsafe-perm=true
 ```
+
+### Keys and sensitive info
+#### Environment Vairables (.env)
+
+#### Google Speech API (config/google_key.json)
 
 ## Adding Marvin's Mirror to your Raspberry Pi 3
 #### Rotate Screen

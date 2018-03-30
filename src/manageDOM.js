@@ -50,10 +50,10 @@ var manageDOM = {
 		manageDOM.buildPopup();
 		var popup = document.getElementById("popup");
 		var qrDiv = document.createElement("div");
-		qrDiv.className = "qr center-div";
+		qrDiv.id = "qr center-div";
 		popup.appendChild(qrDiv);
 		qrDiv.innerHTML = "<img src='../img/" + qr + ".png'>\
-		<br style='font-size: 5rem'>Use this QR code with your phone or go to " + link
+		<br><p style='font-size: 5rem'>Use this QR code with your phone or go to " + link
 	},
 
     /*  This function was created to bridge the issue with searching

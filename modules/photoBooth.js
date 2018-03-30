@@ -42,13 +42,15 @@ var transporter = nodemailer.createTransport(smtpConfig)
 
 function showIMG(name){
 	let popup = document.getElementById("popup");
-	let photobooth = document.createElement("photobooth");
+	console.log('here should be photo');
+	let photobooth = document.createElement("div");
 	photobooth.id = 'photobooth';
 	popup.appendChild(photobooth);
 	var showPhoto = document.createElement("img");
 	photobooth.className = "photobooth center-div";
 	photobooth.appendChild(showPhoto);
 	showPhoto.src = photoConfig.outputDir + name + ".jpg";
+	console.log(popup);
 }
 
 function send_to_mail(email, path, filename)
@@ -74,8 +76,21 @@ function send_to_mail(email, path, filename)
     }); 
 }
 
+function count_down(n)
+{
+	let content = document.getElementById("content");
+	if (n >= 0)
+	{	
+		content.innerHTML = "<div id='count_down'><p>" + n + "</div>";
+		if (n == 0) {
+			var sound = new Audio("../img/photo_sound.mp3");
+			sound.play();
+		}
+		setTimeout(count_down, 1000, n-1);
+	}
+}
+
 function send_by(email) {
-	showIMG(options.fileName)
    var pics = [path.join(__dirname, '..', '/img/42_Logo.png'), photoConfig.outputDir + options.fileName + ".jpg"]
    var jimps = [];
    for (var i = 0; i < 2; i++) {jimps.push(jimp.read(pics[i]))}
@@ -90,19 +105,14 @@ function send_by(email) {
 }
 
 function photo(){
-
+	
 	options.fileName = Math.floor((Math.random()*999) + 1);
-
 	var new_photo = new Raspistill(options);
+	count_down(5);
 	new_photo.takePhoto()
 		.then(() => {
-			setTimeout( () => {
-				var sound = new Audio("../img/photo_sound.mp3");
-				sound.play();
-			}, 500);
-		})
-		.then(() => {
 			get_input(send_by);
+			showIMG(options.fileName);
 		})
 			.catch(console.error);
 }

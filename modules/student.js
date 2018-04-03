@@ -146,7 +146,6 @@ var v2Users = {
 
 	/*  Displays information about a searched student on the screen */
 	studentInfo: (data) => {
-		manageDOM.delPopup();
 		console.log(data);
 		var login = data.toLowerCase();
 		marvinReacts.process_gif();

@@ -22,7 +22,7 @@ function show_on_screen(data){
 function wikiDefinition(word) {
   marvin_reaction.process_gif();
 
-  var wordAPI = config.wikipediaAPI + '?action=query&format=json&prop=extracts&titles=' + word + '&exsentences=3&exintro=1&explaintext=1';
+  var wordAPI = config.wikipediaAPI + '?action=query&format=json&prop=extracts&titles=' + word + '&redirects=1&exsentences=3&exintro=1&explaintext=1';
   console.log(wordAPI);
 
   promiseJSON(wordAPI)

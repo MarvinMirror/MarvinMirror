@@ -4,7 +4,8 @@ var promiseJSON = getJSON.promiseJSON;
 var config = require("../config/config");
 var manageDOM = require("../src/manageDOM");
 var tz = require("../src/timezone");
-var sendMessage = require("../src/controller").message;
+var marvinReacts = require("../src/controller");
+var sendMessage = marvinReacts.message;
 
 // If user did not specify units the function returns default 'imperial' units (fahrenheit) from config file.
 function getUnits(units) {
@@ -15,21 +16,20 @@ function getUnits(units) {
 function weatherForecast(get_place, get_units) {
 
 	// check input
-	var place = (get_place) ? get_place : config.location;
+	var place = (get_place) && (get_place !== "forecast") ? get_place : config.location;
 	
 	// check input for units
 	var units = getUnits(get_units);
 	// clear page
 	var deg = units === "metric" ? "C" : "F";
 
+	marvinReacts.process_gif();
+
 	// array of elements for builing new html
 	var elements = [
 		"forecast-wrapper center-div", "fore_location", "day00", "day01", "day02",
 		"day03", "day04"
 	];
-
-	// creating new html
-	manageDOM.array2Div(elements);
 
 	/*	A series of promises to get city latitude and longitude for accuracy,
 		query weather API for forecast data, get timezone offset so get daytime
@@ -46,12 +46,15 @@ function weatherForecast(get_place, get_units) {
 				sendMessage("Marvin was unable to find weather information for \"" + place.toUpperCase() + "\"");
 			}
 			else {
+
 				let j = 2;
 	
 				/*	Get the promise return of an integer for the gmt offset for the desired location 
 					and pass that to a function to isolate the weather objects that occur between 13:00 and 
 					16:00 in the desired location's timezone */
 				tz.getTimeOffset(place).then( (tzData) => {	
+					// creating new html
+					manageDOM.array2Div(elements);
 					let offset = tzData.gmtOffset;
 					let count = 0;
 					// Loop through all 40 objects in the list and get attributes for 5 days at 1:00 pm PST
@@ -94,6 +97,9 @@ function weatherForecast(get_place, get_units) {
 					document.getElementById("fore_location").innerHTML = "<p>" + data.city.name + " " + count +"-Day Forecast</p>";
 				});
 			}
+		})
+		.catch( () => {
+			sendMessage("Marvin is unable to locate forecast data for \"" + place.toUpperCase() + "\"");
 		});
 }
 

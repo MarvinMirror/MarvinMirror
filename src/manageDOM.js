@@ -13,7 +13,7 @@ var manageDOM = {
         the mirror */
 	buildPopup: (delay) => {
 		let checkPopup = document.getElementById("popup");
-
+		manageDOM.clearContent("content");
 		manageDOM.delPopup();
 
 		let body = document.body;
@@ -46,7 +46,6 @@ var manageDOM = {
 	},
 
 	inputPopup: (qr, link) => {
-		manageDOM.clearContent("content");
 		manageDOM.buildPopup();
 		var popup = document.getElementById("popup");
 		var qrDiv = document.createElement("div");

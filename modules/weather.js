@@ -3,7 +3,8 @@ var promiseJSON = getJSON.promiseJSON;
 var config = require("../config/config.js");
 var manageDOM = require("../src/manageDOM");
 var tz = require("../src/timezone");
-var sendMessage = require("../src/controller").message;
+var marvinReacts = require("../src/controller");
+var sendMessage = marvinReacts.message;
 
 // If user did not specify units the function returns default 'imperial' units (fahrenheit) from config file.
 function getUnits(units)
@@ -18,27 +19,20 @@ the openweathermap.org API, parses and displays in the app window */
 function getWeatherAtLocation(get_place, get_units) {
 	
 	// check input
-	var place = (get_place) ? get_place : config.location;
+	var place = (get_place) && (get_place !== "weather") ? get_place : config.location;
 
 	// check input for units
 	var units = getUnits(get_units);
-	// clear page
-	manageDOM.clearContent("content");
 
 	// array of elements for builing new html
 	var elements = [
 		"weather-wrapper center-div", "wl_location", "wl_img_wrap", "wl_cur_temp", "wl_conditions"
 	];
 
-	// creating new html
-	manageDOM.array2Div(elements);
-
-	var wl_icon = document.createElement("img");
-	wl_icon.id = "wlicon";
 
 	var deg = units === "metric" ? "C" : "F";
 
-	document.getElementById("wl_img_wrap").appendChild(wl_icon);
+	marvinReacts.process_gif();
 
 	tz.getTimeOffset(place).then( tzData => {
 		var latLonAPI = config.openWeatherMapAPI +
@@ -52,6 +46,12 @@ function getWeatherAtLocation(get_place, get_units) {
 			sendMessage("Marvin was unable to find weather information for \"" + place.toUpperCase() + "\"");
 		}
 		else {
+			// creating new html
+			manageDOM.array2Div(elements);
+
+			var wl_icon = document.createElement("img");
+			wl_icon.id = "wlicon";
+			document.getElementById("wl_img_wrap").appendChild(wl_icon);
 			var weather = data.weather[0];
 			var icon = weather.icon;
 			wl_icon.setAttribute("src", "../img/weather/" + icon + ".png");
@@ -60,6 +60,9 @@ function getWeatherAtLocation(get_place, get_units) {
 			document.getElementById("wl_conditions").innerHTML = weather.main;
 			document.getElementById("wl_location").innerHTML = data.name;
 		}
+	})
+	.catch( () => {
+		sendMessage("Marvin is unable to locate weather data for \"" + place.toUpperCase() + "\"");
 	});
 }
 

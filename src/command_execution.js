@@ -4,6 +4,8 @@ var clock = require('../modules/clock');
 var getMenu = require('../modules/cantina').getMenu;
 var marvinHelp = require('../modules/help');
 var authors = require('../modules/author');
+var v2Users = require('../modules/student');
+var v2projects = require('../modules/projects');
 var wordOfADay = require('../modules/word_of_a_day');
 var wikiDefinition = require('../modules/wikiDefinition');
 var calendar = require('../modules/calendar');
@@ -27,7 +29,7 @@ function command_execution (event, message) {
     else if (result.intent === 'authors') authors();
     else if (result.intent === 'word_of_the_day') wordOfADay(result.dictionary);
     else if (result.intent === 'get_student') read_input(v2Users.studentInfo);
-    else if (result.intent === 'projects') read_input(projectFunctions.getBestProjects);
+    else if (result.intent === 'projects') read_input(v2projects.getBestProjects);
     else if (result.intent === 'corrections') read_input(loadCorrections);
     else if (result.intent === 'map') read_input(studentOnMap);
     else if (result.intent === 'events') calendar(result.period, result.date);

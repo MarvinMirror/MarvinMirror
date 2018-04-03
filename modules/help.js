@@ -74,7 +74,7 @@ function marvinHelp() {
 		},
 		{   
 			intent: "Wikipedia",
-			example: "Show me the wiki for James Bond."
+			example: "Show me the wiki for Douglas Adams."
 		},
 		{   
 			intent: "Photobooth",

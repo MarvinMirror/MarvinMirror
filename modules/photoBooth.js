@@ -52,6 +52,7 @@ function showIMG(name){
 	photobooth.appendChild(showPhoto);
 	photobooth.appendChild(qr);
 	showPhoto.src = photoConfig.outputDir + name + ".jpg";
+	showPhoto.className("snapshot");
 }
 
 function send_to_mail(email, path, filename)

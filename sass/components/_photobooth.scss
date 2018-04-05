@@ -1,11 +1,20 @@
-.popup .photobooth img{
+.popup .photobooth .snapshot{
     width: 51.2rem;
     height: 38.4rem;
+    transform: translateY(-10rem);
+}
+
+.popup .photobooth .qr{
+    display: float;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .count_down {
-align-self: flex-start;
-padding-top: 50px;
+    align-self: flex-start;
+    padding-top: 50px;
 }
 
 .count_down p {

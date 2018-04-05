@@ -48,8 +48,11 @@ function showIMG(name){
 	popup.appendChild(photobooth);
 	var showPhoto = document.createElement("img");
 	photobooth.className = "photobooth center-div";
+	let qr = document.getElementById("qr");
 	photobooth.appendChild(showPhoto);
+	photobooth.appendChild(qr);
 	showPhoto.src = photoConfig.outputDir + name + ".jpg";
+	showPhoto.className("snapshot");
 }
 
 function send_to_mail(email, path, filename)

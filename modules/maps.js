@@ -1,6 +1,6 @@
 // Data about 42LAB clusters needed to build the HTML with the map.
 var info = require('../src/maps_info.js');
-
+require("mongoose");
 // Adding Controller.js in order to get access to methods showing and deleting processing gifs
 var marvin_reaction = require('../src/controller.js');
 // Adding ManageDOM.js in order to update HTML using MarvinMirror methods
@@ -8,6 +8,7 @@ var manageDOM = require('../src/manageDOM');
 
 // Adding ftAPI.js to this 
 var ftAPI = require('../src/ftAPI');
+var Student = require("../src/mongoDB").Models.Student;
 
 var send_message = require('../src/controller.js').message;
 
@@ -217,7 +218,6 @@ function add_user_position(zone_name, width, height) {
 }
 
 function zone(num, row, seat, student) {
-
     manageDOM.array2Div(["zone","userPosition","zone_name", "studentPosition"]);
     document.getElementById("zone").className = "zone";
     var zone_obj = info["zone" + num].map
@@ -250,7 +250,8 @@ var showMap = (obj) => {
         if (location != null)
         {
             var res = location.split(/[^1-9]/);
-            zone(res[2], res[3], res[4], obj);
+            if (res[2] == '4') send_message("You should go to the Zone4. <br>I don't have the map of Zone4 yet:(");
+            else zone(res[2], res[3], res[4], obj);
         }
         else send_no_student_message(obj);
     }
@@ -259,14 +260,8 @@ var showMap = (obj) => {
 
 // There is no direct-to-student from login via the API so 2 requests are needed. This is the second and 
 // feeds comprehensive student data object to callback function
-var getStudentID = function (obj) {
-
-    if (obj.length > 0){
-        return ftAPI.query42("/v2/users/" + obj[0].id);
-    }
-    else {
-        return (null);
-    }
+var getStudentID = function (id) {
+	return ftAPI.query42("/v2/users/" + id);
 }
 
 var absent_student = function(student) 
@@ -299,10 +294,14 @@ function studentOnMap(data) {
     manageDOM.delPopup();
     var login = data.toLowerCase();
     marvin_reaction.process_gif();
-    ftAPI.query42("/v2/users/?filter[login]=" + login)
-    .then(getStudentID)
-    .then(showMap)
-    .catch(console.error);
+    Student.findOne({"login": login}).exec((err, data) => {
+		if (data) {
+			getStudentID(data.studentID)
+			.then(showMap)
+			.catch(console.error);
+		}
+		else send_message('No user with that login was found in our database. Please ask me again and provide a valid login.')
+	});
 }
 
 module.exports = studentOnMap;

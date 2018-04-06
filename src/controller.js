@@ -16,10 +16,10 @@ var marvinReacts = {
 		listen_gif.appendChild(gif);
 	},
 
-	process_gif: () => {
+	process_gif: (popup) => {
 		manageDOM.clearContent("content");
-        
-		let content = document.getElementById("content");
+        if (popup) manageDOM.clearContent("popup");
+		let content = (popup) ? document.getElementById("popup") : document.getElementById("content");
 		let process_gif = document.createElement("div");
 		process_gif.className = "process-gif center-div";
 		let gif = document.createElement("img");

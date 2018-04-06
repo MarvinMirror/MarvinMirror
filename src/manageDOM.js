@@ -45,8 +45,8 @@ var manageDOM = {
 		}
 	},
 
-	inputPopup: (qr, link) => {
-		manageDOM.buildPopup();
+	inputPopup: (qr, link, delay) => {
+		manageDOM.buildPopup(delay);
 		var popup = document.getElementById("popup");
 		var qrDiv = document.createElement("div");
 		qrDiv.id = "qr";

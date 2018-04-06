@@ -1,5 +1,5 @@
 var manageDOM = require("../src/manageDOM");
-
+var marvinReacts = require("../src/controller");
 var nodemailer = require("nodemailer");
 var path = require("path");
 var jimp = require("jimp");
@@ -69,10 +69,12 @@ function send_to_mail(email, path, filename)
 };
 	var transporter = nodemailer.createTransport(smtpConfig);
 	transporter.sendMail(mailOptions, function(error, info) {
-		if (error) console.log(error);
+		if (error) {
+			console.log(error);
+			send_message("Hmmm! You gave me bad email:(")}
 		else {
 			console.log("Email sent: " + info.response);
-			send_message("Check you email, dude!");
+			send_message("Check your email!");
 		}
 	}); 
 }
@@ -92,6 +94,7 @@ function count_down(n)
 }
 
 function send_by(email) {
+	marvinReacts.process_gif("popup");
 	var pics = [path.join(__dirname, "..", "/img/42_Logo.png"), photoConfig.outputDir + options.fileName + ".jpg"];
 	var jimps = [];
 	for (var i = 0; i < 2; i++) {jimps.push(jimp.read(pics[i]));}
@@ -102,7 +105,9 @@ function send_by(email) {
 		data[1].write(photoConfig.outputDir + options.fileName + ".jpg");
 		return([photoConfig.outputDir, options.fileName + ".jpg"]);
 	}).then(data => send_to_mail(email, data[0], data[1]))
-		.catch(err => console.log(err));
+		.catch((err) => {
+			send_message("Something went wrong:(");
+			console.log(err)});
 }
 
 function photo(){

@@ -74,7 +74,7 @@ function send_to_mail(email, path, filename)
 			send_message("Hmmm! You gave me bad email:(")}
 		else {
 			console.log("Email sent: " + info.response);
-			send_message("Check you email, dude!");
+			send_message("Check your email, dude!");
 		}
 	}); 
 }

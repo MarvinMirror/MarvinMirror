@@ -8,20 +8,6 @@ var Raspistill = require("node-raspistill").Raspistill;
 var get_input = require("../src/get_input").get_Email;
 var send_message = require("../src/controller.js").message;
 
-let smtpConfig = {
-	host: "smtp.gmail.com",
-	port: 465,
-	secure: true,
-	auth: {
-		type: "OAuth2",
-		user: process.env.MARVIN_GMAIL_USER,
-		clientId: process.env.MARVIN_GMAIL_CLIENT_ID,
-		clientSecret: process.env.MARVIN_GMAIL_CLIENT_SECRET,
-		refreshToken: process.env.MARVIN_GMAIL_REFRESH_TOKEN,
-		accessToken: process.env.MARVIN_GMAIL_ACCESS_TOKEN,
-		expires: 1484314697598
-	}
-};
 //if time is not set it'll be 5sec.
 
 var options = {
@@ -38,8 +24,6 @@ var options = {
 //  saturation: 10
 };
 
-var transporter = nodemailer.createTransport(smtpConfig);
-
 function showIMG(name){
 	let popup = document.getElementById("popup");
 	console.log("here should be photo");
@@ -52,7 +36,7 @@ function showIMG(name){
 	photobooth.appendChild(showPhoto);
 	photobooth.appendChild(qr);
 	showPhoto.src = photoConfig.outputDir + name + ".jpg";
-	showPhoto.className("snapshot");
+	showPhoto.className = "snapshot";
 }
 
 function send_to_mail(email, path, filename)
@@ -69,6 +53,21 @@ function send_to_mail(email, path, filename)
 			cid: "magmir42@gmail.com" //same cid value as in the html img src
 		}]
 	};
+	let smtpConfig = {
+	host: "smtp.gmail.com",
+	port: 465,
+	secure: true,
+	auth: {
+		type: "OAuth2",
+		user: process.env.MARVIN_GMAIL_USER,
+		clientId: process.env.MARVIN_GMAIL_CLIENT_ID,
+		clientSecret: process.env.MARVIN_GMAIL_CLIENT_SECRET,
+		refreshToken: process.env.MARVIN_GMAIL_REFRESH_TOKEN,
+		accessToken: process.env.MARVIN_GMAIL_ACCESS_TOKEN,
+		expires: 1484314697598
+	}
+};
+	var transporter = nodemailer.createTransport(smtpConfig);
 	transporter.sendMail(mailOptions, function(error, info) {
 		if (error) console.log(error);
 		else {
@@ -83,7 +82,7 @@ function count_down(n)
 	let content = document.getElementById("content");
 	if (n >= 0)
 	{	
-		content.innerHTML = "<div id='count_down'><p>" + n + "</div>";
+		content.innerHTML = "<div id='count_down' class='count_down'><p>" + n + "</div>";
 		if (n == 0) {
 			var sound = new Audio("../img/photo_sound.mp3");
 			sound.play();

@@ -1,3 +1,18 @@
+/******************************************************************************\
+**  __  __          _______      _______ _   _ _  _____                       **
+** |  \/  |   /\   |  __ \ \    / /_   _| \ | ( )/ ____|                      **
+** | \  / |  /  \  | |__) \ \  / /  | | |  \| |/| (___                        **
+** | |\/| | / /\ \ |  _  / \ \/ /   | | | . ` |  \___ \                       **
+** | |  | |/ ____ \| | \ \  \  /   _| |_| |\  |  ____) |                      **
+** |_|  |_/_/___ \_\_|  \_\__\/ __|_____|_| \_| |_____/                       **
+** |  \/  |_   _|  __ \|  __ \ / __ \|  __ \                                  **
+** | \  / | | | | |__) | |__) | |  | | |__) |      contributions by:          **
+** | |\/| | | | |  _  /|  _  /| |  | |  _  /       Kyle Murray                **
+** | |  | |_| |_| | \ \| | \ \| |__| | | \ \       Anastasia Zimina           **
+** |_|  |_|_____|_|  \_\_|  \_\\____/|_|  \_\                                 **
+**                                                                            **
+\******************************************************************************/
+
 var waitingTime = require("../config/config").waitingTime;
 
 /*	We use this variable to track the time left before the
@@ -9,10 +24,9 @@ var timeout;
 
 var manageDOM = {
 
-    /*  Creates a popup div of 100vh to use all of the monitor space on
+	/*  Creates a popup div of 100vh to use all of the monitor space on
         the mirror */
 	buildPopup: (delay) => {
-		let checkPopup = document.getElementById("popup");
 		manageDOM.clearContent("content");
 		manageDOM.delPopup();
 
@@ -28,14 +42,14 @@ var manageDOM = {
 		timeout = setTimeout(manageDOM.delPopup, timer);
 	},
 
-    /*  Removes all DOM objects within a parent object */
+	/*  Removes all DOM objects within a parent object */
 	clearContent: (parent) => {
 		var content = document.getElementById(parent);
 		while (content.firstChild)
 			content.removeChild(content.firstChild);
 	},
 
-    /*  Specifically removes the popup element from the DOM */
+	/*  Specifically removes the popup element from the DOM */
 	delPopup: () => {
 		var popup = document.getElementById("popup");
 
@@ -56,7 +70,7 @@ var manageDOM = {
 		<br><p>Use this QR code with your phone or go to " + link + "<p>";
 	},
 
-    /*  This function was created to bridge the issue with searching
+	/*  This function was created to bridge the issue with searching
         for students within the 42 API. There are logistical issues to
         searching by word fragments and names so for time's sake, this function
         is created to manually enter info for a student searched. */
@@ -87,7 +101,7 @@ var manageDOM = {
 		document.getElementById("student-submit").onclick = call_function;
 	},
 
-    /*  This function assists a developer who is creating a new module that needs to
+	/*  This function assists a developer who is creating a new module that needs to
         create an unknown number or, in general, many repeating divs for the mirror.
         For the array submitted as argument, array2Div will take the first element and
         create a wrapper of same name, and then subsequently append to the wrapper

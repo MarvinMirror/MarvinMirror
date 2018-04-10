@@ -1,10 +1,23 @@
+/******************************************************************************\
+**  __  __          _______      _______ _   _ _  _____                       **
+** |  \/  |   /\   |  __ \ \    / /_   _| \ | ( )/ ____|                      **
+** | \  / |  /  \  | |__) \ \  / /  | | |  \| |/| (___                        **
+** | |\/| | / /\ \ |  _  / \ \/ /   | | | . ` |  \___ \                       **
+** | |  | |/ ____ \| | \ \  \  /   _| |_| |\  |  ____) |                      **
+** |_|  |_/_/___ \_\_|  \_\__\/ __|_____|_| \_| |_____/                       **
+** |  \/  |_   _|  __ \|  __ \ / __ \|  __ \                                  **
+** | \  / | | | | |__) | |__) | |  | | |__) |      contributions by:          **
+** | |\/| | | | |  _  /|  _  /| |  | |  _  /       Kyle Murray                **
+** | |  | |_| |_| | \ \| | \ \| |__| | | \ \                                  **
+** |_|  |_|_____|_|  \_\_|  \_\\____/|_|  \_\                                 **
+**                                                                            **
+\******************************************************************************/
+
 var manageDOM = require("../src/manageDOM");
 
 /*	This feature randomly picks from Marvin's features and displays 
 	seven intents and example voice commands to the popup div */
 function marvinHelp() {
-
-	manageDOM.clearContent("content");
 	
 	/*	Creating the array of DOM elements to be generated with one of
 		our source functions */

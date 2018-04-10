@@ -1,4 +1,3 @@
-var manageDOM = require("../src/manageDOM");
 var marvinReacts = require("../src/controller");
 var nodemailer = require("nodemailer");
 var path = require("path");

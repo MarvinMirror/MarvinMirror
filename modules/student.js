@@ -1,3 +1,18 @@
+/******************************************************************************\
+**  __  __          _______      _______ _   _ _  _____                       **
+** |  \/  |   /\   |  __ \ \    / /_   _| \ | ( )/ ____|                      **
+** | \  / |  /  \  | |__) \ \  / /  | | |  \| |/| (___                        **
+** | |\/| | / /\ \ |  _  / \ \/ /   | | | . ` |  \___ \                       **
+** | |  | |/ ____ \| | \ \  \  /   _| |_| |\  |  ____) |                      **
+** |_|  |_/_/___ \_\_|  \_\__\/ __|_____|_| \_| |_____/                       **
+** |  \/  |_   _|  __ \|  __ \ / __ \|  __ \                                  **
+** | \  / | | | | |__) | |__) | |  | | |__) |      contributions by:          **
+** | |\/| | | | |  _  /|  _  /| |  | |  _  /       Kyle Murray                **
+** | |  | |_| |_| | \ \| | \ \| |__| | | \ \                                  **
+** |_|  |_|_____|_|  \_\_|  \_\\____/|_|  \_\                                 **
+**                                                                            **
+\******************************************************************************/
+
 var ftAPI = require("../src/ftAPI");
 var manageDOM = require("../src/manageDOM");
 var Student = require("../src/mongoDB").Models.Student;
@@ -6,74 +21,11 @@ var marvinReacts = require("../src/controller.js");
 
 "use strict";
 
-/*  This function is unused and may be deprecated with the abandonment
-    of using student cards for login */
-let getUser = function (obj) {
-
-	// removes from "content" div of app any div with id "wrapper"
-	manageDOM.clearContent("user");
-    
-	if (obj){
-		// create an array with all of the separate/* divs with
-		// appropriate names here
-		let elements = [
-			"active-user", "me_displayname", "me_profile_pic", "me_login",
-			"me_level", "me_correction_points"
-		];
-        
-		// creates HTML
-		manageDOM.array2Div(elements, "user");
-
-		let splitName = obj.displayname.split(" ").join("<br />");
-
-		let user = {};
-		user.name = splitName;
-		user.login = obj.login;
-		user.profile_pic = obj.image_url;
-		user.level = "Level: " + obj.cursus_users[0].level;
-		user.correction_point = "Correction points:<br />" + obj.correction_point;
-        
-		// adds content to html with data retrieved from API
-		var profile_pic = document.createElement("img");
-		profile_pic.id = "me_pic";
-		profile_pic.src = user.profile_pic;
-		document.getElementById("me_profile_pic").appendChild(profile_pic);      
-		document.getElementById("me_displayname").innerHTML = user.name;
-		document.getElementById("me_login").innerHTML = user.login;
-		document.getElementById("me_level").innerHTML = user.level;
-		document.getElementById("me_correction_points").innerHTML = user.correction_point;
-	}
-	else {
-        
-		// create an array with all of the separate divs with
-		// appropriate names here
-		let elements = [
-			"guest", "guest_login", "guest_pic", "guest_displayname"
-		];
-        
-		// creates HTML
-		manageDOM.array2Div(elements, "user");
-        
-		let guest = {
-			profile_pic: "./img/guest_pic.png",
-			name: "<p>New Hitchhiker</p>"
-		};
-        
-		let guest_pic = document.createElement("img");
-		guest_pic.id = "hh_pic";
-		guest_pic.src = guest.profile_pic;
-		document.getElementById("guest_pic").appendChild(guest_pic);      
-		document.getElementById("guest_login").innerHTML = "Guest";
-		document.getElementById("guest_displayname").innerHTML = guest.name;
-	}
-};
-
 // CREATES HTML ELEMENTS WITH STUDENT INFO AND ADDS TO DOM
 let showStudentToScreen = (obj) => {
-    
-	// CLEARS THE MAIN BOX ON THE MIRROR OF CONTENT
-	manageDOM.clearContent("content");
-    
+	
+	/*	Builds html objects and populates content with information from JSON
+		from ftAPI call */
 	if (obj != null) {    
         
 		var elements = [
@@ -134,54 +86,33 @@ var getStudentPages = (n) => {
 		.catch(e => {throw e;});
 };
 
-var v2Users = {
+var v2Students = {
 
 	/*  Recursive call that cycles through all 42 API pages of users and updates 
         any new students/IDs */
 	getAllStudents: (n) => {
 		return getStudentPages(n)
-			.then(() => {v2Users.getAllStudents(n + 1);})
+			.then(() => {v2Students.getAllStudents(n + 1);})
 			.catch(console.error);
 	},
 
 	/*  Displays information about a searched student on the screen */
 	studentInfo: (data) => {
-		console.log(data);
 		var login = data.toLowerCase();
 		marvinReacts.process_gif();
 
 		Student.findOne({"login": login}).exec((err, data) => {
-		if (data !== null)
-		{
-			ftAPI.query42("/v2/users/" + data.studentID)
-			.then(showStudentToScreen)
-			.catch(console.error);
-		}
-		else {
-			sendMessage("I cannot find any user with this login in our database.");
-		}
-		});
-	},
-
-	/*  Displays current user information. This function is unused and will be 
-        fully deprecated if student ID cards are not implemented */
-	userInfo: (data) => {
-		manageDOM.delPopup();
-		console.log(data);
-		var login = data.toLowerCase();
-		marvinReacts.process_gif();
-		
-		if (!login || login === "")
-			getUser(null);
-		else {
-			Student.findOne({"login": login}).exec((err, data) => {
+			if (data !== null)
+			{
 				ftAPI.query42("/v2/users/" + data.studentID)
-					.then(getUser)
+					.then(showStudentToScreen)
 					.catch(console.error);
-			});
-		}
+			}
+			else {
+				sendMessage("I cannot find any user with this login in our database.");
+			}
+		});
 	}
-
 };
 
-module.exports = v2Users;
+module.exports = v2Students;

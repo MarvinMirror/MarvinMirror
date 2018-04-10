@@ -13,7 +13,7 @@ function accessDB(n, callback, source) {
             Input.deleteOne({source: source}, function(err, obj) {console.log("deleted")});
             n = waitingInput;
             if (data.message != "") callback(data.message)
-            else send_message("You sent me an empty string! <br>Do you think I'm stupid?")
+            else send_message("You sent me an empty string!<br>Do you think I'm stupid?")
         }
         else {
             console.log("nothing there")

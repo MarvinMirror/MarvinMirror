@@ -123,7 +123,7 @@ function marvinHelp() {
 
 		/*	Ensures there will be no duplicates selected */
 		while (flag === 0) {
-			int = Math.floor(Math.random() * 14);
+			int = Math.floor(Math.random() * actions.length);
 			if (int_arr.includes(int)) {
 				flag = 0;
 			}

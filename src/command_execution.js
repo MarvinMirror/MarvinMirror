@@ -1,3 +1,18 @@
+/******************************************************************************\
+**  __  __          _______       _______    ___  _____                       **
+** |  \/  |   /\   |  __ \ \    / /_   _| \ | ( )/ ____|                      **
+** | \  / |  /  \  | |__) \ \  / /  | | |  \| |/| (___                        **
+** | |\/| | / /\ \ |  _  / \ \/ /   | | | . ` |  \___ \                       **
+** | |  | |/ ____ \| | \ \  \  /   _| |_| |\  |  ____) |                      **
+** |_|  |_/_/___ \_\_|  \_\__\/ __|_____|_| \_| |_____/                       **
+** |  \/  |_   _|  __ \|  __ \ / __ \|  __ \                                  **
+** | \  / | | | | |__) | |__) | |  | | |__) |      contributions by:          **
+** | |\/| | | | |    _/|_    /| |  | |  _  /       Anastasia Zimina           **
+** | |  | |_| |_| | \ \| | \ \| |__| | | \ \                                  **
+** |_|  |_|_____|_|  \_\_|  \_\\____/|_|  \_\                                 **
+**                                                                            **
+\******************************************************************************/
+
 var getWeatherAtLocation = require("../modules/weather");
 var weatherForecast = require("../modules/forecast");
 var clock = require("../modules/clock");
@@ -12,11 +27,12 @@ var calendar = require("../modules/calendar");
 var news = require("../modules/news");
 var read_input = require("../src/get_input");
 var studentOnMap = require("../modules/maps.js");
-var loadCorrections = require("../modules/corrections.js");
 var Analytics = require("../src/mongoDB").Models.Analytics;
 var send_message = require("../src/controller").message;
 var photo = require("../modules/photoBooth.js");
+var joke = require("../modules/joke.js");
 var howAreYou = require("../modules/howAreYou");
+var loadCorrections = require("../modules/corrections.js");
 
 
 // Maybe make this a switch instead of if/else?
@@ -39,7 +55,8 @@ function command_execution (event, message) {
 	else if (result.intent === "events") calendar(result.period, result.date);
 	else if (result.intent === "wikiDefinition") wikiDefinition(result.wikiword);
 	else if (result.intent === "news") news(); 
-	else if (result.intent === "howAreYou") howAreYou();
+	else if (result.intent === "joke") joke();
+	else if (result.intent === "how_are_you") howAreYou();
 	else send_message("You asked for \"" + result.text + "\".<br> I don't understand you.");
 }
 

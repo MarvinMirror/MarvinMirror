@@ -47,6 +47,12 @@
     grid-template-rows: repeat(7, var(--size));
 }
 
+.row_container_zone4 {
+	display: grid;
+    grid-template-columns: repeat(11, var(--size));
+    grid-template-rows: repeat(11, var(--size));
+}
+
 .seat-occupied {
 	background-color: red;
 	animation:         blinkChair 1s steps(3, start) infinite;

@@ -1,3 +1,18 @@
+/******************************************************************************\
+**  __  __          _______      _______   ___  _____                       **
+** |  \/  |   /\   |  __ \ \    / /_   _| \ | ( )/ ____|                      **
+** | \  / |  /  \  | |__) \ \  / /  | | |  \| |/| (___                        **
+** | |\/| | / /\ \ |  _  / \ \/ /   | | | . ` |  \___ \                       **
+** | |  | |/ ____ \| | \ \  \  /   _| |_| |\  |  ____) |                      **
+** |_|  |_/_/___ \_\_|  \_\__\/ __|_____|_| \_| |_____/                       **
+** |  \/  |_   _|  __ \|  __ \ / __ \|  __ \                                  **
+** | \  / | | | | |__) | |__) | |  | | |__) |      contributions by:          **
+** | |\/| | | | |    _/|_    /| |  | |  _  /       Anastasia Zimina           **
+** | |  | |_| |_| | \ \| | \ \| |__| | | \ \                                  **
+** |_|  |_|_____|_|  \_\_|  \_\\____/|_|  \_\                                 **
+**                                                                            **
+\******************************************************************************/
+
 // Data about 42LAB clusters needed to build the HTML with the map.
 var info = require('../src/maps_info.js');
 require("mongoose");
@@ -158,6 +173,55 @@ function create_floor_3(zone_name, get_row, get_seat, zone_obj, zone_42, zone_st
     }
 }
 
+function create_floor_4(zone_name, get_row, get_seat, zone_obj, zone_42, zone_style) {
+    //get HTML element to add new elements there
+    var floor = document.getElementById("zone");
+    //create sections/rows
+    for (row in zone_obj)
+    {
+        var occupied = false;
+        var location = zone_style[row];
+        var element = document.createElement("div")
+        element.id = row;
+        if (row === "0") element.className = "row_container_" + zone_name + '_0';
+            else element.className = "row_container_" + zone_name;
+        element.setAttributeNode(creaty_element_style(location[0] + 1, location[1] + 1));
+        for (station in zone_obj[row])
+        {
+            var seat = document.createElement("div")
+            var index = zone_obj[row][station] - 1;
+            var col_seat = zone_style.seat_col[index];
+            var row_seat = zone_style.seat_row[index];
+            seat.id = "station" + zone_obj[row][station];
+            seat.setAttributeNode(creaty_element_style(col_seat, row_seat))
+            if (row == get_row && zone_42[row][station] == get_seat) 
+            {
+                seat.className = "seat-occupied";
+                occupied = true;
+            }
+                else seat.className = "seat"
+            var icon = document.createElement("img");
+            icon.setAttribute("src", "../img/mac.png")
+            seat.appendChild(icon);
+            element.appendChild(seat)
+        }
+        for (table in zone_style.tables[row])
+        {
+            var index = zone_style.tables[row][table] - 1;
+            var table_size = 1;
+            var start_c = zone_style.tables.table_col[index];
+            var start_r = zone_style.tables.table_row[index];
+            var table_div = document.createElement("div")
+            table_div.className = (occupied) ? "table-occupied" : "table";
+            table_div.setAttributeNode(creaty_table_style(table_size, 1, start_c, start_r))
+            element.appendChild(table_div)
+        }
+        floor.appendChild(element);
+        
+    }
+
+}
+
 function creaty_element_style(col_start, row_start)
 {
     var att = document.createAttribute("style");
@@ -228,15 +292,14 @@ function zone(num, row, seat, student) {
     document.documentElement.style.setProperty(`--size`, seat_size + 'px');
     document.documentElement.style.setProperty(`--width`, zone_style.width);
     document.documentElement.style.setProperty(`--height`, zone_style.height);
-
     if (num == 1)
         create_floor_1("zone" + num, row, seat, zone_obj, zone_42, zone_style);
-    if (num == 2)
+    else if (num == 2)
         create_floor_2("zone" + num, row, seat, zone_obj, zone_42, zone_style);
-    if (num == 3)
+    else if (num == 3)
         create_floor_3("zone" + num, row, seat, zone_obj, zone_42, zone_style);
-    //if (num == 4)
-    //    create_floor_4("zone" + num, row, seat);
+    else (num == 4)
+        create_floor_4("zone" + num, row, seat, zone_obj, zone_42, zone_style);
     add_user_position(num, zone_style.width, zone_style.height);
     add_student_info(student, zone_style.position);
     add_zone_name(num, zone_style);
@@ -250,7 +313,7 @@ var showMap = (obj) => {
         if (location != null)
         {
             var res = location.split(/[^1-9]/);
-            if (res[2] == '4') send_message("You should go to the Zone4. <br>I don't have the map of Zone4 yet:(");
+            if (res[2] > 4 || res[2] < 1) send_message("I don't have a map of Zone" + res[2]);
             else zone(res[2], res[3], res[4], obj);
         }
         else send_no_student_message(obj);

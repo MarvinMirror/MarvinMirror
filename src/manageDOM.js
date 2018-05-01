@@ -76,11 +76,6 @@ var manageDOM = {
         is created to manually enter info for a student searched. */
 	studentPopup: (call_function) => {
 
-		// var checkPopup = document.getElementById('popup');
-		// if (checkPopup) {
-		//     document.body.removeChild(document.getElementById('popup'));
-		// }
-		// body.appendChild(popup);
 		manageDOM.buildPopup();
 		var popup = document.getElementById("popup");
 		popup.setAttribute("class", "popup");

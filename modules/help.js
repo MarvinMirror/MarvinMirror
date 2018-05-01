@@ -93,7 +93,7 @@ function marvinHelp() {
 			intent: "Photobooth",
 			example: "Snap a picture of me!"
 		},
-        {   
+		{   
 			intent: "Joke",
 			example: "Tell me a joke!"
 		}
@@ -127,7 +127,7 @@ function marvinHelp() {
 
 		/*	Ensures there will be no duplicates selected */
 		while (flag === 0) {
-			int = Math.floor(Math.random() * 15);
+			int = Math.min(actions.length - 1, Math.floor(Math.random() * actions.length));
 			if (int_arr.includes(int)) {
 				flag = 0;
 			}

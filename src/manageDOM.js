@@ -42,16 +42,33 @@ var manageDOM = {
 		timeout = setTimeout(manageDOM.delPopup, timer);
 	},
 
+	/*  Creates a popup div of 75vh to announce connectivity issues*/
+	wifiDown: () => {
+		if (!document.getElementById("wifi-err")){
+			manageDOM.clearContent("content");
+			manageDOM.delPopup();
+
+			let body = document.body;
+			let wifiErr = document.createElement("div");
+			body.appendChild(wifiErr);
+
+			wifiErr.setAttribute("id", "wifi-err");
+			wifiErr.setAttribute("class", "wifi-err");
+		}
+	},
+
 	/*  Removes all DOM objects within a parent object */
 	clearContent: (parent) => {
 		var content = document.getElementById(parent);
-		while (content.firstChild)
-			content.removeChild(content.firstChild);
+		if (content) {
+			while (content.firstChild)
+				content.removeChild(content.firstChild);
+		}
 	},
 
 	/*  Specifically removes the popup element from the DOM */
-	delPopup: () => {
-		var popup = document.getElementById("popup");
+	delPopup: (div) => {
+		var popup = document.getElementById(div || "popup");
 
 		if (popup !== null) {
 			document.body.removeChild(popup);

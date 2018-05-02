@@ -42,6 +42,14 @@ body {
     transform: translate(-50%, -50%);
 }
 
+.bottom-div {
+	max-width: 75%;
+	position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+}
+
 /* SECTIONS */
 
 .wrapper {
@@ -107,6 +115,28 @@ body {
 
 .popup > div {
 	width: 80rem;
+}
+
+/* WIFIERR */
+
+.wifi-err {
+	height: 75vh;
+	width: 100%;
+	top: 25%;
+	left: 0;
+	background-color: rgba(0, 0, 0, 1);
+	z-index: 1000;
+	position: fixed;
+	transition: all .3s;
+	justify-content: center;
+}
+
+.wifi-err > div {
+	width: 80rem;
+}
+
+.wifi-err .wifi-message {
+	font-size: 2rem;
 }
 
 /* STUDENT SEARCH */

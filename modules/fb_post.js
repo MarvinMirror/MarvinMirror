@@ -69,9 +69,6 @@ var fb_post = () => {
 	fb_img.append(fb_icon);
 	fb_text.setAttribute("class", "post_text");
 	fbdiv.append(fb_img, fb_text);
-
-	//getting FB post text and adding it to the div 'fb_text' for the first time
-	//  get_post_text(fbAPI, fb_text);
 	 
 	 //retrieving saved post from database
 	 let newData = Post.findOne({ "type": "FB" });

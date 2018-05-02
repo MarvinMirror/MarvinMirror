@@ -86,16 +86,20 @@ const howAreYou = () => {
 	let day = moment().format("dddd");
 	let dice = Math.floor(Math.random() * 9);
 	let rand;
-    
+	let mp3 = dice % 2 ? "../mp3/sigh1.mp3" : "../mp3/sigh2.mp3"
+	var sound = new Audio(mp3);
+	
 	if (dice < 7) {
 		rand = Math.min(responseGeneric.length - 1,
 			Math.floor(Math.random() * (responseGeneric.length)));
 		sup.innerHTML = responseGeneric[rand];
+		sound.play();
 	}
 	else {
 		rand = Math.min(responseByDay[day].length - 1,
 			Math.floor(Math.random() * (responseByDay[day].length)));
 		sup.innerHTML = responseByDay[day][rand];
+		sound.play();		
 	}
 };
 

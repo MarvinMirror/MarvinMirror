@@ -17,10 +17,10 @@ var send_message = require("../src/controller.js").message;
 var manageDOM = require("../src/manageDOM");
 
 var joke = function(){
-    var apicall = 'https://icanhazdadjoke.com/';
+    var url = 'https://icanhazdadjoke.com/';
     var retry = true;
     var xhr = new XMLHttpRequest()
-    xhr.open('GET', apicall, true)
+    xhr.open('GET', url, true)
     xhr.setRequestHeader("Accept", "application/json");
     xhr.onload = function(){
        if (xhr.status === 200){

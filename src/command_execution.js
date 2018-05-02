@@ -31,6 +31,7 @@ var Analytics = require("../src/mongoDB").Models.Analytics;
 var send_message = require('../src/controller').message;
 var photo = require('../modules/photoBooth.js');
 var joke = require('../modules/joke.js');
+var introduction = require('../modules/introduction.js');
 
 function command_execution (event, message) {
     var result = JSON.parse(message)
@@ -52,12 +53,13 @@ function command_execution (event, message) {
     else if (result.intent === 'wikiDefinition') wikiDefinition(result.wikiword);
     else if (result.intent === 'news') news();
     else if (result.intent === 'joke') joke();
+	else if (result.intent === 'introduction') introduction();
     else send_message('You asked for "' + result.text + '".<br> I don\'t understand you.')
 }
 
 function add_analytics_data(result) {
     var existingFunctions = ['get_weather', 'forecast', 'local_time', 'cantina_tomorrow', 'cantina_today', 'help', 'authors',
-    'word_of_the_day', 'get_student', 'projects', 'corrections', 'map', 'events', 'wikiDefinition', 'news', 'photo', 'joke'];
+    'word_of_the_day', 'get_student', 'projects', 'corrections', 'map', 'events', 'wikiDefinition', 'news', 'photo', 'joke', 'introduction'];
 
     var d = new Date();
     var knownFunction = existingFunctions.includes(result.intent);

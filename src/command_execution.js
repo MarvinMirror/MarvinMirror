@@ -28,50 +28,15 @@ var news = require("../modules/news");
 var read_input = require("../src/get_input");
 var studentOnMap = require("../modules/maps.js");
 var Analytics = require("../src/mongoDB").Models.Analytics;
-<<<<<<< HEAD
 var send_message = require('../src/controller').message;
 var photo = require('../modules/photoBooth.js');
 var joke = require('../modules/joke.js');
-var introduction = require('../modules/introduction.js');
-=======
-var send_message = require("../src/controller").message;
-var photo = require("../modules/photoBooth.js");
-var joke = require("../modules/joke.js");
 var howAreYou = require("../modules/howAreYou");
 var loadCorrections = require("../modules/corrections.js");
->>>>>>> dc376c98e0f4a3d1559a2574572cb21b28370b74
-
+var introduction = require('../modules/introduction.js');
 
 // Maybe make this a switch instead of if/else?
 function command_execution (event, message) {
-<<<<<<< HEAD
-    var result = JSON.parse(message)
-    add_analytics_data(result)
-    if (result.intent === 'get_weather') getWeatherAtLocation(result.location || result.wikiword, result.units);
-    else if (result.intent === 'forecast') weatherForecast(result.location || result.wikiword, result.units);
-    else if (result.intent === 'local_time') clock.localDateTime(result.location);
-    else if (result.intent === 'cantina_tomorrow') getMenu('tomorrow');
-    else if (result.intent === 'cantina_today') getMenu('today');
-    else if (result.intent === 'help') marvinHelp();
-    else if (result.intent === 'photo') photo();
-    else if (result.intent === 'authors') authors();
-    else if (result.intent === 'word_of_the_day') wordOfADay(result.dictionary);
-    else if (result.intent === 'get_student') read_input(v2Users.studentInfo);
-    else if (result.intent === 'projects') read_input(v2projects.getBestProjects);
-    else if (result.intent === 'corrections') read_input(loadCorrections);
-    else if (result.intent === 'map') read_input(studentOnMap);
-    else if (result.intent === 'events') calendar(result.period, result.date);
-    else if (result.intent === 'wikiDefinition') wikiDefinition(result.wikiword);
-    else if (result.intent === 'news') news();
-    else if (result.intent === 'joke') joke();
-	else if (result.intent === 'introduction') introduction();
-    else send_message('You asked for "' + result.text + '".<br> I don\'t understand you.')
-}
-
-function add_analytics_data(result) {
-    var existingFunctions = ['get_weather', 'forecast', 'local_time', 'cantina_tomorrow', 'cantina_today', 'help', 'authors',
-    'word_of_the_day', 'get_student', 'projects', 'corrections', 'map', 'events', 'wikiDefinition', 'news', 'photo', 'joke', 'introduction'];
-=======
 	var result = JSON.parse(message);
 	add_analytics_data(result);
 	if (result.intent === "get_weather") getWeatherAtLocation(result.location || result.wikiword, result.units);
@@ -92,13 +57,13 @@ function add_analytics_data(result) {
 	else if (result.intent === "news") news(); 
 	else if (result.intent === "joke") joke();
 	else if (result.intent === "how_are_you") howAreYou();
+	else if (result.intent === 'introduction') introduction();
 	else send_message("You asked for \"" + result.text + "\".<br> I don't understand you.");
 }
 
 function add_analytics_data(result) {
 	var existingFunctions = ["get_weather", "forecast", "local_time", "cantina_tomorrow", "cantina_today", "help", "authors",
-		"word_of_the_day", "get_student", "projects", "corrections", "map", "events", "wikiDefinition", "news", "photo"];
->>>>>>> dc376c98e0f4a3d1559a2574572cb21b28370b74
+		"word_of_the_day", "get_student", "projects", "corrections", "map", "events", "wikiDefinition", "news", "photo", 'joke', 'introduction'];
 
 	var d = new Date();
 	var knownFunction = existingFunctions.includes(result.intent);

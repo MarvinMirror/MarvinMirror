@@ -100,7 +100,7 @@ function count_down(n)
 	{	
 		content.innerHTML = "<div id='count_down' class='count_down'><p>" + n + "</div>";
 		if (n == 0) {
-			var sound = new Audio("../img/photo_sound.mp3");
+			var sound = new Audio("../mp3/photo_sound.mp3");
 			sound.play();
 		}
 		setTimeout(count_down, 1000, n-1);

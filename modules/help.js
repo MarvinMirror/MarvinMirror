@@ -35,7 +35,7 @@ function marvinHelp() {
     
 	/*  An array of objects that Marvin will currently pick from to
         display on the help screen.
-        Current count (for rand generator): 0 to 13 */
+        Current count (for rand generator): 0 to 14 */
 	var actions = [
 		{   
 			intent: "weather",
@@ -96,6 +96,11 @@ function marvinHelp() {
 		{   
 			intent: "Joke",
 			example: "Tell me a joke!"
+		},
+		{
+			intent: "Introduction",
+			example: "Introduce Yourself"
+			
 		}
 	];
 

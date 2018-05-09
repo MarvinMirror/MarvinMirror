@@ -1,12 +1,25 @@
-var send_message = require("../src/controller.js").message;
-var manageDOM = require("../src/manageDOM");
+/******************************************************************************\
+**  __  __          _______      _______     ___  _____                       **
+** |  \/  |   /\   |  __ \ \    / /_   _| \ | ( )/ ____|                      **
+** | \  / |  /  \  | |__) \ \  / /  | | |  \| |/| (___                        **
+** | |\/| | / /\ \ |  _  / \ \/ /   | | | . ` |  \___ \                       **
+** | |  | |/ ____ \| | \ \  \  /   _| |_| |\  |  ____) |                      **
+** |_|  |_/_/___ \_\_|  \_\__\/ __|_____|_| \_| |_____/                       **
+** |  \/  |_   _|  __ \|  __ \ / __ \|  __ \                                  **
+** | \  / | | | | |__) | |__) | |  | | |__) |      contributions by:          **
+** | |\/| | | | |    _/|_    /| |  | |  _  /       Eugeniu Popa               **
+** | |  | |_| |_| | \ \| | \ \| |__| | | \ \                                  **
+** |_|  |_|_____|_|  \_\_|  \_\\____/|_|  \_\                                 **
+**                                                                            **
+\******************************************************************************/
 
 function speech(voice){
-    responsiveVoice.speak(voice, "UK English Male");
+	responsiveVoice.speak(voice, "UK English Male");
 }
 
 function introduction(){
-	var voice = 'Hello. My name is Marvin! As you can see. I am a Mirror. I was created and designed at. 42. I am pleased to meet you.';
+	var voice = "Hello. My name is Marvin! As you can see. I am a Mirror. \
+	I was created and designed at. 42. I am pleased to meet you.";
 	speech(voice);
 }
 

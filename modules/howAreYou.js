@@ -41,7 +41,7 @@ const responseGeneric = [
 const responseByDay = {
 	"Monday": [
 		"Well on the bright side...<br><br>*sigh*<br><br>It's Monday, \
-            there IS no bright side.",
+            there *is* no bright side.",
 		"Funny how just when you think life can't possibly get any \
             worse, it's suddenly Monday."
 	],
@@ -71,7 +71,7 @@ const responseByDay = {
 	"Sunday": [
 		"I have a million ideas on the implications of Sunday. \
             They all point to certain death.",
-		"Sunday rhymes with my least favorite day: every day."
+		"Sunday rhymes with my least-favourite day: every day."
 	]
 };
 
@@ -86,7 +86,7 @@ const howAreYou = () => {
 	let day = moment().format("dddd");
 	let dice = Math.floor(Math.random() * 9);
 	let rand;
-	let mp3 = dice % 2 ? "../mp3/sigh1.mp3" : "../mp3/sigh2.mp3"
+	let mp3 = dice % 2 ? "../mp3/sigh1.mp3" : "../mp3/sigh2.mp3";
 	var sound = new Audio(mp3);
 	
 	if (dice < 7) {

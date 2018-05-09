@@ -13,34 +13,33 @@
 **                                                                            **
 \******************************************************************************/
 
-var send_message = require("../src/controller.js").message;
 var manageDOM = require("../src/manageDOM");
 
 var joke = function(){
-    var url = 'https://icanhazdadjoke.com/';
-    var retry = true;
-    var xhr = new XMLHttpRequest()
-    xhr.open('GET', url, true)
-    xhr.setRequestHeader("Accept", "application/json");
-    xhr.onload = function(){
-       if (xhr.status === 200){
-           var output = JSON.parse(xhr.responseText)
-           var joke = output.joke;
-           manageDOM.buildPopup();
-           var smile = document.createElement("div");
-           var face = document.createElement("img");
-           var popup = document.getElementById("popup");
-           popup.appendChild(smile);
-           smile.appendChild(face);
-           face.src  = ("../img/laugh_cry.png");
-           var text = document.createElement("div");
-           popup.appendChild(text);
-           text.innerHTML = joke;
-           smile.className = "png";
-           text.className = "text";
-           }
-       }
-xhr.send()
-}
+	var url = "https://icanhazdadjoke.com/";
+	var retry = true;
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", url, true);
+	xhr.setRequestHeader("Accept", "application/json");
+	xhr.onload = function(){
+		if (xhr.status === 200){
+			var output = JSON.parse(xhr.responseText);
+			var joke = output.joke.replace("? ", "?<br><br>");
+			manageDOM.buildPopup();
+			var smile = document.createElement("div");
+			var face = document.createElement("img");
+			var popup = document.getElementById("popup");
+			popup.appendChild(smile);
+			smile.appendChild(face);
+			face.src  = ("../img/laugh_cry.png");
+			var text = document.createElement("div");
+			popup.appendChild(text);
+			text.innerHTML = joke;
+			smile.className = "png";
+			text.className = "text center-div";
+		}
+	};
+	xhr.send();
+};
 
 module.exports = joke;

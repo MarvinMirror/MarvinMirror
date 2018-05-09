@@ -26,7 +26,7 @@ the openweathermap.org API, parses and displays in the app window */
 function getWeatherAtLocation(get_place, get_units) {
 	
 	// check input
-	var place = (get_place) && (get_place !== "weather") ? get_place : config.location;
+	var place = (get_place) && (get_place.includes("weather") !== true ) ? get_place : config.location;
 
 	// check input for units
 	var units = (!get_units || get_units === "Fahrenheit") ? config.units : "metric";

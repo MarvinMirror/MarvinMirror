@@ -85,7 +85,7 @@ var manageDOM = {
 		popup.appendChild(qrDiv);
 		qrDiv.innerHTML = "<img src='../img/" + qr + ".png'>\
 		<br><p>Use this QR code with your phone or go to " + link + "\
-		<br>(You have 15 seconds before timeout)<p>";
+		<br>(You have 30 seconds)<p>";
 	},
 
 	/*  This function was created to bridge the issue with searching

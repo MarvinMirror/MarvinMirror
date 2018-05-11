@@ -28,18 +28,13 @@ function accessDB(n, callback, source) {
             Input.deleteOne({source: source}, function(err, obj) {console.log("deleted")});
             n = waitingInput;
             if (data.message != "") callback(data.message)
-            else send_message("You sent me an empty string!<br>Do you think I'm stupid?")
+            else send_message("The input you submitted was empty.")
         }
         else {
-            console.log("nothing there")
             if (n < waitingInput) 
             { 
                 n++; 
                 setTimeout(function() {accessDB(n, callback, source)}, 2000);
-            }
-            else {
-                console.log("done");
-                send_message("You didn't fill the form!<br>So can not help you.")
             }
         }
     })
